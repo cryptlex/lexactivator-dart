@@ -11,8 +11,9 @@ void main() {
       print('License is genuinely activated!');
 
       final expiryDate = LexActivator.GetLicenseExpiryDate();
-      final daysLeft = DateTime.fromMillisecondsSinceEpoch(expiryDate)
-          .difference(DateTime.now());
+      final daysLeft = (DateTime.fromMillisecondsSinceEpoch(expiryDate * 1000))
+          .difference(DateTime.now())
+          .inDays;
       print('Days left: $daysLeft');
 
       final userName = LexActivator.GetLicenseUserName();
@@ -27,8 +28,9 @@ void main() {
       final trialStatus = LexActivator.IsTrialGenuine();
       if (LexStatusCodes.LA_OK == trialStatus) {
         final expiryDate = LexActivator.GetTrialExpiryDate();
-        final daysLeft = DateTime.fromMillisecondsSinceEpoch(expiryDate)
-            .difference(DateTime.now());
+        final daysLeft = (DateTime.fromMillisecondsSinceEpoch(expiryDate * 1000))
+          .difference(DateTime.now())
+          .inDays;
         print('Trial days left: $daysLeft');
       } else if (LexStatusCodes.LA_TRIAL_EXPIRED == trialStatus) {
         print('Trial has expired!');
