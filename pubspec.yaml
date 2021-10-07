@@ -1,0 +1,25 @@
+name: lexactivator
+description: LexActivator API wrapper for Dart (licensing library) 
+version: 0.0.1
+homepage: https://cryptlex.com
+
+environment:
+  sdk: ">=2.14.0 <3.0.0"
+  # flutter: ">=2.5.0"
+
+dependencies:
+  ffigen: ^4.0.0  
+
+dev_dependencies:
+  flutter_lints: ^1.0.0
+  
+  
+flutter:
+  plugin:
+    platforms:
+      linux:
+        pluginClass: LexactivatorPlugin
+      macos:
+        pluginClass: LexactivatorPlugin
+      windows:
+        pluginClass: LexactivatorPlugin
