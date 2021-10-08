@@ -1150,8 +1150,9 @@ class LexActivator {
       return DynamicLibrary.open(
           libraryPathURI.resolve('lib/libLexActivator.so').path);
     } else if (Platform.isWindows) {
-      return DynamicLibrary.open(
-          libraryPathURI.resolve('lib/libLexActivator.dll').path);
+      return DynamicLibrary.open(Platform.script
+          .resolve("build/windows/Runner/Debug/LexActivator.dll")
+          .toFilePath(windows: true));
     } else {
       throw Exception();
     }

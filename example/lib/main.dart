@@ -2,10 +2,10 @@
 import 'package:lexactivator/lexactivator.dart';
 
 void main() {
-  initializeLexActivator();
-  activateLicense();
-
   try {
+    initializeLexActivator();
+    activateLicense();
+
     final status = LexActivator.IsLicenseGenuine();
     if (LexStatusCodes.LA_OK == status) {
       print('License is genuinely activated!');
@@ -28,9 +28,10 @@ void main() {
       final trialStatus = LexActivator.IsTrialGenuine();
       if (LexStatusCodes.LA_OK == trialStatus) {
         final expiryDate = LexActivator.GetTrialExpiryDate();
-        final daysLeft = (DateTime.fromMillisecondsSinceEpoch(expiryDate * 1000))
-          .difference(DateTime.now())
-          .inDays;
+        final daysLeft =
+            (DateTime.fromMillisecondsSinceEpoch(expiryDate * 1000))
+                .difference(DateTime.now())
+                .inDays;
         print('Trial days left: $daysLeft');
       } else if (LexStatusCodes.LA_TRIAL_EXPIRED == trialStatus) {
         print('Trial has expired!');
