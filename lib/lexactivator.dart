@@ -39,7 +39,7 @@ class LexActivator {
 
   static int SetProductFile({required String filePath}) {
     int status = _lexActivatorNative.SetProductFile(
-      filePath.toNativeUtf8(),
+      filePath,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -57,7 +57,7 @@ class LexActivator {
   /// The function throws a [LexActivatorException] on error.
 
   static int SetProductData({required String productData}) {
-    int status = _lexActivatorNative.SetProductData(productData.toNativeUtf8());
+    int status = _lexActivatorNative.SetProductData(productData);
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
     }
@@ -79,7 +79,7 @@ class LexActivator {
 
   static int SetProductId({required String productId, required int flags}) {
     int status = _lexActivatorNative.SetProductId(
-      productId.toNativeUtf8(),
+      productId,
       flags,
     );
     if (LexStatusCodes.LA_OK != status) {
@@ -101,7 +101,7 @@ class LexActivator {
 
   static int SetDataDirectory({required String directoryPath}) {
     int status = _lexActivatorNative.SetDataDirectory(
-      directoryPath.toNativeUtf8(),
+      directoryPath,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -122,7 +122,7 @@ class LexActivator {
 
   static int SetCustomDeviceFingerprint({required String fingerprint}) {
     int status = _lexActivatorNative.SetCustomDeviceFingerprint(
-      fingerprint.toNativeUtf8(),
+      fingerprint,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -136,7 +136,7 @@ class LexActivator {
 
   static int SetLicenseKey({required String licenseKey}) {
     int status = _lexActivatorNative.SetLicenseKey(
-      licenseKey.toNativeUtf8(),
+      licenseKey,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -156,8 +156,8 @@ class LexActivator {
     required String password,
   }) {
     int status = _lexActivatorNative.SetLicenseUserCredential(
-      email.toNativeUtf8(),
-      password.toNativeUtf8(),
+      email,
+      password,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -201,8 +201,8 @@ class LexActivator {
     required String value,
   }) {
     int status = _lexActivatorNative.SetActivationMetadata(
-      key.toNativeUtf8(),
-      value.toNativeUtf8(),
+      key,
+      value,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -223,8 +223,8 @@ class LexActivator {
     required String value,
   }) {
     int status = _lexActivatorNative.SetTrialActivationMetadata(
-      key.toNativeUtf8(),
-      value.toNativeUtf8(),
+      key,
+      value,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -244,7 +244,7 @@ class LexActivator {
     required String appVersion,
   }) {
     int status = _lexActivatorNative.SetAppVersion(
-      appVersion.toNativeUtf8(),
+      appVersion,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -266,7 +266,7 @@ class LexActivator {
   }) {
     int status =
         _lexActivatorNative.SetOfflineActivationRequestMeterAttributeUses(
-      name.toNativeUtf8(),
+      name,
       uses,
     );
     if (LexStatusCodes.LA_OK != status) {
@@ -290,7 +290,7 @@ class LexActivator {
     required String proxy,
   }) {
     int status = _lexActivatorNative.SetNetworkProxy(
-      proxy.toNativeUtf8(),
+      proxy,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -307,7 +307,7 @@ class LexActivator {
     String host,
   ) {
     int status = _lexActivatorNative.SetCryptlexHost(
-      host.toNativeUtf8(),
+      host,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -324,7 +324,7 @@ class LexActivator {
   static String GetProductMetadata({required String key}) {
     final array = calloc<Uint8>(256);
     int status = _lexActivatorNative.GetProductMetadata(
-      key.toNativeUtf8(),
+      key,
       array.cast(),
       256,
     );
@@ -345,7 +345,7 @@ class LexActivator {
   }) {
     final array = calloc<Uint8>(256);
     int status = _lexActivatorNative.GetLicenseMetadata(
-      key.toNativeUtf8(),
+      key,
       array.cast(),
       256,
     );
@@ -370,7 +370,7 @@ class LexActivator {
     final grossUses = calloc<Uint32>();
 
     int status = _lexActivatorNative.GetLicenseMeterAttribute(
-      name.toNativeUtf8(),
+      name,
       allowedUses,
       totalUses,
       grossUses,
@@ -521,7 +521,7 @@ class LexActivator {
   static String GetLicenseUserMetadata({required String key}) {
     final array = calloc<Uint8>(256);
     int status = _lexActivatorNative.GetLicenseUserMetadata(
-      key.toNativeUtf8(),
+      key,
       array.cast(),
       256,
     );
@@ -558,7 +558,7 @@ class LexActivator {
   static String GetActivationMetadata(String key) {
     final array = calloc<Uint8>(256);
     int status = _lexActivatorNative.GetActivationMetadata(
-      key.toNativeUtf8(),
+      key,
       array.cast(),
       256,
     );
@@ -580,7 +580,7 @@ class LexActivator {
   }) {
     final uses = calloc<Uint32>();
     int status = _lexActivatorNative.GetActivationMeterAttributeUses(
-      name.toNativeUtf8(),
+      name,
       uses,
     );
     if (LexStatusCodes.LA_OK != status) {
@@ -612,7 +612,7 @@ class LexActivator {
     final array = calloc<Uint8>(256);
 
     int status = _lexActivatorNative.GetTrialActivationMetadata(
-      key.toNativeUtf8(),
+      key,
       array.cast(),
       256,
     );
@@ -714,9 +714,9 @@ class LexActivator {
   //   required CallbackType releaseUpdateCallback,
   // }) {
   //   int status = _lexActivatorNative.CheckForReleaseUpdate(
-  //     platform.toNativeUtf8(),
-  //     version.toNativeUtf8(),
-  //     channel.toNativeUtf8(),
+  //     platform,
+  //     version,
+  //     channel,
   //     releaseUpdateCallback,
   //   );
   //   if (LexStatusCodes.LA_OK != status) {
@@ -761,7 +761,7 @@ class LexActivator {
 
   static int ActivateLicenseOffline({required String filePath}) {
     int status = _lexActivatorNative.ActivateLicenseOffline(
-      filePath.toNativeUtf8(),
+      filePath,
     );
     switch (status) {
       case LexStatusCodes.LA_OK:
@@ -785,7 +785,7 @@ class LexActivator {
 
   static int GenerateOfflineActivationRequest({required String filePath}) {
     int status = _lexActivatorNative.GenerateOfflineActivationRequest(
-      filePath.toNativeUtf8(),
+      filePath,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -828,7 +828,7 @@ class LexActivator {
     required String filePath,
   }) {
     int status = _lexActivatorNative.GenerateOfflineDeactivationRequest(
-      filePath.toNativeUtf8(),
+      filePath,
     );
     switch (status) {
       case LexStatusCodes.LA_OK:
@@ -944,7 +944,7 @@ class LexActivator {
     required String filePath,
   }) {
     int status = _lexActivatorNative.ActivateTrialOffline(
-      filePath.toNativeUtf8(),
+      filePath,
     );
     switch (status) {
       case LexStatusCodes.LA_OK:
@@ -967,7 +967,7 @@ class LexActivator {
     required String filePath,
   }) {
     int status = _lexActivatorNative.GenerateOfflineTrialActivationRequest(
-      filePath.toNativeUtf8(),
+      filePath,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -1084,7 +1084,7 @@ class LexActivator {
   static int IncrementActivationMeterAttributeUses(
       {required String name, required int increment}) {
     int status = _lexActivatorNative.IncrementActivationMeterAttributeUses(
-      name.toNativeUtf8(),
+      name,
       increment,
     );
     if (LexStatusCodes.LA_OK != status) {
@@ -1102,7 +1102,7 @@ class LexActivator {
     required int decrement,
   }) {
     int status = _lexActivatorNative.DecrementActivationMeterAttributeUses(
-      name.toNativeUtf8(),
+      name,
       decrement,
     );
     if (LexStatusCodes.LA_OK != status) {
@@ -1119,7 +1119,7 @@ class LexActivator {
     required String name,
   }) {
     int status = _lexActivatorNative.ResetActivationMeterAttributeUses(
-      name.toNativeUtf8(),
+      name,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -1166,7 +1166,6 @@ class LexActivator {
     }
     return charPtr.cast<Utf8>().toDartString();
   }
-
   // static void licenseCallback(int status) {
   //   switch (status) {
   //     case LexStatusCodes.LA_OK:

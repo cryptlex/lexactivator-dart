@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, camel_case_types, constant_identifier_names
 import 'dart:ffi';
+import 'dart:io';
 import 'package:ffi/ffi.dart';
 
 class LexActivatorNative {
@@ -15,10 +16,13 @@ class LexActivatorNative {
       : _lookup = lookup;
 
   int SetProductFile(
-    CSTRTYPE filePath,
+    String filePath,
   ) {
+    if (Platform.isWindows) {
+      return _SetProductFileWin(convertDartStringToCSTR(filePath).cast());
+    }
     return _SetProductFile(
-      filePath,
+      convertDartStringToCSTR(filePath).cast(),
     );
   }
 
@@ -27,11 +31,22 @@ class LexActivatorNative {
   late final _SetProductFile =
       _SetProductFilePtr.asFunction<int Function(CSTRTYPE)>();
 
+  late final _SetProductFilePtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE)>>('SetProductFile');
+  late final _SetProductFileWin =
+      _SetProductFilePtrWin.asFunction<int Function(CSTRTYPE)>();
+
   int SetProductData(
-    CSTRTYPE productData,
+    String productData,
   ) {
+    if (Platform.isWindows) {
+      return _SetProductDataWin(
+        convertDartStringToCSTR(productData).cast(),
+      );
+    }
+
     return _SetProductData(
-      productData,
+      convertDartStringToCSTR(productData).cast(),
     );
   }
 
@@ -40,12 +55,23 @@ class LexActivatorNative {
   late final _SetProductData =
       _SetProductDataPtr.asFunction<int Function(CSTRTYPE)>();
 
+  late final _SetProductDataPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>('SetProductData');
+  late final _SetProductDataWin =
+      _SetProductDataPtrWin.asFunction<int Function(CSTRTYPE_WIN)>();
+
   int SetProductId(
-    CSTRTYPE productId,
+    String productId,
     int flags,
   ) {
+    if (Platform.isWindows) {
+      return _SetProductIdWin(
+        convertDartStringToCSTR(productId).cast(),
+        flags,
+      );
+    }
     return _SetProductId(
-      productId,
+      convertDartStringToCSTR(productId).cast(),
       flags,
     );
   }
@@ -55,12 +81,20 @@ class LexActivatorNative {
   late final _SetProductId =
       _SetProductIdPtr.asFunction<int Function(CSTRTYPE, int)>();
 
+  late final _SetProductIdPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'SetProductId');
+  late final _SetProductIdWin =
+      _SetProductIdPtrWin.asFunction<int Function(CSTRTYPE_WIN, int)>();
+
   int SetDataDirectory(
-    CSTRTYPE directoryPath,
+    String directoryPath,
   ) {
-    return _SetDataDirectory(
-      directoryPath,
-    );
+    if (Platform.isWindows) {
+      return _SetDataDirectoryWin(
+          convertDartStringToCSTR(directoryPath).cast());
+    }
+    return _SetDataDirectory(convertDartStringToCSTR(directoryPath).cast());
   }
 
   late final _SetDataDirectoryPtr =
@@ -68,11 +102,21 @@ class LexActivatorNative {
   late final _SetDataDirectory =
       _SetDataDirectoryPtr.asFunction<int Function(CSTRTYPE)>();
 
+  late final _SetDataDirectoryPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>('SetDataDirectory');
+  late final _SetDataDirectoryWin =
+      _SetDataDirectoryPtrWin.asFunction<int Function(CSTRTYPE_WIN)>();
+
   int SetCustomDeviceFingerprint(
-    CSTRTYPE fingerprint,
+    String fingerprint,
   ) {
+    if (Platform.isWindows) {
+      return _SetCustomDeviceFingerprintWin(
+        convertDartStringToCSTR(fingerprint).cast(),
+      );
+    }
     return _SetCustomDeviceFingerprint(
-      fingerprint,
+      convertDartStringToCSTR(fingerprint).cast(),
     );
   }
 
@@ -82,11 +126,22 @@ class LexActivatorNative {
   late final _SetCustomDeviceFingerprint =
       _SetCustomDeviceFingerprintPtr.asFunction<int Function(CSTRTYPE)>();
 
+  late final _SetCustomDeviceFingerprintPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>(
+          'SetCustomDeviceFingerprint');
+  late final _SetCustomDeviceFingerprintWin = _SetCustomDeviceFingerprintPtrWin
+      .asFunction<int Function(CSTRTYPE_WIN)>();
+
   int SetLicenseKey(
-    CSTRTYPE licenseKey,
+    String licenseKey,
   ) {
+    if (Platform.isWindows) {
+      return _SetLicenseKeyWin(
+        convertDartStringToCSTR(licenseKey).cast(),
+      );
+    }
     return _SetLicenseKey(
-      licenseKey,
+      convertDartStringToCSTR(licenseKey).cast(),
     );
   }
 
@@ -95,13 +150,24 @@ class LexActivatorNative {
   late final _SetLicenseKey =
       _SetLicenseKeyPtr.asFunction<int Function(CSTRTYPE)>();
 
+  late final _SetLicenseKeyPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>('SetLicenseKey');
+  late final _SetLicenseKeyWin =
+      _SetLicenseKeyPtrWin.asFunction<int Function(CSTRTYPE_WIN)>();
+
   int SetLicenseUserCredential(
-    CSTRTYPE email,
-    CSTRTYPE password,
+    String email,
+    String password,
   ) {
+    if (Platform.isWindows) {
+      return _SetLicenseUserCredentialWin(
+        convertDartStringToCSTR(email).cast(),
+        convertDartStringToCSTR(password).cast(),
+      );
+    }
     return _SetLicenseUserCredential(
-      email,
-      password,
+      convertDartStringToCSTR(email).cast(),
+      convertDartStringToCSTR(password).cast(),
     );
   }
 
@@ -110,6 +176,12 @@ class LexActivatorNative {
           'SetLicenseUserCredential');
   late final _SetLicenseUserCredential = _SetLicenseUserCredentialPtr
       .asFunction<int Function(CSTRTYPE, CSTRTYPE)>();
+
+  late final _SetLicenseUserCredentialPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, CSTRTYPE_WIN)>>(
+          'SetLicenseUserCredential');
+  late final _SetLicenseUserCredentialWin = _SetLicenseUserCredentialPtrWin
+      .asFunction<int Function(CSTRTYPE_WIN, CSTRTYPE_WIN)>();
 
   int SetLicenseCallback(
     CallbackType callback,
@@ -126,12 +198,18 @@ class LexActivatorNative {
       _SetLicenseCallbackPtr.asFunction<int Function(CallbackType)>();
 
   int SetActivationMetadata(
-    CSTRTYPE key,
-    CSTRTYPE value,
+    String key,
+    String value,
   ) {
+    if (Platform.isWindows) {
+      return _SetActivationMetadataWin(
+        convertDartStringToCSTR(key).cast(),
+        convertDartStringToCSTR(value).cast(),
+      );
+    }
     return _SetActivationMetadata(
-      key,
-      value,
+      convertDartStringToCSTR(key).cast(),
+      convertDartStringToCSTR(value).cast(),
     );
   }
 
@@ -141,13 +219,25 @@ class LexActivatorNative {
   late final _SetActivationMetadata =
       _SetActivationMetadataPtr.asFunction<int Function(CSTRTYPE, CSTRTYPE)>();
 
+  late final _SetActivationMetadataPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, CSTRTYPE_WIN)>>(
+          'SetActivationMetadata');
+  late final _SetActivationMetadataWin = _SetActivationMetadataPtrWin
+      .asFunction<int Function(CSTRTYPE_WIN, CSTRTYPE_WIN)>();
+
   int SetTrialActivationMetadata(
-    CSTRTYPE key,
-    CSTRTYPE value,
+    String key,
+    String value,
   ) {
+    if (Platform.isWindows) {
+      return _SetTrialActivationMetadataWin(
+        convertDartStringToCSTR(key).cast(),
+        convertDartStringToCSTR(value).cast(),
+      );
+    }
     return _SetTrialActivationMetadata(
-      key,
-      value,
+      convertDartStringToCSTR(key).cast(),
+      convertDartStringToCSTR(value).cast(),
     );
   }
 
@@ -157,11 +247,22 @@ class LexActivatorNative {
   late final _SetTrialActivationMetadata = _SetTrialActivationMetadataPtr
       .asFunction<int Function(CSTRTYPE, CSTRTYPE)>();
 
+  late final _SetTrialActivationMetadataPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, CSTRTYPE_WIN)>>(
+          'SetTrialActivationMetadata');
+  late final _SetTrialActivationMetadataWin = _SetTrialActivationMetadataPtrWin
+      .asFunction<int Function(CSTRTYPE_WIN, CSTRTYPE_WIN)>();
+
   int SetAppVersion(
-    CSTRTYPE appVersion,
+    String appVersion,
   ) {
+    if (Platform.isWindows) {
+      return _SetAppVersionWin(
+        convertDartStringToCSTR(appVersion).cast(),
+      );
+    }
     return _SetAppVersion(
-      appVersion,
+      convertDartStringToCSTR(appVersion).cast(),
     );
   }
 
@@ -170,12 +271,23 @@ class LexActivatorNative {
   late final _SetAppVersion =
       _SetAppVersionPtr.asFunction<int Function(CSTRTYPE)>();
 
+  late final _SetAppVersionPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>('SetAppVersion');
+  late final _SetAppVersionWin =
+      _SetAppVersionPtrWin.asFunction<int Function(CSTRTYPE_WIN)>();
+
   int SetOfflineActivationRequestMeterAttributeUses(
-    CSTRTYPE name,
+    String name,
     int uses,
   ) {
+    if (Platform.isWindows) {
+      return _SetOfflineActivationRequestMeterAttributeUsesWin(
+        convertDartStringToCSTR(name).cast(),
+        uses,
+      );
+    }
     return _SetOfflineActivationRequestMeterAttributeUses(
-      name,
+      convertDartStringToCSTR(name).cast(),
       uses,
     );
   }
@@ -187,11 +299,23 @@ class LexActivatorNative {
       _SetOfflineActivationRequestMeterAttributeUsesPtr.asFunction<
           int Function(CSTRTYPE, int)>();
 
+  late final _SetOfflineActivationRequestMeterAttributeUsesPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'SetOfflineActivationRequestMeterAttributeUses');
+  late final _SetOfflineActivationRequestMeterAttributeUsesWin =
+      _SetOfflineActivationRequestMeterAttributeUsesPtrWin.asFunction<
+          int Function(CSTRTYPE_WIN, int)>();
+
   int SetNetworkProxy(
-    CSTRTYPE proxy,
+    String proxy,
   ) {
+    if (Platform.isWindows) {
+      return _SetNetworkProxyWin(
+        convertDartStringToCSTR(proxy).cast(),
+      );
+    }
     return _SetNetworkProxy(
-      proxy,
+      convertDartStringToCSTR(proxy).cast(),
     );
   }
 
@@ -200,11 +324,21 @@ class LexActivatorNative {
   late final _SetNetworkProxy =
       _SetNetworkProxyPtr.asFunction<int Function(CSTRTYPE)>();
 
+  late final _SetNetworkProxyPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>('SetNetworkProxy');
+  late final _SetNetworkProxyWin =
+      _SetNetworkProxyPtrWin.asFunction<int Function(CSTRTYPE_WIN)>();
+
   int SetCryptlexHost(
-    CSTRTYPE host,
+    String host,
   ) {
+    if (Platform.isWindows) {
+      return _SetCryptlexHostWin(
+        convertDartStringToCSTR(host).cast(),
+      );
+    }
     return _SetCryptlexHost(
-      host,
+      convertDartStringToCSTR(host).cast(),
     );
   }
 
@@ -213,50 +347,89 @@ class LexActivatorNative {
   late final _SetCryptlexHost =
       _SetCryptlexHostPtr.asFunction<int Function(CSTRTYPE)>();
 
+  late final _SetCryptlexHostPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>('SetCryptlexHost');
+  late final _SetCryptlexHostWin =
+      _SetCryptlexHostPtrWin.asFunction<int Function(CSTRTYPE_WIN)>();
+
   int GetProductMetadata(
-    CSTRTYPE key,
-    STRTYPE value,
+    String key,
+    CSTRTYPE value,
     int length,
   ) {
+    if (Platform.isWindows) {
+      return _GetProductMetadataWin(
+        convertDartStringToCSTR(key).cast(),
+        value.cast(),
+        length,
+      );
+    }
     return _GetProductMetadata(
-      key,
-      value,
+      convertDartStringToCSTR(key).cast(),
+      value.cast(),
       length,
     );
   }
 
   late final _GetProductMetadataPtr =
-      _lookup<NativeFunction<Int32 Function(CSTRTYPE, STRTYPE, Uint32)>>(
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, CSTRTYPE, Uint32)>>(
           'GetProductMetadata');
-  late final _GetProductMetadata =
-      _GetProductMetadataPtr.asFunction<int Function(CSTRTYPE, STRTYPE, int)>();
+  late final _GetProductMetadata = _GetProductMetadataPtr.asFunction<
+      int Function(CSTRTYPE, CSTRTYPE, int)>();
+
+  late final _GetProductMetadataPtrWin = _lookup<
+          NativeFunction<Int32 Function(CSTRTYPE_WIN, CSTRTYPE_WIN, Uint32)>>(
+      'GetProductMetadata');
+  late final _GetProductMetadataWin = _GetProductMetadataPtrWin.asFunction<
+      int Function(CSTRTYPE_WIN, CSTRTYPE_WIN, int)>();
 
   int GetLicenseMetadata(
-    CSTRTYPE key,
-    STRTYPE value,
+    String key,
+    CSTRTYPE value,
     int length,
   ) {
+    if (Platform.isWindows) {
+      return _GetLicenseMetadataWin(
+        convertDartStringToCSTR(key).cast(),
+        (value).cast(),
+        length,
+      );
+    }
     return _GetLicenseMetadata(
-      key,
-      value,
+      convertDartStringToCSTR(key).cast(),
+      (value).cast(),
       length,
     );
   }
 
   late final _GetLicenseMetadataPtr =
-      _lookup<NativeFunction<Int32 Function(CSTRTYPE, STRTYPE, Uint32)>>(
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, CSTRTYPE, Uint32)>>(
           'GetLicenseMetadata');
-  late final _GetLicenseMetadata =
-      _GetLicenseMetadataPtr.asFunction<int Function(CSTRTYPE, STRTYPE, int)>();
+  late final _GetLicenseMetadata = _GetLicenseMetadataPtr.asFunction<
+      int Function(CSTRTYPE, CSTRTYPE, int)>();
+
+  late final _GetLicenseMetadataPtrWin = _lookup<
+          NativeFunction<Int32 Function(CSTRTYPE_WIN, CSTRTYPE_WIN, Uint32)>>(
+      'GetLicenseMetadata');
+  late final _GetLicenseMetadataWin = _GetLicenseMetadataPtrWin.asFunction<
+      int Function(CSTRTYPE_WIN, CSTRTYPE_WIN, int)>();
 
   int GetLicenseMeterAttribute(
-    CSTRTYPE name,
+    String name,
     Pointer<Uint32> allowedUses,
     Pointer<Uint32> totalUses,
     Pointer<Uint32> grossUses,
   ) {
+    if (Platform.isWindows) {
+      return _GetLicenseMeterAttributeWin(
+        convertDartStringToCSTR(name).cast(),
+        allowedUses,
+        totalUses,
+        grossUses,
+      );
+    }
     return _GetLicenseMeterAttribute(
-      name,
+      convertDartStringToCSTR(name).cast(),
       allowedUses,
       totalUses,
       grossUses,
@@ -272,20 +445,42 @@ class LexActivatorNative {
           int Function(
               CSTRTYPE, Pointer<Uint32>, Pointer<Uint32>, Pointer<Uint32>)>();
 
+  late final _GetLicenseMeterAttributePtrWin = _lookup<
+      NativeFunction<
+          Int32 Function(CSTRTYPE_WIN, Pointer<Uint32>, Pointer<Uint32>,
+              Pointer<Uint32>)>>('GetLicenseMeterAttribute');
+  late final _GetLicenseMeterAttributeWin =
+      _GetLicenseMeterAttributePtrWin.asFunction<
+          int Function(CSTRTYPE_WIN, Pointer<Uint32>, Pointer<Uint32>,
+              Pointer<Uint32>)>();
+
   int GetLicenseKey(
-    STRTYPE licenseKey,
+    CSTRTYPE licenseKey,
     int length,
   ) {
+    if (Platform.isWindows) {
+      return _GetLicenseKeyWin(
+        (licenseKey).cast(),
+        length,
+      );
+    }
     return _GetLicenseKey(
-      licenseKey,
+      (licenseKey).cast(),
       length,
     );
   }
 
   late final _GetLicenseKeyPtr =
-      _lookup<NativeFunction<Int32 Function(STRTYPE, Uint32)>>('GetLicenseKey');
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, Uint32)>>(
+          'GetLicenseKey');
   late final _GetLicenseKey =
-      _GetLicenseKeyPtr.asFunction<int Function(STRTYPE, int)>();
+      _GetLicenseKeyPtr.asFunction<int Function(CSTRTYPE, int)>();
+
+  late final _GetLicenseKeyPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'GetLicenseKey');
+  late final _GetLicenseKeyWin =
+      _GetLicenseKeyPtrWin.asFunction<int Function(CSTRTYPE_WIN, int)>();
 
   int GetLicenseAllowedActivations(
     Pointer<Uint32> allowedActivations,
@@ -330,9 +525,15 @@ class LexActivatorNative {
       _GetLicenseExpiryDatePtr.asFunction<int Function(Pointer<Uint32>)>();
 
   int GetLicenseUserEmail(
-    STRTYPE email,
+    CSTRTYPE email,
     int length,
   ) {
+    if (Platform.isWindows) {
+      return _GetLicenseUserEmailWin(
+        email.cast(),
+        length,
+      );
+    }
     return _GetLicenseUserEmail(
       email,
       length,
@@ -340,15 +541,27 @@ class LexActivatorNative {
   }
 
   late final _GetLicenseUserEmailPtr =
-      _lookup<NativeFunction<Int32 Function(STRTYPE, Uint32)>>(
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, Uint32)>>(
           'GetLicenseUserEmail');
   late final _GetLicenseUserEmail =
-      _GetLicenseUserEmailPtr.asFunction<int Function(STRTYPE, int)>();
+      _GetLicenseUserEmailPtr.asFunction<int Function(CSTRTYPE, int)>();
+
+  late final _GetLicenseUserEmailPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'GetLicenseUserEmail');
+  late final _GetLicenseUserEmailWin =
+      _GetLicenseUserEmailPtrWin.asFunction<int Function(CSTRTYPE_WIN, int)>();
 
   int GetLicenseUserName(
-    STRTYPE name,
+    CSTRTYPE name,
     int length,
   ) {
+    if (Platform.isWindows) {
+      return _GetLicenseUserNameWin(
+        name.cast(),
+        length,
+      );
+    }
     return _GetLicenseUserName(
       name,
       length,
@@ -356,15 +569,27 @@ class LexActivatorNative {
   }
 
   late final _GetLicenseUserNamePtr =
-      _lookup<NativeFunction<Int32 Function(STRTYPE, Uint32)>>(
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, Uint32)>>(
           'GetLicenseUserName');
   late final _GetLicenseUserName =
-      _GetLicenseUserNamePtr.asFunction<int Function(STRTYPE, int)>();
+      _GetLicenseUserNamePtr.asFunction<int Function(CSTRTYPE, int)>();
+
+  late final _GetLicenseUserNamePtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'GetLicenseUserName');
+  late final _GetLicenseUserNameWin =
+      _GetLicenseUserNamePtrWin.asFunction<int Function(CSTRTYPE_WIN, int)>();
 
   int GetLicenseUserCompany(
-    STRTYPE company,
+    CSTRTYPE company,
     int length,
   ) {
+    if (Platform.isWindows) {
+      return _GetLicenseUserCompanyWin(
+        company.cast(),
+        length,
+      );
+    }
     return _GetLicenseUserCompany(
       company,
       length,
@@ -372,33 +597,58 @@ class LexActivatorNative {
   }
 
   late final _GetLicenseUserCompanyPtr =
-      _lookup<NativeFunction<Int32 Function(STRTYPE, Uint32)>>(
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, Uint32)>>(
           'GetLicenseUserCompany');
   late final _GetLicenseUserCompany =
-      _GetLicenseUserCompanyPtr.asFunction<int Function(STRTYPE, int)>();
+      _GetLicenseUserCompanyPtr.asFunction<int Function(CSTRTYPE, int)>();
+
+  late final _GetLicenseUserCompanyPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'GetLicenseUserCompany');
+  late final _GetLicenseUserCompanyWin = _GetLicenseUserCompanyPtrWin
+      .asFunction<int Function(CSTRTYPE_WIN, int)>();
 
   int GetLicenseUserMetadata(
-    CSTRTYPE key,
-    STRTYPE value,
+    String key,
+    CSTRTYPE value,
     int length,
   ) {
+    if (Platform.isWindows) {
+      return _GetLicenseUserMetadataWin(
+        convertDartStringToCSTR(key).cast(),
+        value.cast(),
+        length,
+      );
+    }
     return _GetLicenseUserMetadata(
-      key,
+      convertDartStringToCSTR(key).cast(),
       value,
       length,
     );
   }
 
   late final _GetLicenseUserMetadataPtr =
-      _lookup<NativeFunction<Int32 Function(CSTRTYPE, STRTYPE, Uint32)>>(
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, CSTRTYPE, Uint32)>>(
           'GetLicenseUserMetadata');
   late final _GetLicenseUserMetadata = _GetLicenseUserMetadataPtr.asFunction<
-      int Function(CSTRTYPE, STRTYPE, int)>();
+      int Function(CSTRTYPE, CSTRTYPE, int)>();
+
+  late final _GetLicenseUserMetadataPtrWin = _lookup<
+          NativeFunction<Int32 Function(CSTRTYPE_WIN, CSTRTYPE_WIN, Uint32)>>(
+      'GetLicenseUserMetadata');
+  late final _GetLicenseUserMetadataWin = _GetLicenseUserMetadataPtrWin
+      .asFunction<int Function(CSTRTYPE_WIN, CSTRTYPE_WIN, int)>();
 
   int GetLicenseType(
-    STRTYPE licenseType,
+    CSTRTYPE licenseType,
     int length,
   ) {
+    if (Platform.isWindows) {
+      return _GetLicenseTypeWin(
+        licenseType.cast(),
+        length,
+      );
+    }
     return _GetLicenseType(
       licenseType,
       length,
@@ -406,35 +656,54 @@ class LexActivatorNative {
   }
 
   late final _GetLicenseTypePtr =
-      _lookup<NativeFunction<Int32 Function(STRTYPE, Uint32)>>(
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, Uint32)>>(
           'GetLicenseType');
   late final _GetLicenseType =
-      _GetLicenseTypePtr.asFunction<int Function(STRTYPE, int)>();
+      _GetLicenseTypePtr.asFunction<int Function(CSTRTYPE, int)>();
+
+  late final _GetLicenseTypePtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'GetLicenseType');
+  late final _GetLicenseTypeWin =
+      _GetLicenseTypePtrWin.asFunction<int Function(CSTRTYPE_WIN, int)>();
 
   int GetActivationMetadata(
-    CSTRTYPE key,
-    STRTYPE value,
+    String key,
+    CSTRTYPE value,
     int length,
   ) {
+    if (Platform.isWindows) {
+      return _GetActivationMetadataWin(
+        convertDartStringToCSTR(key).cast(),
+        value.cast(),
+        length,
+      );
+    }
     return _GetActivationMetadata(
-      key,
+      convertDartStringToCSTR(key).cast(),
       value,
       length,
     );
   }
 
   late final _GetActivationMetadataPtr =
-      _lookup<NativeFunction<Int32 Function(CSTRTYPE, STRTYPE, Uint32)>>(
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, CSTRTYPE, Uint32)>>(
           'GetActivationMetadata');
   late final _GetActivationMetadata = _GetActivationMetadataPtr.asFunction<
-      int Function(CSTRTYPE, STRTYPE, int)>();
+      int Function(CSTRTYPE, CSTRTYPE, int)>();
+
+  late final _GetActivationMetadataPtrWin = _lookup<
+          NativeFunction<Int32 Function(CSTRTYPE_WIN, CSTRTYPE_WIN, Uint32)>>(
+      'GetActivationMetadata');
+  late final _GetActivationMetadataWin = _GetActivationMetadataPtrWin
+      .asFunction<int Function(CSTRTYPE_WIN, CSTRTYPE_WIN, int)>();
 
   int GetActivationMeterAttributeUses(
-    CSTRTYPE name,
+    String name,
     Pointer<Uint32> uses,
   ) {
     return _GetActivationMeterAttributeUses(
-      name,
+      convertDartStringToCSTR(name).cast(),
       uses,
     );
   }
@@ -462,22 +731,35 @@ class LexActivatorNative {
           int Function(Pointer<Uint32>)>();
 
   int GetTrialActivationMetadata(
-    CSTRTYPE key,
-    STRTYPE value,
+    String key,
+    CSTRTYPE value,
     int length,
   ) {
+    if (Platform.isWindows) {
+      return _GetTrialActivationMetadataWin(
+        convertDartStringToCSTR(key).cast(),
+        value.cast(),
+        length,
+      );
+    }
     return _GetTrialActivationMetadata(
-      key,
+      convertDartStringToCSTR(key).cast(),
       value,
       length,
     );
   }
 
   late final _GetTrialActivationMetadataPtr =
-      _lookup<NativeFunction<Int32 Function(CSTRTYPE, STRTYPE, Uint32)>>(
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, CSTRTYPE, Uint32)>>(
           'GetTrialActivationMetadata');
   late final _GetTrialActivationMetadata = _GetTrialActivationMetadataPtr
-      .asFunction<int Function(CSTRTYPE, STRTYPE, int)>();
+      .asFunction<int Function(CSTRTYPE, CSTRTYPE, int)>();
+
+  late final _GetTrialActivationMetadataPtrWin = _lookup<
+          NativeFunction<Int32 Function(CSTRTYPE_WIN, CSTRTYPE_WIN, Uint32)>>(
+      'GetTrialActivationMetadata');
+  late final _GetTrialActivationMetadataWin = _GetTrialActivationMetadataPtrWin
+      .asFunction<int Function(CSTRTYPE_WIN, CSTRTYPE_WIN, int)>();
 
   int GetTrialExpiryDate(
     Pointer<Uint32> trialExpiryDate,
@@ -494,9 +776,15 @@ class LexActivatorNative {
       _GetTrialExpiryDatePtr.asFunction<int Function(Pointer<Uint32>)>();
 
   int GetTrialId(
-    STRTYPE trialId,
+    CSTRTYPE trialId,
     int length,
   ) {
+    if (Platform.isWindows) {
+      return _GetTrialIdWin(
+        trialId.cast(),
+        length,
+      );
+    }
     return _GetTrialId(
       trialId,
       length,
@@ -504,9 +792,15 @@ class LexActivatorNative {
   }
 
   late final _GetTrialIdPtr =
-      _lookup<NativeFunction<Int32 Function(STRTYPE, Uint32)>>('GetTrialId');
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, Uint32)>>('GetTrialId');
   late final _GetTrialId =
-      _GetTrialIdPtr.asFunction<int Function(STRTYPE, int)>();
+      _GetTrialIdPtr.asFunction<int Function(CSTRTYPE, int)>();
+
+  late final _GetTrialIdPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'GetTrialId');
+  late final _GetTrialIdWin =
+      _GetTrialIdPtrWin.asFunction<int Function(CSTRTYPE_WIN, int)>();
 
   int GetLocalTrialExpiryDate(
     Pointer<Uint32> trialExpiryDate,
@@ -523,9 +817,16 @@ class LexActivatorNative {
       _GetLocalTrialExpiryDatePtr.asFunction<int Function(Pointer<Uint32>)>();
 
   int GetLibraryVersion(
-    STRTYPE libraryVersion,
+    CSTRTYPE libraryVersion,
     int length,
   ) {
+    if (Platform.isWindows) {
+      return _GetLibraryVersionWin(
+        libraryVersion.cast(),
+        length,
+      );
+    }
+
     return _GetLibraryVersion(
       libraryVersion,
       length,
@@ -533,11 +834,18 @@ class LexActivatorNative {
   }
 
   late final _GetLibraryVersionPtr =
-      _lookup<NativeFunction<Int32 Function(STRTYPE, Uint32)>>(
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, Uint32)>>(
           'GetLibraryVersion');
   late final _GetLibraryVersion =
-      _GetLibraryVersionPtr.asFunction<int Function(STRTYPE, int)>();
+      _GetLibraryVersionPtr.asFunction<int Function(CSTRTYPE, int)>();
 
+  late final _GetLibraryVersionPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'GetLibraryVersion');
+  late final _GetLibraryVersionWin =
+      _GetLibraryVersionPtrWin.asFunction<int Function(CSTRTYPE_WIN, int)>();
+
+  //TODO
   int CheckForReleaseUpdate(
     CSTRTYPE platform,
     CSTRTYPE version,
@@ -559,6 +867,7 @@ class LexActivatorNative {
   late final _CheckForReleaseUpdate = _CheckForReleaseUpdatePtr.asFunction<
       int Function(CSTRTYPE, CSTRTYPE, CSTRTYPE, CallbackType)>();
 
+
   int ActivateLicense() {
     return _ActivateLicense();
   }
@@ -569,10 +878,15 @@ class LexActivatorNative {
       _ActivateLicensePtr.asFunction<int Function()>();
 
   int ActivateLicenseOffline(
-    CSTRTYPE filePath,
+    String filePath,
   ) {
+    if (Platform.isWindows) {
+      return _ActivateLicenseOfflineWin(
+        convertDartStringToCSTR(filePath).cast(),
+      );
+    }
     return _ActivateLicenseOffline(
-      filePath,
+      convertDartStringToCSTR(filePath).cast(),
     );
   }
 
@@ -582,11 +896,22 @@ class LexActivatorNative {
   late final _ActivateLicenseOffline =
       _ActivateLicenseOfflinePtr.asFunction<int Function(CSTRTYPE)>();
 
+  late final _ActivateLicenseOfflinePtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>(
+          'ActivateLicenseOffline');
+  late final _ActivateLicenseOfflineWin =
+      _ActivateLicenseOfflinePtrWin.asFunction<int Function(CSTRTYPE_WIN)>();
+
   int GenerateOfflineActivationRequest(
-    CSTRTYPE filePath,
+    String filePath,
   ) {
+    if (Platform.isWindows) {
+      return _GenerateOfflineActivationRequestWin(
+        convertDartStringToCSTR(filePath).cast(),
+      );
+    }
     return _GenerateOfflineActivationRequest(
-      filePath,
+      convertDartStringToCSTR(filePath).cast(),
     );
   }
 
@@ -595,6 +920,13 @@ class LexActivatorNative {
           'GenerateOfflineActivationRequest');
   late final _GenerateOfflineActivationRequest =
       _GenerateOfflineActivationRequestPtr.asFunction<int Function(CSTRTYPE)>();
+
+  late final _GenerateOfflineActivationRequestPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>(
+          'GenerateOfflineActivationRequest');
+  late final _GenerateOfflineActivationRequestWin =
+      _GenerateOfflineActivationRequestPtrWin.asFunction<
+          int Function(CSTRTYPE_WIN)>();
 
   int DeactivateLicense() {
     return _DeactivateLicense();
@@ -606,10 +938,15 @@ class LexActivatorNative {
       _DeactivateLicensePtr.asFunction<int Function()>();
 
   int GenerateOfflineDeactivationRequest(
-    CSTRTYPE filePath,
+    String filePath,
   ) {
+    if (Platform.isWindows) {
+      return _GenerateOfflineDeactivationRequestWin(
+        convertDartStringToCSTR(filePath).cast(),
+      );
+    }
     return _GenerateOfflineDeactivationRequest(
-      filePath,
+      convertDartStringToCSTR(filePath).cast(),
     );
   }
 
@@ -619,6 +956,13 @@ class LexActivatorNative {
   late final _GenerateOfflineDeactivationRequest =
       _GenerateOfflineDeactivationRequestPtr.asFunction<
           int Function(CSTRTYPE)>();
+
+  late final _GenerateOfflineDeactivationRequestPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>(
+          'GenerateOfflineDeactivationRequest');
+  late final _GenerateOfflineDeactivationRequestWin =
+      _GenerateOfflineDeactivationRequestPtrWin.asFunction<
+          int Function(CSTRTYPE_WIN)>();
 
   int IsLicenseGenuine() {
     return _IsLicenseGenuine();
@@ -646,10 +990,15 @@ class LexActivatorNative {
   late final _ActivateTrial = _ActivateTrialPtr.asFunction<int Function()>();
 
   int ActivateTrialOffline(
-    CSTRTYPE filePath,
+    String filePath,
   ) {
+    if (Platform.isWindows) {
+      return _ActivateTrialOfflineWin(
+        convertDartStringToCSTR(filePath).cast(),
+      );
+    }
     return _ActivateTrialOffline(
-      filePath,
+      convertDartStringToCSTR(filePath).cast(),
     );
   }
 
@@ -658,11 +1007,22 @@ class LexActivatorNative {
   late final _ActivateTrialOffline =
       _ActivateTrialOfflinePtr.asFunction<int Function(CSTRTYPE)>();
 
+  late final _ActivateTrialOfflinePtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>(
+          'ActivateTrialOffline');
+  late final _ActivateTrialOfflineWin =
+      _ActivateTrialOfflinePtrWin.asFunction<int Function(CSTRTYPE_WIN)>();
+
   int GenerateOfflineTrialActivationRequest(
-    CSTRTYPE filePath,
+    String filePath,
   ) {
+    if (Platform.isWindows) {
+      return _GenerateOfflineTrialActivationRequestWin(
+        convertDartStringToCSTR(filePath).cast(),
+      );
+    }
     return _GenerateOfflineTrialActivationRequest(
-      filePath,
+      convertDartStringToCSTR(filePath).cast(),
     );
   }
 
@@ -672,6 +1032,13 @@ class LexActivatorNative {
   late final _GenerateOfflineTrialActivationRequest =
       _GenerateOfflineTrialActivationRequestPtr.asFunction<
           int Function(CSTRTYPE)>();
+
+  late final _GenerateOfflineTrialActivationRequestPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>(
+          'GenerateOfflineTrialActivationRequest');
+  late final _GenerateOfflineTrialActivationRequestWin =
+      _GenerateOfflineTrialActivationRequestPtrWin.asFunction<
+          int Function(CSTRTYPE_WIN)>();
 
   int IsTrialGenuine() {
     return _IsTrialGenuine();
@@ -717,11 +1084,17 @@ class LexActivatorNative {
       _ExtendLocalTrialPtr.asFunction<int Function(int)>();
 
   int IncrementActivationMeterAttributeUses(
-    CSTRTYPE name,
+    String name,
     int increment,
   ) {
+    if (Platform.isWindows) {
+      return _IncrementActivationMeterAttributeUsesWin(
+        convertDartStringToCSTR(name).cast(),
+        increment,
+      );
+    }
     return _IncrementActivationMeterAttributeUses(
-      name,
+      convertDartStringToCSTR(name).cast(),
       increment,
     );
   }
@@ -733,12 +1106,25 @@ class LexActivatorNative {
       _IncrementActivationMeterAttributeUsesPtr.asFunction<
           int Function(CSTRTYPE, int)>();
 
+  late final _IncrementActivationMeterAttributeUsesPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'IncrementActivationMeterAttributeUses');
+  late final _IncrementActivationMeterAttributeUsesWin =
+      _IncrementActivationMeterAttributeUsesPtrWin.asFunction<
+          int Function(CSTRTYPE_WIN, int)>();
+
   int DecrementActivationMeterAttributeUses(
-    CSTRTYPE name,
+    String name,
     int decrement,
   ) {
+    if (Platform.isWindows) {
+      return _DecrementActivationMeterAttributeUsesWin(
+        convertDartStringToCSTR(name).cast(),
+        decrement,
+      );
+    }
     return _DecrementActivationMeterAttributeUses(
-      name,
+      convertDartStringToCSTR(name).cast(),
       decrement,
     );
   }
@@ -750,11 +1136,23 @@ class LexActivatorNative {
       _DecrementActivationMeterAttributeUsesPtr.asFunction<
           int Function(CSTRTYPE, int)>();
 
+  late final _DecrementActivationMeterAttributeUsesPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'DecrementActivationMeterAttributeUses');
+  late final _DecrementActivationMeterAttributeUsesWin =
+      _DecrementActivationMeterAttributeUsesPtrWin.asFunction<
+          int Function(CSTRTYPE_WIN, int)>();
+
   int ResetActivationMeterAttributeUses(
-    CSTRTYPE name,
+    String name,
   ) {
+    if (Platform.isWindows) {
+      return _ResetActivationMeterAttributeUsesWin(
+        convertDartStringToCSTR(name).cast(),
+      );
+    }
     return _ResetActivationMeterAttributeUses(
-      name,
+      convertDartStringToCSTR(name).cast(),
     );
   }
 
@@ -765,22 +1163,44 @@ class LexActivatorNative {
       _ResetActivationMeterAttributeUsesPtr.asFunction<
           int Function(CSTRTYPE)>();
 
+  late final _ResetActivationMeterAttributeUsesPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>(
+          'ResetActivationMeterAttributeUses');
+  late final _ResetActivationMeterAttributeUsesWin =
+      _ResetActivationMeterAttributeUsesPtrWin.asFunction<
+          int Function(CSTRTYPE_WIN)>();
+
   int Reset() {
     return _Reset();
   }
 
   late final _ResetPtr = _lookup<NativeFunction<Int32 Function()>>('Reset');
   late final _Reset = _ResetPtr.asFunction<int Function()>();
+
+  String convertArrayToDartString(Pointer charPtr) {
+    if (Platform.isWindows) {
+      return charPtr.cast<Utf16>().toDartString();
+    }
+    return charPtr.cast<Utf8>().toDartString();
+  }
+
+  Pointer convertDartStringToCSTR(String str) {
+    if (Platform.isWindows) {
+      return str.toNativeUtf16();
+    }
+    return str.toNativeUtf8();
+  }
 }
 
 class max_align_t extends Opaque {}
 
 typedef CSTRTYPE = Pointer<Utf8>;
+
+typedef CSTRTYPE_WIN = Pointer<Utf16>;
+
 typedef CallbackType = Pointer<NativeFunction<Void Function(Uint32)>>;
-// typedef CallbackTypeDart = Pointer<NativeFunction<Void Function(Uint32)>>;
 typedef CallbackFunc = Void Function(Uint32);
 typedef CallbackFuncDart = void Function(int);
-typedef STRTYPE = Pointer<Utf8>;
 
 const int INT8_MIN = -128;
 
