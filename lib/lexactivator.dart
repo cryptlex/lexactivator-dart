@@ -1166,6 +1166,7 @@ class LexActivator {
     }
     return charPtr.cast<Utf8>().toDartString();
   }
+
   // static void licenseCallback(int status) {
   //   switch (status) {
   //     case LexStatusCodes.LA_OK:

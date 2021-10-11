@@ -19,10 +19,10 @@ class LexActivatorNative {
     String filePath,
   ) {
     if (Platform.isWindows) {
-      return _SetProductFileWin(convertDartStringToCSTR(filePath).cast());
+      return _SetProductFileWin(filePath.toNativeUtf16());
     }
     return _SetProductFile(
-      convertDartStringToCSTR(filePath).cast(),
+      (filePath).toNativeUtf8(),
     );
   }
 
@@ -32,21 +32,21 @@ class LexActivatorNative {
       _SetProductFilePtr.asFunction<int Function(CSTRTYPE)>();
 
   late final _SetProductFilePtrWin =
-      _lookup<NativeFunction<Int32 Function(CSTRTYPE)>>('SetProductFile');
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>('SetProductFile');
   late final _SetProductFileWin =
-      _SetProductFilePtrWin.asFunction<int Function(CSTRTYPE)>();
+      _SetProductFilePtrWin.asFunction<int Function(CSTRTYPE_WIN)>();
 
   int SetProductData(
     String productData,
   ) {
     if (Platform.isWindows) {
       return _SetProductDataWin(
-        convertDartStringToCSTR(productData).cast(),
+        (productData).toNativeUtf16(),
       );
     }
 
     return _SetProductData(
-      convertDartStringToCSTR(productData).cast(),
+      (productData).toNativeUtf8(),
     );
   }
 
@@ -66,12 +66,12 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _SetProductIdWin(
-        convertDartStringToCSTR(productId).cast(),
+        (productId).toNativeUtf16(),
         flags,
       );
     }
     return _SetProductId(
-      convertDartStringToCSTR(productId).cast(),
+      (productId).toNativeUtf8(),
       flags,
     );
   }
@@ -91,10 +91,9 @@ class LexActivatorNative {
     String directoryPath,
   ) {
     if (Platform.isWindows) {
-      return _SetDataDirectoryWin(
-          convertDartStringToCSTR(directoryPath).cast());
+      return _SetDataDirectoryWin((directoryPath).toNativeUtf16());
     }
-    return _SetDataDirectory(convertDartStringToCSTR(directoryPath).cast());
+    return _SetDataDirectory((directoryPath).toNativeUtf8());
   }
 
   late final _SetDataDirectoryPtr =
@@ -112,11 +111,11 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _SetCustomDeviceFingerprintWin(
-        convertDartStringToCSTR(fingerprint).cast(),
+        (fingerprint).toNativeUtf16(),
       );
     }
     return _SetCustomDeviceFingerprint(
-      convertDartStringToCSTR(fingerprint).cast(),
+      (fingerprint).toNativeUtf8(),
     );
   }
 
@@ -137,11 +136,11 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _SetLicenseKeyWin(
-        convertDartStringToCSTR(licenseKey).cast(),
+        (licenseKey).toNativeUtf16(),
       );
     }
     return _SetLicenseKey(
-      convertDartStringToCSTR(licenseKey).cast(),
+      (licenseKey).toNativeUtf8(),
     );
   }
 
@@ -161,13 +160,13 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _SetLicenseUserCredentialWin(
-        convertDartStringToCSTR(email).cast(),
-        convertDartStringToCSTR(password).cast(),
+        (email).toNativeUtf16(),
+        (password).toNativeUtf16(),
       );
     }
     return _SetLicenseUserCredential(
-      convertDartStringToCSTR(email).cast(),
-      convertDartStringToCSTR(password).cast(),
+      (email).toNativeUtf8(),
+      (password).toNativeUtf8(),
     );
   }
 
@@ -203,13 +202,13 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _SetActivationMetadataWin(
-        convertDartStringToCSTR(key).cast(),
-        convertDartStringToCSTR(value).cast(),
+        (key).toNativeUtf16(),
+        (value).toNativeUtf16(),
       );
     }
     return _SetActivationMetadata(
-      convertDartStringToCSTR(key).cast(),
-      convertDartStringToCSTR(value).cast(),
+      key.toNativeUtf8(),
+      value.toNativeUtf8(),
     );
   }
 
@@ -231,13 +230,13 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _SetTrialActivationMetadataWin(
-        convertDartStringToCSTR(key).cast(),
-        convertDartStringToCSTR(value).cast(),
+        key.toNativeUtf16(),
+        value.toNativeUtf16(),
       );
     }
     return _SetTrialActivationMetadata(
-      convertDartStringToCSTR(key).cast(),
-      convertDartStringToCSTR(value).cast(),
+      key.toNativeUtf8(),
+      value.toNativeUtf8(),
     );
   }
 
@@ -258,12 +257,10 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _SetAppVersionWin(
-        convertDartStringToCSTR(appVersion).cast(),
+        appVersion.toNativeUtf16(),
       );
     }
-    return _SetAppVersion(
-      convertDartStringToCSTR(appVersion).cast(),
-    );
+    return _SetAppVersion(appVersion.toNativeUtf8());
   }
 
   late final _SetAppVersionPtr =
@@ -282,12 +279,12 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _SetOfflineActivationRequestMeterAttributeUsesWin(
-        convertDartStringToCSTR(name).cast(),
+        name.toNativeUtf16(),
         uses,
       );
     }
     return _SetOfflineActivationRequestMeterAttributeUses(
-      convertDartStringToCSTR(name).cast(),
+      (name).toNativeUtf8(),
       uses,
     );
   }
@@ -311,11 +308,11 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _SetNetworkProxyWin(
-        convertDartStringToCSTR(proxy).cast(),
+        (proxy).toNativeUtf16(),
       );
     }
     return _SetNetworkProxy(
-      convertDartStringToCSTR(proxy).cast(),
+      (proxy).toNativeUtf8(),
     );
   }
 
@@ -334,11 +331,11 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _SetCryptlexHostWin(
-        convertDartStringToCSTR(host).cast(),
+        (host).toNativeUtf16(),
       );
     }
     return _SetCryptlexHost(
-      convertDartStringToCSTR(host).cast(),
+      (host).toNativeUtf8(),
     );
   }
 
@@ -359,13 +356,13 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _GetProductMetadataWin(
-        convertDartStringToCSTR(key).cast(),
+        (key).toNativeUtf16(),
         value.cast(),
         length,
       );
     }
     return _GetProductMetadata(
-      convertDartStringToCSTR(key).cast(),
+      (key).toNativeUtf8(),
       value.cast(),
       length,
     );
@@ -390,13 +387,13 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _GetLicenseMetadataWin(
-        convertDartStringToCSTR(key).cast(),
+        (key).toNativeUtf16(),
         (value).cast(),
         length,
       );
     }
     return _GetLicenseMetadata(
-      convertDartStringToCSTR(key).cast(),
+      (key).toNativeUtf8(),
       (value).cast(),
       length,
     );
@@ -422,14 +419,14 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _GetLicenseMeterAttributeWin(
-        convertDartStringToCSTR(name).cast(),
+        (name).toNativeUtf16(),
         allowedUses,
         totalUses,
         grossUses,
       );
     }
     return _GetLicenseMeterAttribute(
-      convertDartStringToCSTR(name).cast(),
+      (name).toNativeUtf8(),
       allowedUses,
       totalUses,
       grossUses,
@@ -615,13 +612,13 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _GetLicenseUserMetadataWin(
-        convertDartStringToCSTR(key).cast(),
+        (key).toNativeUtf16(),
         value.cast(),
         length,
       );
     }
     return _GetLicenseUserMetadata(
-      convertDartStringToCSTR(key).cast(),
+      (key).toNativeUtf8(),
       value,
       length,
     );
@@ -674,13 +671,13 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _GetActivationMetadataWin(
-        convertDartStringToCSTR(key).cast(),
+        (key).toNativeUtf16(),
         value.cast(),
         length,
       );
     }
     return _GetActivationMetadata(
-      convertDartStringToCSTR(key).cast(),
+      (key).toNativeUtf8(),
       value,
       length,
     );
@@ -702,8 +699,14 @@ class LexActivatorNative {
     String name,
     Pointer<Uint32> uses,
   ) {
+    if (Platform.isWindows) {
+      return _GetActivationMeterAttributeUsesWin(
+        (name).toNativeUtf16(),
+        uses,
+      );
+    }
     return _GetActivationMeterAttributeUses(
-      convertDartStringToCSTR(name).cast(),
+      (name).toNativeUtf8(),
       uses,
     );
   }
@@ -714,6 +717,14 @@ class LexActivatorNative {
   late final _GetActivationMeterAttributeUses =
       _GetActivationMeterAttributeUsesPtr.asFunction<
           int Function(CSTRTYPE, Pointer<Uint32>)>();
+
+  late final _GetActivationMeterAttributeUsesPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Pointer<Uint32>)>>(
+          'GetActivationMeterAttributeUses');
+  late final _GetActivationMeterAttributeUsesWin =
+      _GetActivationMeterAttributeUsesPtrWin.asFunction<
+          int Function(CSTRTYPE_WIN, Pointer<Uint32>)>();
+
 
   int GetServerSyncGracePeriodExpiryDate(
     Pointer<Uint32> expiryDate,
@@ -737,13 +748,13 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _GetTrialActivationMetadataWin(
-        convertDartStringToCSTR(key).cast(),
+        (key).toNativeUtf16(),
         value.cast(),
         length,
       );
     }
     return _GetTrialActivationMetadata(
-      convertDartStringToCSTR(key).cast(),
+      (key).toNativeUtf8(),
       value,
       length,
     );
@@ -867,7 +878,6 @@ class LexActivatorNative {
   late final _CheckForReleaseUpdate = _CheckForReleaseUpdatePtr.asFunction<
       int Function(CSTRTYPE, CSTRTYPE, CSTRTYPE, CallbackType)>();
 
-
   int ActivateLicense() {
     return _ActivateLicense();
   }
@@ -882,11 +892,11 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _ActivateLicenseOfflineWin(
-        convertDartStringToCSTR(filePath).cast(),
+        (filePath).toNativeUtf16(),
       );
     }
     return _ActivateLicenseOffline(
-      convertDartStringToCSTR(filePath).cast(),
+      (filePath).toNativeUtf8(),
     );
   }
 
@@ -907,11 +917,11 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _GenerateOfflineActivationRequestWin(
-        convertDartStringToCSTR(filePath).cast(),
+        (filePath).toNativeUtf16(),
       );
     }
     return _GenerateOfflineActivationRequest(
-      convertDartStringToCSTR(filePath).cast(),
+      (filePath).toNativeUtf8(),
     );
   }
 
@@ -942,11 +952,11 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _GenerateOfflineDeactivationRequestWin(
-        convertDartStringToCSTR(filePath).cast(),
+        (filePath).toNativeUtf16(),
       );
     }
     return _GenerateOfflineDeactivationRequest(
-      convertDartStringToCSTR(filePath).cast(),
+      (filePath).toNativeUtf8(),
     );
   }
 
@@ -994,11 +1004,11 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _ActivateTrialOfflineWin(
-        convertDartStringToCSTR(filePath).cast(),
+        (filePath).toNativeUtf16(),
       );
     }
     return _ActivateTrialOffline(
-      convertDartStringToCSTR(filePath).cast(),
+      (filePath).toNativeUtf8(),
     );
   }
 
@@ -1018,11 +1028,11 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _GenerateOfflineTrialActivationRequestWin(
-        convertDartStringToCSTR(filePath).cast(),
+        (filePath).toNativeUtf16(),
       );
     }
     return _GenerateOfflineTrialActivationRequest(
-      convertDartStringToCSTR(filePath).cast(),
+      (filePath).toNativeUtf8(),
     );
   }
 
@@ -1089,12 +1099,12 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _IncrementActivationMeterAttributeUsesWin(
-        convertDartStringToCSTR(name).cast(),
+        (name).toNativeUtf16(),
         increment,
       );
     }
     return _IncrementActivationMeterAttributeUses(
-      convertDartStringToCSTR(name).cast(),
+      (name).toNativeUtf8(),
       increment,
     );
   }
@@ -1119,12 +1129,12 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _DecrementActivationMeterAttributeUsesWin(
-        convertDartStringToCSTR(name).cast(),
+        (name).toNativeUtf16(),
         decrement,
       );
     }
     return _DecrementActivationMeterAttributeUses(
-      convertDartStringToCSTR(name).cast(),
+      (name).toNativeUtf8(),
       decrement,
     );
   }
@@ -1148,11 +1158,11 @@ class LexActivatorNative {
   ) {
     if (Platform.isWindows) {
       return _ResetActivationMeterAttributeUsesWin(
-        convertDartStringToCSTR(name).cast(),
+        (name).toNativeUtf16(),
       );
     }
     return _ResetActivationMeterAttributeUses(
-      convertDartStringToCSTR(name).cast(),
+      (name).toNativeUtf8(),
     );
   }
 
@@ -1182,13 +1192,6 @@ class LexActivatorNative {
       return charPtr.cast<Utf16>().toDartString();
     }
     return charPtr.cast<Utf8>().toDartString();
-  }
-
-  Pointer convertDartStringToCSTR(String str) {
-    if (Platform.isWindows) {
-      return str.toNativeUtf16();
-    }
-    return str.toNativeUtf8();
   }
 }
 
