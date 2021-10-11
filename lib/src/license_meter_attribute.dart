@@ -8,5 +8,4 @@ class LicenseMeterAttribute {
 
   LicenseMeterAttribute(
       this.name, this.allowedUses, this.totalUses, this.grossUses);
-
 }

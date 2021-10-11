@@ -725,7 +725,6 @@ class LexActivatorNative {
       _GetActivationMeterAttributeUsesPtrWin.asFunction<
           int Function(CSTRTYPE_WIN, Pointer<Uint32>)>();
 
-
   int GetServerSyncGracePeriodExpiryDate(
     Pointer<Uint32> expiryDate,
   ) {
