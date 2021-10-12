@@ -18,12 +18,17 @@ class LexActivatorNative {
   int SetProductFile(
     String filePath,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _SetProductFileWin(filePath.toNativeUtf16());
+      final string = filePath.toNativeUtf16();
+      result = _SetProductFileWin(string);
+      calloc.free(string);
+      return result;
     }
-    return _SetProductFile(
-      (filePath).toNativeUtf8(),
-    );
+    final string = filePath.toNativeUtf8();
+    result = _SetProductFile(string);
+    calloc.free(string);
+    return result;
   }
 
   late final _SetProductFilePtr =
@@ -39,15 +44,17 @@ class LexActivatorNative {
   int SetProductData(
     String productData,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _SetProductDataWin(
-        (productData).toNativeUtf16(),
-      );
+      final string = productData.toNativeUtf16();
+      result = _SetProductDataWin(string);
+      calloc.free(string);
+      return result;
     }
-
-    return _SetProductData(
-      (productData).toNativeUtf8(),
-    );
+    final string = productData.toNativeUtf8();
+    result = _SetProductData(string);
+    calloc.free(string);
+    return result;
   }
 
   late final _SetProductDataPtr =
@@ -64,16 +71,17 @@ class LexActivatorNative {
     String productId,
     int flags,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _SetProductIdWin(
-        (productId).toNativeUtf16(),
-        flags,
-      );
+      final string = productId.toNativeUtf16();
+      result = _SetProductIdWin(string, flags);
+      calloc.free(string);
+      return result;
     }
-    return _SetProductId(
-      (productId).toNativeUtf8(),
-      flags,
-    );
+    final string = productId.toNativeUtf8();
+    result = _SetProductId(string, flags);
+    calloc.free(string);
+    return result;
   }
 
   late final _SetProductIdPtr =
@@ -90,10 +98,17 @@ class LexActivatorNative {
   int SetDataDirectory(
     String directoryPath,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _SetDataDirectoryWin((directoryPath).toNativeUtf16());
+      final string = directoryPath.toNativeUtf16();
+      result = _SetDataDirectoryWin(string);
+      calloc.free(string);
+      return result;
     }
-    return _SetDataDirectory((directoryPath).toNativeUtf8());
+    final string = directoryPath.toNativeUtf8();
+    result = _SetDataDirectory(string);
+    calloc.free(string);
+    return result;
   }
 
   late final _SetDataDirectoryPtr =
@@ -109,14 +124,17 @@ class LexActivatorNative {
   int SetCustomDeviceFingerprint(
     String fingerprint,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _SetCustomDeviceFingerprintWin(
-        (fingerprint).toNativeUtf16(),
-      );
+      final string = fingerprint.toNativeUtf16();
+      result = _SetCustomDeviceFingerprintWin(string);
+      calloc.free(string);
+      return result;
     }
-    return _SetCustomDeviceFingerprint(
-      (fingerprint).toNativeUtf8(),
-    );
+    final string = fingerprint.toNativeUtf8();
+    result = _SetCustomDeviceFingerprint(string);
+    calloc.free(string);
+    return result;
   }
 
   late final _SetCustomDeviceFingerprintPtr =
@@ -134,14 +152,17 @@ class LexActivatorNative {
   int SetLicenseKey(
     String licenseKey,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _SetLicenseKeyWin(
-        (licenseKey).toNativeUtf16(),
-      );
+      final string = licenseKey.toNativeUtf16();
+      result = _SetLicenseKeyWin(string);
+      calloc.free(string);
+      return result;
     }
-    return _SetLicenseKey(
-      (licenseKey).toNativeUtf8(),
-    );
+    final string = licenseKey.toNativeUtf8();
+    result = _SetLicenseKey(string);
+    calloc.free(string);
+    return result;
   }
 
   late final _SetLicenseKeyPtr =
@@ -158,16 +179,21 @@ class LexActivatorNative {
     String email,
     String password,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _SetLicenseUserCredentialWin(
-        (email).toNativeUtf16(),
-        (password).toNativeUtf16(),
-      );
+      final stringOne = email.toNativeUtf16();
+      final stringTwo = password.toNativeUtf16();
+      result = _SetLicenseUserCredentialWin(stringOne, stringTwo);
+      calloc.free(stringOne);
+      calloc.free(stringTwo);
+      return result;
     }
-    return _SetLicenseUserCredential(
-      (email).toNativeUtf8(),
-      (password).toNativeUtf8(),
-    );
+    final stringOne = email.toNativeUtf8();
+    final stringTwo = password.toNativeUtf8();
+    result = _SetLicenseUserCredential(stringOne, stringTwo);
+    calloc.free(stringOne);
+    calloc.free(stringTwo);
+    return result;
   }
 
   late final _SetLicenseUserCredentialPtr =
@@ -200,16 +226,21 @@ class LexActivatorNative {
     String key,
     String value,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _SetActivationMetadataWin(
-        (key).toNativeUtf16(),
-        (value).toNativeUtf16(),
-      );
+      final stringOne = key.toNativeUtf16();
+      final stringTwo = value.toNativeUtf16();
+      result = _SetActivationMetadataWin(stringOne, stringTwo);
+      calloc.free(stringOne);
+      calloc.free(stringTwo);
+      return result;
     }
-    return _SetActivationMetadata(
-      key.toNativeUtf8(),
-      value.toNativeUtf8(),
-    );
+    final stringOne = key.toNativeUtf8();
+    final stringTwo = value.toNativeUtf8();
+    result = _SetActivationMetadata(stringOne, stringTwo);
+    calloc.free(stringOne);
+    calloc.free(stringTwo);
+    return result;
   }
 
   late final _SetActivationMetadataPtr =
@@ -228,16 +259,21 @@ class LexActivatorNative {
     String key,
     String value,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _SetTrialActivationMetadataWin(
-        key.toNativeUtf16(),
-        value.toNativeUtf16(),
-      );
+      final stringOne = key.toNativeUtf16();
+      final stringTwo = value.toNativeUtf16();
+      result = _SetTrialActivationMetadataWin(stringOne, stringTwo);
+      calloc.free(stringOne);
+      calloc.free(stringTwo);
+      return result;
     }
-    return _SetTrialActivationMetadata(
-      key.toNativeUtf8(),
-      value.toNativeUtf8(),
-    );
+    final stringOne = key.toNativeUtf8();
+    final stringTwo = value.toNativeUtf8();
+    result = _SetTrialActivationMetadata(stringOne, stringTwo);
+    calloc.free(stringOne);
+    calloc.free(stringTwo);
+    return result;
   }
 
   late final _SetTrialActivationMetadataPtr =
@@ -255,12 +291,17 @@ class LexActivatorNative {
   int SetAppVersion(
     String appVersion,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _SetAppVersionWin(
-        appVersion.toNativeUtf16(),
-      );
+      final string = appVersion.toNativeUtf16();
+      result = _SetAppVersionWin(string);
+      calloc.free(string);
+      return result;
     }
-    return _SetAppVersion(appVersion.toNativeUtf8());
+    final string = appVersion.toNativeUtf8();
+    result = _SetAppVersion(string);
+    calloc.free(string);
+    return result;
   }
 
   late final _SetAppVersionPtr =
@@ -277,16 +318,23 @@ class LexActivatorNative {
     String name,
     int uses,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _SetOfflineActivationRequestMeterAttributeUsesWin(
-        name.toNativeUtf16(),
+      final string = name.toNativeUtf16();
+      result = _SetOfflineActivationRequestMeterAttributeUsesWin(
+        string,
         uses,
       );
+      calloc.free(string);
+      return result;
     }
-    return _SetOfflineActivationRequestMeterAttributeUses(
-      (name).toNativeUtf8(),
+    final string = name.toNativeUtf8();
+    result = _SetOfflineActivationRequestMeterAttributeUses(
+      string,
       uses,
     );
+    calloc.free(string);
+    return result;
   }
 
   late final _SetOfflineActivationRequestMeterAttributeUsesPtr =
@@ -306,14 +354,17 @@ class LexActivatorNative {
   int SetNetworkProxy(
     String proxy,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _SetNetworkProxyWin(
-        (proxy).toNativeUtf16(),
-      );
+      final string = proxy.toNativeUtf16();
+      result = _SetNetworkProxyWin(string);
+      calloc.free(string);
+      return result;
     }
-    return _SetNetworkProxy(
-      (proxy).toNativeUtf8(),
-    );
+    final string = proxy.toNativeUtf8();
+    result = _SetNetworkProxy(string);
+    calloc.free(string);
+    return result;
   }
 
   late final _SetNetworkProxyPtr =
@@ -329,14 +380,17 @@ class LexActivatorNative {
   int SetCryptlexHost(
     String host,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _SetCryptlexHostWin(
-        (host).toNativeUtf16(),
-      );
+      final string = host.toNativeUtf16();
+      result = _SetCryptlexHostWin(string);
+      calloc.free(string);
+      return result;
     }
-    return _SetCryptlexHost(
-      (host).toNativeUtf8(),
-    );
+    final string = host.toNativeUtf8();
+    result = _SetCryptlexHost(string);
+    calloc.free(string);
+    return result;
   }
 
   late final _SetCryptlexHostPtr =
@@ -354,18 +408,25 @@ class LexActivatorNative {
     CSTRTYPE value,
     int length,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _GetProductMetadataWin(
-        (key).toNativeUtf16(),
+      final string = key.toNativeUtf16();
+      result = _GetProductMetadataWin(
+        string,
         value.cast(),
         length,
       );
+      calloc.free(string);
+      return result;
     }
-    return _GetProductMetadata(
-      (key).toNativeUtf8(),
+    final string = key.toNativeUtf8();
+    result = _GetProductMetadata(
+      string,
       value.cast(),
       length,
     );
+    calloc.free(string);
+    return result;
   }
 
   late final _GetProductMetadataPtr =
@@ -385,18 +446,25 @@ class LexActivatorNative {
     CSTRTYPE value,
     int length,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _GetLicenseMetadataWin(
-        (key).toNativeUtf16(),
-        (value).cast(),
+      final string = key.toNativeUtf16();
+      result = _GetLicenseMetadataWin(
+        string,
+        value.cast(),
         length,
       );
+      calloc.free(string);
+      return result;
     }
-    return _GetLicenseMetadata(
-      (key).toNativeUtf8(),
-      (value).cast(),
+    final string = key.toNativeUtf8();
+    result = _GetLicenseMetadata(
+      string,
+      value.cast(),
       length,
     );
+    calloc.free(string);
+    return result;
   }
 
   late final _GetLicenseMetadataPtr =
@@ -417,20 +485,27 @@ class LexActivatorNative {
     Pointer<Uint32> totalUses,
     Pointer<Uint32> grossUses,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _GetLicenseMeterAttributeWin(
-        (name).toNativeUtf16(),
+      final string = (name).toNativeUtf16();
+      result = _GetLicenseMeterAttributeWin(
+        string,
         allowedUses,
         totalUses,
         grossUses,
       );
+      calloc.free(string);
+      return result;
     }
-    return _GetLicenseMeterAttribute(
-      (name).toNativeUtf8(),
+    final string = (name).toNativeUtf8();
+    result = _GetLicenseMeterAttribute(
+      string,
       allowedUses,
       totalUses,
       grossUses,
     );
+    calloc.free(string);
+    return result;
   }
 
   late final _GetLicenseMeterAttributePtr = _lookup<
@@ -455,16 +530,19 @@ class LexActivatorNative {
     CSTRTYPE licenseKey,
     int length,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _GetLicenseKeyWin(
+      result = _GetLicenseKeyWin(
         (licenseKey).cast(),
         length,
       );
+      return result;
     }
-    return _GetLicenseKey(
+    result = _GetLicenseKey(
       (licenseKey).cast(),
       length,
     );
+    return result;
   }
 
   late final _GetLicenseKeyPtr =
@@ -610,18 +688,25 @@ class LexActivatorNative {
     CSTRTYPE value,
     int length,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _GetLicenseUserMetadataWin(
-        (key).toNativeUtf16(),
+      final string = (key).toNativeUtf16();
+      result = _GetLicenseUserMetadataWin(
+        string,
         value.cast(),
         length,
       );
+      calloc.free(string);
+      return result;
     }
-    return _GetLicenseUserMetadata(
-      (key).toNativeUtf8(),
-      value,
+    final string = (key).toNativeUtf8();
+    result = _GetLicenseUserMetadata(
+      string,
+      value.cast(),
       length,
     );
+    calloc.free(string);
+    return result;
   }
 
   late final _GetLicenseUserMetadataPtr =
@@ -669,18 +754,25 @@ class LexActivatorNative {
     CSTRTYPE value,
     int length,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _GetActivationMetadataWin(
-        (key).toNativeUtf16(),
+      final string = (key).toNativeUtf16();
+      result = _GetActivationMetadataWin(
+        string,
         value.cast(),
         length,
       );
+      calloc.free(string);
+      return result;
     }
-    return _GetActivationMetadata(
-      (key).toNativeUtf8(),
-      value,
+    final string = (key).toNativeUtf8();
+    result = _GetActivationMetadata(
+      string,
+      value.cast(),
       length,
     );
+    calloc.free(string);
+    return result;
   }
 
   late final _GetActivationMetadataPtr =
@@ -699,16 +791,23 @@ class LexActivatorNative {
     String name,
     Pointer<Uint32> uses,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _GetActivationMeterAttributeUsesWin(
-        (name).toNativeUtf16(),
+      final string = (name).toNativeUtf16();
+      result = _GetActivationMeterAttributeUsesWin(
+        string,
         uses,
       );
+      calloc.free(string);
+      return result;
     }
-    return _GetActivationMeterAttributeUses(
-      (name).toNativeUtf8(),
+    final string = (name).toNativeUtf8();
+    result = _GetActivationMeterAttributeUses(
+      string,
       uses,
     );
+    calloc.free(string);
+    return result;
   }
 
   late final _GetActivationMeterAttributeUsesPtr =
@@ -745,18 +844,25 @@ class LexActivatorNative {
     CSTRTYPE value,
     int length,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _GetTrialActivationMetadataWin(
-        (key).toNativeUtf16(),
+      final string = (key).toNativeUtf16();
+      result = _GetTrialActivationMetadataWin(
+        string,
         value.cast(),
         length,
       );
+      calloc.free(string);
+      return result;
     }
-    return _GetTrialActivationMetadata(
-      (key).toNativeUtf8(),
-      value,
+    final string = (key).toNativeUtf8();
+    result = _GetTrialActivationMetadata(
+      string,
+      value.cast(),
       length,
     );
+    calloc.free(string);
+    return result;
   }
 
   late final _GetTrialActivationMetadataPtr =
@@ -889,14 +995,17 @@ class LexActivatorNative {
   int ActivateLicenseOffline(
     String filePath,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _ActivateLicenseOfflineWin(
-        (filePath).toNativeUtf16(),
-      );
+      final string = filePath.toNativeUtf16();
+      result = _ActivateLicenseOfflineWin(string);
+      calloc.free(string);
+      return result;
     }
-    return _ActivateLicenseOffline(
-      (filePath).toNativeUtf8(),
-    );
+    final string = filePath.toNativeUtf8();
+    result = _ActivateLicenseOffline(string);
+    calloc.free(string);
+    return result;
   }
 
   late final _ActivateLicenseOfflinePtr =
@@ -914,14 +1023,17 @@ class LexActivatorNative {
   int GenerateOfflineActivationRequest(
     String filePath,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _GenerateOfflineActivationRequestWin(
-        (filePath).toNativeUtf16(),
-      );
+      final string = filePath.toNativeUtf16();
+      result = _GenerateOfflineActivationRequestWin(string);
+      calloc.free(string);
+      return result;
     }
-    return _GenerateOfflineActivationRequest(
-      (filePath).toNativeUtf8(),
-    );
+    final string = filePath.toNativeUtf8();
+    result = _GenerateOfflineActivationRequest(string);
+    calloc.free(string);
+    return result;
   }
 
   late final _GenerateOfflineActivationRequestPtr =
@@ -949,14 +1061,17 @@ class LexActivatorNative {
   int GenerateOfflineDeactivationRequest(
     String filePath,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _GenerateOfflineDeactivationRequestWin(
-        (filePath).toNativeUtf16(),
-      );
+      final string = filePath.toNativeUtf16();
+      result = _GenerateOfflineDeactivationRequestWin(string);
+      calloc.free(string);
+      return result;
     }
-    return _GenerateOfflineDeactivationRequest(
-      (filePath).toNativeUtf8(),
-    );
+    final string = filePath.toNativeUtf8();
+    result = _GenerateOfflineDeactivationRequest(string);
+    calloc.free(string);
+    return result;
   }
 
   late final _GenerateOfflineDeactivationRequestPtr =
@@ -1001,14 +1116,17 @@ class LexActivatorNative {
   int ActivateTrialOffline(
     String filePath,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _ActivateTrialOfflineWin(
-        (filePath).toNativeUtf16(),
-      );
+      final string = filePath.toNativeUtf16();
+      result = _ActivateTrialOfflineWin(string);
+      calloc.free(string);
+      return result;
     }
-    return _ActivateTrialOffline(
-      (filePath).toNativeUtf8(),
-    );
+    final string = filePath.toNativeUtf8();
+    result = _ActivateTrialOffline(string);
+    calloc.free(string);
+    return result;
   }
 
   late final _ActivateTrialOfflinePtr =
@@ -1025,14 +1143,17 @@ class LexActivatorNative {
   int GenerateOfflineTrialActivationRequest(
     String filePath,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _GenerateOfflineTrialActivationRequestWin(
-        (filePath).toNativeUtf16(),
-      );
+      final string = filePath.toNativeUtf16();
+      result = _GenerateOfflineTrialActivationRequestWin(string);
+      calloc.free(string);
+      return result;
     }
-    return _GenerateOfflineTrialActivationRequest(
-      (filePath).toNativeUtf8(),
-    );
+    final string = filePath.toNativeUtf8();
+    result = _GenerateOfflineTrialActivationRequest(string);
+    calloc.free(string);
+    return result;
   }
 
   late final _GenerateOfflineTrialActivationRequestPtr =
@@ -1096,16 +1217,23 @@ class LexActivatorNative {
     String name,
     int increment,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _IncrementActivationMeterAttributeUsesWin(
-        (name).toNativeUtf16(),
+      final string = (name).toNativeUtf16();
+      result = _IncrementActivationMeterAttributeUsesWin(
+        string,
         increment,
       );
+      calloc.free(string);
+      return result;
     }
-    return _IncrementActivationMeterAttributeUses(
-      (name).toNativeUtf8(),
+    final string = (name).toNativeUtf8();
+    result = _IncrementActivationMeterAttributeUses(
+      string,
       increment,
     );
+    calloc.free(string);
+    return result;
   }
 
   late final _IncrementActivationMeterAttributeUsesPtr =
@@ -1126,16 +1254,23 @@ class LexActivatorNative {
     String name,
     int decrement,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _DecrementActivationMeterAttributeUsesWin(
-        (name).toNativeUtf16(),
+      final string = (name).toNativeUtf16();
+      result = _DecrementActivationMeterAttributeUsesWin(
+        string,
         decrement,
       );
+      calloc.free(string);
+      return result;
     }
-    return _DecrementActivationMeterAttributeUses(
-      (name).toNativeUtf8(),
+    final string = (name).toNativeUtf8();
+    result = _DecrementActivationMeterAttributeUses(
+      string,
       decrement,
     );
+    calloc.free(string);
+    return result;
   }
 
   late final _DecrementActivationMeterAttributeUsesPtr =
@@ -1155,14 +1290,21 @@ class LexActivatorNative {
   int ResetActivationMeterAttributeUses(
     String name,
   ) {
+    late final int result;
     if (Platform.isWindows) {
-      return _ResetActivationMeterAttributeUsesWin(
-        (name).toNativeUtf16(),
+      final string = (name).toNativeUtf16();
+      result = _ResetActivationMeterAttributeUsesWin(
+        string,
       );
+      calloc.free(string);
+      return result;
     }
-    return _ResetActivationMeterAttributeUses(
-      (name).toNativeUtf8(),
+    final string = (name).toNativeUtf8();
+    result = _ResetActivationMeterAttributeUses(
+      string,
     );
+    calloc.free(string);
+    return result;
   }
 
   late final _ResetActivationMeterAttributeUsesPtr =
