@@ -86,4 +86,3 @@ void activateTrial() {
     print('Product trial activation failed: $status');
   }
 }
-

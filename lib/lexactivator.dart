@@ -15,13 +15,11 @@ part 'src/lex_status_codes.dart';
 part 'src/license_meter_attribute.dart';
 
 class LexActivator {
-  ///TODO
+  
   static const int LA_USER = 1;
-
-  ///TODO
+  
   static const int LA_SYSTEM = 2;
 
-  ///TODO
   static const int LA_IN_MEMORY = 4;
 
   static final DynamicLibrary _dynamicLibrary = loadLib();
