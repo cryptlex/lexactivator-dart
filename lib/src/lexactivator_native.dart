@@ -208,6 +208,7 @@ class LexActivatorNative {
   late final _SetLicenseUserCredentialWin = _SetLicenseUserCredentialPtrWin
       .asFunction<int Function(CSTRTYPE_WIN, CSTRTYPE_WIN)>();
 
+  ///TODO
   int SetLicenseCallback(
     CallbackType callback,
   ) {
@@ -961,6 +962,7 @@ class LexActivatorNative {
   late final _GetLibraryVersionWin =
       _GetLibraryVersionPtrWin.asFunction<int Function(CSTRTYPE_WIN, int)>();
 
+  ///TODO
   int CheckForReleaseUpdate(
     CSTRTYPE platform,
     CSTRTYPE version,

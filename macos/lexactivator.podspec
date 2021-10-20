@@ -4,17 +4,18 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'lexactivator'
-  s.version          = '0.0.1'
-  s.summary          = 'A new flutter plugin project.'
+  s.version          = '3.0.0'
+  s.summary          = 'LexActivator API wrapper for Dart (licensing library)'
   s.description      = <<-DESC
-A new flutter plugin project.
+  LexActivator API wrapper for Dart (licensing library)
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://cryptlex.com'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'Cryptlex' => 'email@example.com' }
   s.source           = { :path => '.' }
   s.source_files     = 'Classes/**/*'
   s.dependency 'FlutterMacOS'
+  s.library '../'
 
   s.platform = :osx, '10.11'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }

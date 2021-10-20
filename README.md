@@ -42,10 +42,11 @@ Each time, your app starts, you need to verify whether your license is already a
 
 ```dart
 void main() {
-  initializeLexActivator();
-  activateLicense(); //Run once, during first run.
-
   try {
+    
+    initializeLexActivator();
+    activateLicense(); //Run once, during first run.
+
     final status = LexActivator.IsLicenseGenuine();
     if (LexStatusCodes.LA_OK == status) {
       print('License is genuinely activated!');
@@ -85,4 +86,5 @@ void main() {
   }
 }
 ```
+
 The above code should be executed every time user starts the app. After verifying locally, it schedules a periodic server check in a separate thread.

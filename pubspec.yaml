@@ -5,17 +5,16 @@ homepage: https://cryptlex.com
 
 environment:
   sdk: ">=2.14.0 <3.0.0"
-  flutter: ">=2.5.0"
-
+  
 dependencies:
   flutter:
     sdk: flutter
+
   ffi: ^1.1.2
 
 dev_dependencies:
   flutter_lints: ^1.0.0
-  
-  
+
 flutter:
   plugin:
     platforms:
@@ -25,3 +24,8 @@ flutter:
         pluginClass: LexactivatorPlugin
       windows:
         pluginClass: LexactivatorPlugin
+      # android:
+      #   package: com.example.lexactivator
+      #   pluginClass: LexactivatorPlugin
+      # ios:
+      #   pluginClass: LexactivatorPlugin
