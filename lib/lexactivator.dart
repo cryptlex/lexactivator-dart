@@ -1145,12 +1145,13 @@ class LexActivator {
   /// For developer use only.
 
   static DynamicLibrary loadLib() {
-    final libraryPathURI = File(Platform.resolvedExecutable).parent.uri;
+    // final libraryPathURI = File(Platform.resolvedExecutable).parent.uri;
+    // Is no longer required to access paths. Debugging only
+
     if (Platform.isLinux) {
-      return DynamicLibrary.open(
-          libraryPathURI.resolve('lib/libLexActivator.so').path);
+      return DynamicLibrary.open('libLexActivator.so');
     } else if (Platform.isWindows) {
-      return DynamicLibrary.open("LexActivator.dll");
+      return DynamicLibrary.open('LexActivator.dll');
     } else if (Platform.isMacOS) {
       return DynamicLibrary.open('libLexActivator.dylib');
     } else {
