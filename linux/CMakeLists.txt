@@ -98,28 +98,28 @@ target_link_libraries(${PLUGIN_NAME} PRIVATE PkgConfig::GTK)
 # List of absolute paths to libraries that should be bundled with the plugin
 if(ARCH STREQUAL "x86_64")
   set(lexactivator_bundled_libraries
-  "${CMAKE_CURRENT_SOURCE_DIR}/../native/linux-x86-64/libLexActivator.so"
+  "${CMAKE_CURRENT_SOURCE_DIR}/linux-x86-64/libLexActivator.so"
   PARENT_SCOPE
   )  
 endif()
 
 if(ARCH STREQUAL "i386")
   set(lexactivator_bundled_libraries
-  "${CMAKE_CURRENT_SOURCE_DIR}/../native/linux-x86/libLexActivator.so"
+  "${CMAKE_CURRENT_SOURCE_DIR}/linux-x86/libLexActivator.so"
   PARENT_SCOPE
   )
 endif()
 
 if(ARCH STREQUAL "armv7" OR ARCH STREQUAL "arm")
   set(lexactivator_bundled_libraries
-  "${CMAKE_CURRENT_SOURCE_DIR}/../native/linux-arm/libLexActivator.so"
+  "${CMAKE_CURRENT_SOURCE_DIR}/linux-arm/libLexActivator.so"
   PARENT_SCOPE
   )
 endif()
 
 if(ARCH STREQUAL "armv8")
   set(lexactivator_bundled_libraries
-  "${CMAKE_CURRENT_SOURCE_DIR}/../native/linux-aarch64/libLexActivator.so"
+  "${CMAKE_CURRENT_SOURCE_DIR}/linux-aarch64/libLexActivator.so"
   PARENT_SCOPE
   )
 endif()

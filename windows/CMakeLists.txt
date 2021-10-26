@@ -94,14 +94,14 @@ target_link_libraries(${PLUGIN_NAME} PRIVATE flutter flutter_wrapper_plugin)
 # List of absolute paths to libraries that should be bundled with the plugin
 if(ARCH STREQUAL "x86_64")
   set(lexactivator_bundled_libraries
-  "${CMAKE_CURRENT_SOURCE_DIR}/../native/win-x86-64/LexActivator.dll"
+  "${CMAKE_CURRENT_SOURCE_DIR}/win-x86-64/LexActivator.dll"
   PARENT_SCOPE
   )  
 endif()
 
 if(ARCH STREQUAL "i386")
   set(lexactivator_bundled_libraries
-  "${CMAKE_CURRENT_SOURCE_DIR}/../native/win-x86/LexActivator.dll"
+  "${CMAKE_CURRENT_SOURCE_DIR}/win-x86/LexActivator.dll"
   PARENT_SCOPE
   )
 endif()
