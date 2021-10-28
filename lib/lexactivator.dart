@@ -1156,6 +1156,8 @@ class LexActivator {
       return DynamicLibrary.open('libLexActivator.dylib');
     } else if (Platform.isAndroid) {
       return DynamicLibrary.open('libLexActivator.so');
+    } else if (Platform.isIOS) {
+      return DynamicLibrary.open('libLexActivator.dylib');
     } else {
       throw Exception();
     }
