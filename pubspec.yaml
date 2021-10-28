@@ -25,8 +25,8 @@ flutter:
         pluginClass: LexactivatorPlugin
       windows:
         pluginClass: LexactivatorPlugin
-      # android:
-      #   package: com.example.lexactivator
-      #   pluginClass: LexactivatorPlugin
+      android:
+        package: com.example.lexactivator
+        pluginClass: LexactivatorPlugin
       # ios:
       #   pluginClass: LexactivatorPlugin

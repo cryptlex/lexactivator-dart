@@ -15,13 +15,13 @@ part 'src/lex_status_codes.dart';
 part 'src/license_meter_attribute.dart';
 
 class LexActivator {
-  ///TODO
+  ///User Permission Flag
   static const int LA_USER = 1;
 
-  ///TODO
+  ///System Permission Flag
   static const int LA_SYSTEM = 2;
 
-  ///TODO
+  ///In Memory Permission Flag
   static const int LA_IN_MEMORY = 4;
 
   static final DynamicLibrary _dynamicLibrary = loadLib();
@@ -1146,7 +1146,7 @@ class LexActivator {
 
   static DynamicLibrary loadLib() {
     // final libraryPathURI = File(Platform.resolvedExecutable).parent.uri;
-    // Is no longer required to access paths. Debugging only
+    // Is no longer required to access paths. Debugging only.
 
     if (Platform.isLinux) {
       return DynamicLibrary.open('libLexActivator.so');
@@ -1154,6 +1154,8 @@ class LexActivator {
       return DynamicLibrary.open('LexActivator.dll');
     } else if (Platform.isMacOS) {
       return DynamicLibrary.open('libLexActivator.dylib');
+    } else if (Platform.isAndroid) {
+      return DynamicLibrary.open('libLexActivator.so');
     } else {
       throw Exception();
     }

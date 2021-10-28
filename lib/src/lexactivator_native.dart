@@ -209,19 +209,19 @@ class LexActivatorNative {
       .asFunction<int Function(CSTRTYPE_WIN, CSTRTYPE_WIN)>();
 
   ///TODO
-  int SetLicenseCallback(
-    CallbackType callback,
-  ) {
-    return _SetLicenseCallback(
-      callback,
-    );
-  }
+  // int SetLicenseCallback(
+  //   CallbackType callback,
+  // ) {
+  //   return _SetLicenseCallback(
+  //     callback,
+  //   );
+  // }
 
-  late final _SetLicenseCallbackPtr =
-      _lookup<NativeFunction<Int32 Function(CallbackType)>>(
-          'SetLicenseCallback');
-  late final _SetLicenseCallback =
-      _SetLicenseCallbackPtr.asFunction<int Function(CallbackType)>();
+  // late final _SetLicenseCallbackPtr =
+  //     _lookup<NativeFunction<Int32 Function(CallbackType)>>(
+  //         'SetLicenseCallback');
+  // late final _SetLicenseCallback =
+  //     _SetLicenseCallbackPtr.asFunction<int Function(CallbackType)>();
 
   int SetActivationMetadata(
     String key,
@@ -963,26 +963,26 @@ class LexActivatorNative {
       _GetLibraryVersionPtrWin.asFunction<int Function(CSTRTYPE_WIN, int)>();
 
   ///TODO
-  int CheckForReleaseUpdate(
-    CSTRTYPE platform,
-    CSTRTYPE version,
-    CSTRTYPE channel,
-    CallbackType releaseUpdateCallback,
-  ) {
-    return _CheckForReleaseUpdate(
-      platform,
-      version,
-      channel,
-      releaseUpdateCallback,
-    );
-  }
+  // int CheckForReleaseUpdate(
+  //   CSTRTYPE platform,
+  //   CSTRTYPE version,
+  //   CSTRTYPE channel,
+  //   CallbackType releaseUpdateCallback,
+  // ) {
+  //   return _CheckForReleaseUpdate(
+  //     platform,
+  //     version,
+  //     channel,
+  //     releaseUpdateCallback,
+  //   );
+  // }
 
-  late final _CheckForReleaseUpdatePtr = _lookup<
-      NativeFunction<
-          Int32 Function(CSTRTYPE, CSTRTYPE, CSTRTYPE,
-              CallbackType)>>('CheckForReleaseUpdate');
-  late final _CheckForReleaseUpdate = _CheckForReleaseUpdatePtr.asFunction<
-      int Function(CSTRTYPE, CSTRTYPE, CSTRTYPE, CallbackType)>();
+  // late final _CheckForReleaseUpdatePtr = _lookup<
+  //     NativeFunction<
+  //         Int32 Function(CSTRTYPE, CSTRTYPE, CSTRTYPE,
+  //             CallbackType)>>('CheckForReleaseUpdate');
+  // late final _CheckForReleaseUpdate = _CheckForReleaseUpdatePtr.asFunction<
+  //     int Function(CSTRTYPE, CSTRTYPE, CSTRTYPE, CallbackType)>();
 
   int ActivateLicense() {
     return _ActivateLicense();
