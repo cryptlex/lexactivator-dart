@@ -13,6 +13,7 @@ import 'src/lexactivator_native.dart';
 part 'src/lexactivator_exception.dart';
 part 'src/lex_status_codes.dart';
 part 'src/license_meter_attribute.dart';
+part 'src/product_version_feature_flag.dart';
 
 class LexActivator {
   ///User Permission Flag
@@ -334,6 +335,68 @@ class LexActivator {
     final metadata = convertArrayToDartString(array);
     calloc.free(array);
     return metadata;
+  }
+
+  ///Returns the set name of the Product Version.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+  static String GetProductVersionName() {
+    final array = calloc<Uint8>(256);
+    int status = _lexActivatorNative.GetProductVersionName(
+      array.cast(),
+      256,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    final name = convertArrayToDartString(array);
+    calloc.free(array);
+    return name;
+  }
+
+  ///Returns the set display name of the Product Version.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+  static String GetProductVersionDisplayName() {
+    final array = calloc<Uint8>(256);
+    int status = _lexActivatorNative.GetProductVersionDisplayName(
+      array.cast(),
+      256,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    final displayName = convertArrayToDartString(array);
+    calloc.free(array);
+    return displayName;
+  }
+
+  ///Returns a [ProductVersionFeatureFlag] object with the details of the product version feature flag for the passed [name].
+  ///
+  /// The function throws a [LexActivatorException] on error.
+  static ProductVersionFeatureFlag GetProductVersionFeatureFlag(
+      {required String name}) {
+    final enabled = calloc<Uint32>();
+    final array = calloc<Uint8>(256);
+
+    int status = _lexActivatorNative.GetProductVersionFeatureFlag(
+      name,
+      enabled,
+      array.cast(),
+      256,
+    );
+
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+
+    final featureFlag = ProductVersionFeatureFlag(
+        name, enabled.value > 0, convertArrayToDartString(array));
+
+    calloc.free(enabled);
+    calloc.free(array);
+
+    return featureFlag;
   }
 
   /// Returns the license metadata for the passed [key] value, as set in the dashboard.

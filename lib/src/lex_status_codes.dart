@@ -190,6 +190,14 @@ abstract class LexStatusCodes {
   /// or more than 256 characters.
 
   static const int LA_E_CUSTOM_FINGERPRINT_LENGTH = 74;
+     
+  /// No product version is linked with the license.
+  
+  static const int LA_E_PRODUCT_VERSION_NOT_LINKED = 75;
+
+  /// The product version feature flag does not exist.
+  
+  static const int LA_E_FEATURE_FLAG_NOT_FOUND = 76;
 
   /// Application is being run inside a virtual machine / hypervisor, and
   /// activation has been disallowed in the VM.

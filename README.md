@@ -88,3 +88,6 @@ void main() {
 ```
 
 The above code should be executed every time user starts the app. After verifying locally, it schedules a periodic server check in a separate thread.
+
+## Limitations
+The application you are building with the plugin will only build for the host architecture on Linux and Windows i.e. if you are building your application on a Linux x64, it will build for Linux x64 and not for Linux x86 or Linux ARM.
