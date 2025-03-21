@@ -3,10 +3,24 @@ import 'package:lexactivator/lexactivator.dart';
 
 void main() {
   try {
+    print('Starting LexActivator-10');
+    // final statusi =
+    // LexActivator.SetCryptlexHost('https://api.cryptlex.com');
+    // if (LexStatusCodes.LA_OK != statusi) {
+    //   print('Error setting Cryptlex host: $statusi');
+    // } else {
+    //   print('Cryptlex host set successfully');
+    // }
+    print('Starting LexActivator-9');
+    // LexActivator.SetDataDirectory(directoryPath: '/Users/mumin/Downloads');
     initializeLexActivator();
     activateLicense();
 
     final status = LexActivator.IsLicenseGenuine();
+    LexActivator.SetCallback(callback: (status) {
+      print('Callback status: $status');
+    });
+
     if (LexStatusCodes.LA_OK == status) {
       print('License is genuinely activated!');
 
@@ -51,10 +65,13 @@ void main() {
 ///Initialize function is always called at the start of your application or within
 ///the scope of use of LexActivator
 void initializeLexActivator() {
-  LexActivator.SetProductData(productData: "PASTE_CONTENT_OF_PRODUCT.DAT_FILE");
+  LexActivator.SetProductData(
+      productData:
+          "RDY5RDBFMkRDRjdDNjg0QkM0NjlBNzc2RDYyMTZGNzU=.R1u4GnB8hwfxsYYN8NVmINYULHn05e6BB1r7waCY52hDkxVhhnhEHmP2gQ0Hx6hN/FAl7DRGMxKFS7gSMlN4PcYYpHEFu6oKv7hhNrFslH0bT7N+BbKcezEhSIzFUHk1dkNMHjKsjAMW+S1v9U7ubCwjXxdZePtnFPYwlC55K/ow1iwDFd9x2uBQiOzLFYdxBCzcyR+3tuVkOaMclw160sh35Pv4lGbZk6GWZaW7Ah48T68GS7PUqD3ziLKvs4DR4GPW2DtvHWpL89Ifa51Qih4Hc9XkMiY4J5hRC/UsvhxzLp6w+winOgVI+RggZoMxUCoFU1DZmf3ggFeh3EZ1m1fMyEUXcZVwPuX1+WpR5rl/xE65SiwQ2R942qn+BRqIG25IKd7OqEtqThk4v0gA5aaFvxoVxvllZJMqXMAimlrSNj0M3FHxN9tEjviiAiEfdF81rwqdAb3AwjTCjC1P9QLy5N/MK/aUbqTLHVznD6wpWUb0Q8/s3qoxu5rNQq9Wwjb2qQVQK+ZpG4nNcbWROlQy+/YlJxl0Zdf5YhWizKoNcbPK2e4RimAKXvD3xlDLZ5TYb1LKDUVXJqrclkzt7A6X6Cc6cB31EUrme8upCotHBrvQhnGcCHkaHZp+hVGl8MKUMPvTW+BtSAKs1gvf/3u3YZNeBA4EUZ4MSNTQc/GJmXIB5jHzYgSlAE3XAOPGbKQdzAyjxX6kh7rv49Yab8BP14v95X7OIay+ORfX1zKXVG+teIncu1CXnuYMzHpVVJBExt8lHssZz+ROCo68sdzCptw6RHfGol8mGe5yANb4jBgOGyDL01sOMCS+0VmW");
 
   LexActivator.SetProductId(
-      productId: "PASTE_PRODUCT_ID", flags: LexActivator.LA_USER);
+      productId: "73be022d-513c-455b-8690-9ab20ea4a02d",
+      flags: LexActivator.LA_IN_MEMORY);
 
   LexActivator.SetAppVersion(appVersion: 'PASTE_YOUR_APP_VERSION');
 }
@@ -62,9 +79,13 @@ void initializeLexActivator() {
 ///Activation function is called once when license is to be activated. Calling this function
 ///again is not required.
 void activateLicense() {
-  LexActivator.SetLicenseKey(licenseKey: 'PASTE_LICENSE_KEY');
-  LexActivator.SetActivationMetadata(key: 'Metadata 1', value: 'Value 1');
+  LexActivator.SetLicenseKey(
+      licenseKey: 'BF9CA6-D702F4-4EC8A2-7ED6C9-55FA1D-088502');
+  // LexActivator.SetActivationMetadata(key: 'Metadata 1', value: 'Value 1');
+  // LexActivator.SetActivationLeaseDuration(leaseDuration: 86400 * 60 * 2);
+  print('Activating license');
   final status = LexActivator.ActivateLicense();
+  print('License activation status: $status');
   if (LexStatusCodes.LA_OK == status) {
     print('License activated successfully!');
   } else if (LexStatusCodes.LA_EXPIRED == status) {

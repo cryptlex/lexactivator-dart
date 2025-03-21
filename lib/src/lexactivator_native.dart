@@ -208,20 +208,20 @@ class LexActivatorNative {
   late final _SetLicenseUserCredentialWin = _SetLicenseUserCredentialPtrWin
       .asFunction<int Function(CSTRTYPE_WIN, CSTRTYPE_WIN)>();
 
-  ///TODO
-  // int SetLicenseCallback(
-  //   CallbackType callback,
-  // ) {
-  //   return _SetLicenseCallback(
-  //     callback,
-  //   );
-  // }
+  // /TODO
+  int SetLicenseCallback(
+    CallbackType callback,
+  ) {
+    return _SetLicenseCallback(
+      callback,
+    );
+  }
 
-  // late final _SetLicenseCallbackPtr =
-  //     _lookup<NativeFunction<Int32 Function(CallbackType)>>(
-  //         'SetLicenseCallback');
-  // late final _SetLicenseCallback =
-  //     _SetLicenseCallbackPtr.asFunction<int Function(CallbackType)>();
+  late final _SetLicenseCallbackPtr =
+      _lookup<NativeFunction<Int32 Function(CallbackType)>>(
+          'SetLicenseCallback');
+  late final _SetLicenseCallback =
+      _SetLicenseCallbackPtr.asFunction<int Function(CallbackType)>();
 
   int SetActivationMetadata(
     String key,
@@ -404,6 +404,18 @@ class LexActivatorNative {
   late final _SetCryptlexHostWin =
       _SetCryptlexHostPtrWin.asFunction<int Function(CSTRTYPE_WIN)>();
 
+  int SetActivationLeaseDuration(
+    int leaseDuration,
+  ) {
+    return _SetActivationLeaseDuration(leaseDuration);
+  }
+
+  late final _SetActivationLeaseDurationPtr =
+      _lookup<NativeFunction<Int32 Function(Int32)>>(
+          'SetActivationLeaseDuration');
+  late final _SetActivationLeaseDuration =
+      _SetActivationLeaseDurationPtr.asFunction<int Function(int)>();
+
   int GetProductMetadata(
     String key,
     CSTRTYPE value,
@@ -467,8 +479,7 @@ class LexActivatorNative {
   late final _GetProductVersionNameWin = _GetProductVersionNamePtrWin
       .asFunction<int Function(CSTRTYPE_WIN, int)>();
 
-
-    int GetProductVersionDisplayName(CSTRTYPE name, int length) {
+  int GetProductVersionDisplayName(CSTRTYPE name, int length) {
     if (Platform.isWindows) {
       return _GetProductVersionDisplayNameWin(
         name.cast(),
@@ -484,17 +495,18 @@ class LexActivatorNative {
   late final _GetProductVersionDisplayNamePtr =
       _lookup<NativeFunction<Int32 Function(CSTRTYPE, Uint32)>>(
           'GetProductVersionDisplayName');
-  late final _GetProductVersionDisplayName =
-      _GetProductVersionDisplayNamePtr.asFunction<int Function(CSTRTYPE, int)>();
+  late final _GetProductVersionDisplayName = _GetProductVersionDisplayNamePtr
+      .asFunction<int Function(CSTRTYPE, int)>();
 
   late final _GetProductVersionDisplayNamePtrWin =
       _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
           'GetProductVersionDisplayName');
-  late final _GetProductVersionDisplayNameWin = _GetProductVersionDisplayNamePtrWin
-      .asFunction<int Function(CSTRTYPE_WIN, int)>();
+  late final _GetProductVersionDisplayNameWin =
+      _GetProductVersionDisplayNamePtrWin.asFunction<
+          int Function(CSTRTYPE_WIN, int)>();
 
-
-    int GetProductVersionFeatureFlag(String name, Pointer<Uint32> enabled, CSTRTYPE data, int length) {
+  int GetProductVersionFeatureFlag(
+      String name, Pointer<Uint32> enabled, CSTRTYPE data, int length) {
     late final int result;
     if (Platform.isWindows) {
       final string = name.toNativeUtf16();
@@ -517,23 +529,21 @@ class LexActivatorNative {
     calloc.free(string);
     return result;
   }
+
   late final _GetProductVersionFeatureFlagPtr = _lookup<
       NativeFunction<
           Int32 Function(CSTRTYPE, Pointer<Uint32>, CSTRTYPE,
               Uint32)>>('GetLicenseMeterAttribute');
-  late final _GetProductVersionFeatureFlag =
-      _GetProductVersionFeatureFlagPtr.asFunction<
-          int Function(
-              CSTRTYPE, Pointer<Uint32>, CSTRTYPE, int)>();
+  late final _GetProductVersionFeatureFlag = _GetProductVersionFeatureFlagPtr
+      .asFunction<int Function(CSTRTYPE, Pointer<Uint32>, CSTRTYPE, int)>();
 
-late final _GetProductVersionFeatureFlagPtrWin = _lookup<
+  late final _GetProductVersionFeatureFlagPtrWin = _lookup<
       NativeFunction<
           Int32 Function(CSTRTYPE_WIN, Pointer<Uint32>, CSTRTYPE_WIN,
               Uint32)>>('GetLicenseMeterAttribute');
   late final _GetProductVersionFeatureFlagWin =
       _GetProductVersionFeatureFlagPtrWin.asFunction<
-          int Function(
-              CSTRTYPE_WIN, Pointer<Uint32>, CSTRTYPE_WIN, int)>();
+          int Function(CSTRTYPE_WIN, Pointer<Uint32>, CSTRTYPE_WIN, int)>();
 
   int GetLicenseMetadata(
     String key,
@@ -1430,7 +1440,7 @@ late final _GetProductVersionFeatureFlagPtrWin = _lookup<
   }
 }
 
-class max_align_t extends Opaque {}
+base class max_align_t extends Opaque {}
 
 typedef CSTRTYPE = Pointer<Utf8>;
 

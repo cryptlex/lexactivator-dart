@@ -166,28 +166,28 @@ class LexActivator {
     return status;
   }
 
-  // /// Sets server sync [callback] function.
-  // ///
-  // /// Whenever the server sync occurs in a separate thread, and server returns the
-  // /// response, event listener function gets invoked with the following [LexStatusCodes]:
-  // ///
-  // /// LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_E_REVOKED,
-  // /// LA_E_ACTIVATION_NOT_FOUND, LA_E_MACHINE_FINGERPRINT LA_E_COUNTRY, LA_E_INET,
-  // /// LA_E_SERVER, LA_E_RATE_LIMIT, LA_E_IP
-  // ///
-  // /// The function throws a [LexActivatorException] on error.
+  /// Sets server sync [callback] function.
+  ///
+  /// Whenever the server sync occurs in a separate thread, and server returns the
+  /// response, event listener function gets invoked with the following [LexStatusCodes]:
+  ///
+  /// LA_OK, LA_EXPIRED, LA_SUSPENDED, LA_E_REVOKED,
+  /// LA_E_ACTIVATION_NOT_FOUND, LA_E_MACHINE_FINGERPRINT LA_E_COUNTRY, LA_E_INET,
+  /// LA_E_SERVER, LA_E_RATE_LIMIT, LA_E_IP
+  ///
+  /// The function throws a [LexActivatorException] on error.
 
-  // static int SetLicenseCallback({required CallbackFuncDart callback}) {
-  //   Pointer<NativeFunction<CallbackFunc>> pointer = Pointer.fromFunction(callback);
+  static int SetCallback({required CallbackFuncDart callback}) {
+    final nativeCallable = NativeCallable<CallbackFunc>.listener(callback);
 
-  //   int status = _lexActivatorNative.SetLicenseCallback(
-  //     pointer,
-  //   );
-  //   if (LexStatusCodes.LA_OK != status) {
-  //     throw LexActivatorException(status);
-  //   }
-  //   return status;
-  // }
+    int status = _lexActivatorNative.SetLicenseCallback(
+      nativeCallable.nativeFunction,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    return status;
+  }
 
   /// Sets the activation metadata with a [key], [value] pair.
   ///
@@ -309,6 +309,31 @@ class LexActivator {
   ) {
     int status = _lexActivatorNative.SetCryptlexHost(
       host,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    return status;
+  }
+
+  /*
+    FUNCTION: SetActivationLeaseDuration()
+
+    PURPOSE: Sets the lease duration for the activation.
+
+    The activation lease duration is honoured when the allow client
+    lease duration property is enabled.
+
+    PARAMETERS:
+    * leaseDuration - value of the lease duration. A value of -1 indicates unlimited 
+      lease duration.
+
+    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY
+*/
+
+  static int SetActivationLeaseDuration({required int leaseDuration}) {
+    int status = _lexActivatorNative.SetActivationLeaseDuration(
+      leaseDuration,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -801,6 +826,7 @@ class LexActivator {
 
   static int ActivateLicense() {
     int status = _lexActivatorNative.ActivateLicense();
+    print('ActivateLicense status: $status');
     switch (status) {
       case LexStatusCodes.LA_OK:
         return LexStatusCodes.LA_OK;
@@ -1220,7 +1246,7 @@ class LexActivator {
     } else if (Platform.isAndroid) {
       return DynamicLibrary.open('libLexActivator.so');
     } else if (Platform.isIOS) {
-      return DynamicLibrary.open('libLexActivator.dylib');
+      return DynamicLibrary.open('LexActivator.framework/LexActivator');
     } else {
       throw Exception();
     }
