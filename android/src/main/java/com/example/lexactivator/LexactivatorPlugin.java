@@ -2,7 +2,6 @@ package com.example.lexactivator;
 
 import androidx.annotation.NonNull;
 
-import com.sun.jna.JNIEnv;
 import com.cryptlex.android.lexactivator.LexActivatorNative;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -16,9 +15,7 @@ public class LexactivatorPlugin implements FlutterPlugin, MethodCallHandler {
 
   private MethodChannel channel;
   
-  static{
-	  LexActivatorNative.SetJniEnv(JNIEnv.CURRENT);
-	  }
+
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {

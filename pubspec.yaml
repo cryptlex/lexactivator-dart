@@ -1,7 +1,7 @@
 name: lexactivator
-description: LexActivator wrapper for Dart and Flutter. The library lex_activator is part of the lex_activator package.
+description: LexActivator API wrapper for Dart. Integrates Crypltex's services into the Dart language.
 version: 3.0.0
-homepage: https://github.com/cryptlex/lexactivator-dart
+homepage: https://cryptlex.com
 
 environment:
   sdk: ">=3.1.0 <4.0.0"
