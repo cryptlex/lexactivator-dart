@@ -55,10 +55,10 @@ void main() {
 ///Initialize function is always called at the start of your application or within
 ///the scope of use of LexActivator
 void initializeLexActivator() {
-  LexActivator.SetProductData(productData: "SET_PRODUCT_DATA");
+  LexActivator.SetProductData(productData: "PASTE_CONTENT_OF_PRODUCT.DAT_FILE");
 
   LexActivator.SetProductId(
-      productId: "SET_PRODUCT_ID", flags: LexActivator.LA_IN_MEMORY);
+      productId: "SET_PRODUCT_ID", flags: LexActivator.LA_USER);
 
   LexActivator.SetAppVersion(appVersion: 'PASTE_YOUR_APP_VERSION');
 }
@@ -67,9 +67,6 @@ void initializeLexActivator() {
 ///again is not required.
 void activateLicense() {
   LexActivator.SetLicenseKey(licenseKey: 'SET_LICENSE_KEY');
-  // LexActivator.SetActivationMetadata(key: 'Metadata 1', value: 'Value 1');
-  // LexActivator.SetActivationLeaseDuration(leaseDuration: 86400 * 60 * 2);
-  print('Activating license');
   final status = LexActivator.ActivateLicense();
   print('License activation status: $status');
   if (LexStatusCodes.LA_OK == status) {

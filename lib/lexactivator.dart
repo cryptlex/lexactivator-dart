@@ -826,7 +826,6 @@ class LexActivator {
 
   static int ActivateLicense() {
     int status = _lexActivatorNative.ActivateLicense();
-    print('ActivateLicense status: $status');
     switch (status) {
       case LexStatusCodes.LA_OK:
         return LexStatusCodes.LA_OK;
