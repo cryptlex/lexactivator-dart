@@ -7,6 +7,10 @@ void main() {
     activateLicense();
 
     final status = LexActivator.IsLicenseGenuine();
+    LexActivator.SetCallback(callback: (status) {
+      print('Callback status: $status');
+    });
+
     if (LexStatusCodes.LA_OK == status) {
       print('License is genuinely activated!');
 
@@ -54,7 +58,7 @@ void initializeLexActivator() {
   LexActivator.SetProductData(productData: "PASTE_CONTENT_OF_PRODUCT.DAT_FILE");
 
   LexActivator.SetProductId(
-      productId: "PASTE_PRODUCT_ID", flags: LexActivator.LA_USER);
+      productId: "SET_PRODUCT_ID", flags: LexActivator.LA_USER);
 
   LexActivator.SetAppVersion(appVersion: 'PASTE_YOUR_APP_VERSION');
 }
@@ -62,9 +66,9 @@ void initializeLexActivator() {
 ///Activation function is called once when license is to be activated. Calling this function
 ///again is not required.
 void activateLicense() {
-  LexActivator.SetLicenseKey(licenseKey: 'PASTE_LICENSE_KEY');
-  LexActivator.SetActivationMetadata(key: 'Metadata 1', value: 'Value 1');
+  LexActivator.SetLicenseKey(licenseKey: 'SET_LICENSE_KEY');
   final status = LexActivator.ActivateLicense();
+  print('License activation status: $status');
   if (LexStatusCodes.LA_OK == status) {
     print('License activated successfully!');
   } else if (LexStatusCodes.LA_EXPIRED == status) {

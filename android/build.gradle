@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:8.7.0'
     }
 }
 
@@ -22,11 +22,12 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
+    namespace = "com.example.lexactivator"
+    compileSdkVersion 35
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     defaultConfig {
@@ -36,5 +37,6 @@ android {
 
 dependencies {
 // https://mvnrepository.com/artifact/com.cryptlex.android.lexactivator/lexactivator
-implementation 'com.cryptlex.android.lexactivator:lexactivator:3.15.4'
+implementation 'com.cryptlex.android.lexactivator:lexactivator:3.22.0'
 }
+
