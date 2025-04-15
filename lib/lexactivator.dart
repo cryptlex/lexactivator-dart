@@ -1755,21 +1755,11 @@ class LexActivator {
 
   /// Converts Pointer to Array to a String usable in Dart
 
-  static String convertArrayToDartString(Pointer<Uint8> array) {
-    // Find the length of the string (up to the first null terminator)
-    int length = 0;
-    while (length < 1024 && array[length] != 0) {
-      length++;
+  static String convertArrayToDartString(Pointer charPtr) {
+    if (Platform.isWindows) {
+      return charPtr.cast<Utf16>().toDartString();
     }
-
-    // Create a list of bytes
-    List<int> bytes = [];
-    for (int i = 0; i < length; i++) {
-      bytes.add(array[i]);
-    }
-
-    // Convert to string using UTF-8 encoding
-    return utf8.decode(bytes);
+    return charPtr.cast<Utf8>().toDartString();
   }
 
   // static void licenseCallback(int status) {
