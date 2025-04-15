@@ -42,9 +42,18 @@ abstract class LexStatusCodes {
   static const int LA_RELEASE_UPDATE_AVAILABLE = 30;
 
   /// No new update is available for the product. The current version is
+  /// @deprecated
   /// latest.
 
   static const int LA_RELEASE_NO_UPDATE_AVAILABLE = 31;
+
+  /// The update available is not allowed for this license.
+
+  static const int LA_RELEASE_UPDATE_NOT_AVAILABLE = 31;
+
+  /// The update available is not allowed for this license.
+
+  static const int LA_RELEASE_UPDATE_AVAILABLE_NOT_ALLOWED = 32;
 
   /// Invalid file path.
 
@@ -190,13 +199,13 @@ abstract class LexStatusCodes {
   /// or more than 256 characters.
 
   static const int LA_E_CUSTOM_FINGERPRINT_LENGTH = 74;
-     
+
   /// No product version is linked with the license.
-  
+
   static const int LA_E_PRODUCT_VERSION_NOT_LINKED = 75;
 
   /// The product version feature flag does not exist.
-  
+
   static const int LA_E_FEATURE_FLAG_NOT_FOUND = 76;
 
   /// Application is being run inside a virtual machine / hypervisor, and
@@ -228,4 +237,32 @@ abstract class LexStatusCodes {
   /// Client error.
 
   static const int LA_E_CLIENT = 92;
+
+  /// The user account has been temporarily locked for 5 mins due to 5 failed attempts.
+
+  static const int LA_E_LOGIN_TEMPORARILY_LOCKED = 100;
+
+  /// Invalid authentication ID token.
+
+  static const int LA_E_AUTHENTICATION_ID_TOKEN_INVALID = 101;
+
+  /// OIDC SSO is not enabled.
+
+  static const int LA_E_OIDC_SSO_NOT_ENABLED = 102;
+
+  /// The allowed users for this account has reached its limit.
+
+  static const int LA_E_USERS_LIMIT_REACHED = 103;
+
+  /// OS user has changed since activation and the license is user-locked.
+
+  static const int LA_E_OS_USER = 104;
+
+  /// Invalid permission flag.
+
+  static const int LA_E_INVALID_PERMISSION_FLAG = 105;
+
+  /// The free plan has reached it's activation limit.
+
+  static const int LA_E_FREE_PLAN_ACTIVATION_LIMIT_REACHED = 106;
 }

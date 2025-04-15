@@ -4,6 +4,7 @@
 ///is part of the lex_activator package.
 library lexactivator;
 
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ffi';
 
@@ -14,6 +15,17 @@ part 'src/lexactivator_exception.dart';
 part 'src/lex_status_codes.dart';
 part 'src/license_meter_attribute.dart';
 part 'src/product_version_feature_flag.dart';
+part 'src/activation_mode.dart';
+part 'src/organisation_address.dart';
+part 'src/user_license.dart';
+part 'src/release.dart';
+
+// Move the typedef outside the class
+typedef ReleaseUpdateCallback = void Function(
+    int status, CSTRTYPE release, Pointer<Void> userData);
+typedef CallbackFuncReleaseUpdate = Void Function(
+    Uint32, CSTRTYPE, Pointer<Void>);
+typedef CallbackFuncReleaseUpdateDart = void Function(int, Release?, dynamic);
 
 class LexActivator {
   ///User Permission Flag
@@ -22,8 +34,14 @@ class LexActivator {
   ///System Permission Flag
   static const int LA_SYSTEM = 2;
 
+  ///System Permission Flag
+  static const int LA_ALL_USERS = 3;
+
   ///In Memory Permission Flag
   static const int LA_IN_MEMORY = 4;
+
+  static const int LA_RELEASES_ALL = 1;
+  static const int LA_RELEASES_ALLOWED = 2;
 
   static final DynamicLibrary _dynamicLibrary = loadLib();
 
@@ -110,6 +128,24 @@ class LexActivator {
     return status;
   }
 
+  /// Enables or disables in-memory caching for LexActivator.
+  ///
+  /// This function is designed to control caching behavior to suit specific application requirements.
+  /// Caching is enabled by default to enhance performance.
+  ///
+  /// Disabling caching is recommended in environments where multiple processes access the same license on a
+  /// single machine and require real-time updates to the license state.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+  static int SetCacheMode({required bool enable}) {
+    final enableFlag = enable ? 1 : 0;
+    int status = _lexActivatorNative.SetCacheMode(enableFlag);
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    return status;
+  }
+
   /// This function can be used to set a custom device fingerprint to [fingerprint]
   /// which is a string of minimum length 64 characters and maximum length 256 characters,
   /// in case you don't want to use the LexActivator's advanced device fingerprinting algorithm.
@@ -177,11 +213,12 @@ class LexActivator {
   ///
   /// The function throws a [LexActivatorException] on error.
 
-  static int SetCallback({required CallbackFuncDart callback}) {
-    final nativeCallable = NativeCallable<CallbackFunc>.listener(callback);
+  static int SetLicenseCallback({required LicenseCallbackFuncDart callback}) {
+    final licenseCallback =
+        NativeCallable<LicenseCallbackFunc>.listener(callback);
 
     int status = _lexActivatorNative.SetLicenseCallback(
-      nativeCallable.nativeFunction,
+      licenseCallback.nativeFunction,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -253,6 +290,60 @@ class LexActivator {
     return status;
   }
 
+  /// Sets the release published date of your application.
+  ///
+  /// [releasePublishedDate] is a unix timestamp of the release published date.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+
+  static int SetReleasePublishedDate({
+    required int releasePublishedDate,
+  }) {
+    int status = _lexActivatorNative.SetReleasePublishedDate(
+      releasePublishedDate,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    return status;
+  }
+
+  /// Sets the release platform e.g. windows, macos, linux
+  ///
+  /// The release platform appears along with the activation details in dashboard.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+
+  static int SetReleasePlatform({
+    required String releasePlatform,
+  }) {
+    int status = _lexActivatorNative.SetReleasePlatform(
+      releasePlatform,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    return status;
+  }
+
+  /// Sets the release channel e.g. stable, beta
+  ///
+  /// The release channel appears along with the activation details in dashboard.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+
+  static int SetReleaseChannel({
+    required String releaseChannel,
+  }) {
+    int status = _lexActivatorNative.SetReleaseChannel(
+      releaseChannel,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    return status;
+  }
+
   /// Sets the meter attribute [uses] for the offline activation request to the given
   /// [name].
   ///
@@ -316,24 +407,37 @@ class LexActivator {
     return status;
   }
 
-  /*
-    FUNCTION: SetActivationLeaseDuration()
-
-    PURPOSE: Sets the lease duration for the activation.
-
-    The activation lease duration is honoured when the allow client
-    lease duration property is enabled.
-
-    PARAMETERS:
-    * leaseDuration - value of the lease duration. A value of -1 indicates unlimited 
-      lease duration.
-
-    RETURN CODES: LA_OK, LA_E_PRODUCT_ID, LA_E_LICENSE_KEY
-*/
+  /// Sets the lease duration for the activation.
+  ///
+  /// The activation lease duration is honoured when the allow client
+  /// lease duration property is enabled.
+  ///
+  /// The [leaseDuration] is the value of the lease duration. A value of -1 indicates
+  /// unlimited lease duration.
+  ///
+  /// Returns [LexStatusCodes.LA_OK] on success.
+  /// May return [LexStatusCodes.LA_E_PRODUCT_ID] or [LexStatusCodes.LA_E_LICENSE_KEY] on failure.
 
   static int SetActivationLeaseDuration({required int leaseDuration}) {
     int status = _lexActivatorNative.SetActivationLeaseDuration(
       leaseDuration,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    return status;
+  }
+
+  /// Sets the two-factor authentication code for user authentication.
+  ///
+  /// The [twoFactorAuthenticationCode] is the 2FA code to set.
+  ///
+  /// Throws a [LexActivatorException] on error.
+  static int SetTwoFactorAuthenticationCode({
+    required String twoFactorAuthenticationCode,
+  }) {
+    int status = _lexActivatorNative.SetTwoFactorAuthenticationCode(
+      twoFactorAuthenticationCode,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -453,9 +557,9 @@ class LexActivator {
 
   static LicenseMeterAttribute GetLicenseMeterAttribute(
       {required String name}) {
-    final allowedUses = calloc<Uint32>();
-    final totalUses = calloc<Uint32>();
-    final grossUses = calloc<Uint32>();
+    final allowedUses = calloc<Int64>();
+    final totalUses = calloc<Int64>();
+    final grossUses = calloc<Int64>();
 
     int status = _lexActivatorNative.GetLicenseMeterAttribute(
       name,
@@ -500,7 +604,7 @@ class LexActivator {
   /// The function throws a [LexActivatorException] on error.
 
   static int GetLicenseAllowedActivations() {
-    final allowedActivations = calloc<Uint32>();
+    final allowedActivations = calloc<Int64>();
 
     int status = _lexActivatorNative.GetLicenseAllowedActivations(
       allowedActivations,
@@ -530,6 +634,139 @@ class LexActivator {
     return totalActivations.value;
   }
 
+  /// Gets the allowed deactivations of the license.
+  /// Returns the number of allowed deactivations. A value of -1 indicates unlimited deactivations.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+  static int GetLicenseAllowedDeactivations() {
+    final allowedDeactivations = calloc<Int64>();
+
+    int status = _lexActivatorNative.GetLicenseAllowedDeactivations(
+      allowedDeactivations,
+    );
+
+    try {
+      switch (status) {
+        case LexStatusCodes.LA_OK:
+          return allowedDeactivations.value;
+        case LexStatusCodes.LA_FAIL:
+          return 0;
+        default:
+          throw LexActivatorException(status);
+      }
+    } finally {
+      calloc.free(allowedDeactivations);
+    }
+  }
+
+  /// Gets the total deactivations of the license.
+  ///
+  /// Returns the total number of deactivations.
+  ///
+  /// Throws a [LexActivatorException] on error.
+  static int GetLicenseTotalDeactivations() {
+    final totalDeactivations = calloc<Uint32>();
+    int status = _lexActivatorNative.GetLicenseTotalDeactivations(
+      totalDeactivations,
+    );
+    try {
+      switch (status) {
+        case LexStatusCodes.LA_OK:
+          return totalDeactivations.value;
+        case LexStatusCodes.LA_FAIL:
+          return 0;
+        default:
+          throw LexActivatorException(status);
+      }
+    } finally {
+      calloc.free(totalDeactivations);
+    }
+  }
+
+  /// Gets the license creation date timestamp.
+  ///
+  /// Returns the timestamp as an integer.
+  ///
+  /// Throws a [LexActivatorException] on error.
+  static int GetLicenseCreationDate() {
+    final creationDate = calloc<Uint32>();
+    int status = _lexActivatorNative.GetLicenseCreationDate(creationDate);
+    try {
+      switch (status) {
+        case LexStatusCodes.LA_OK:
+          return creationDate.value;
+        case LexStatusCodes.LA_FAIL:
+          return 0;
+        default:
+          throw LexActivatorException(status);
+      }
+    } finally {
+      calloc.free(creationDate);
+    }
+  }
+
+  /// Gets the activation creation date timestamp.
+  ///
+  /// Returns the timestamp as an integer.
+  ///
+  /// Throws a [LexActivatorException] on error.
+  static int GetActivationCreationDate() {
+    final creationDate = calloc<Uint32>();
+    int status = _lexActivatorNative.GetActivationCreationDate(creationDate);
+    try {
+      switch (status) {
+        case LexStatusCodes.LA_OK:
+          return creationDate.value;
+        case LexStatusCodes.LA_FAIL:
+          return 0;
+        default:
+          throw LexActivatorException(status);
+      }
+    } finally {
+      calloc.free(creationDate);
+    }
+  }
+
+  /// Enables network logs.
+  ///
+  /// This function should be used for network testing only in case of network errors.
+  /// By default logging is disabled.
+  ///
+  /// This function generates the lexactivator-logs.log file in the same directory
+  /// where the application is running.
+  ///
+  /// The [flag] parameter should be 0 or 1 to disable or enable logging.
+  ///
+  /// Throws a [LexActivatorException] on error.
+  static void SetDebugMode(int flag) {
+    final status = _lexActivatorNative.SetDebugMode(flag);
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+  }
+
+  /// Gets the activation creation date timestamp.
+  ///
+  /// Returns the timestamp as an integer.
+  ///
+  /// Throws a [LexActivatorException] on error.
+  static int GetLicenseActivationDate() {
+    final activationDate = calloc<Uint32>();
+    int status = _lexActivatorNative.GetLicenseActivationDate(activationDate);
+    try {
+      switch (status) {
+        case LexStatusCodes.LA_OK:
+          return activationDate.value;
+        case LexStatusCodes.LA_FAIL:
+          return 0;
+        default:
+          throw LexActivatorException(status);
+      }
+    } finally {
+      calloc.free(activationDate);
+    }
+  }
+
   /// Returns the license expiry date timestamp.
   ///
   /// The function throws a [LexActivatorException] on error.
@@ -544,6 +781,57 @@ class LexActivator {
     }
 
     return expiryDate.value;
+  }
+
+  /// Gets the license maintenance expiry date timestamp.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+
+  static int GetLicenseMaintenanceExpiryDate() {
+    final expiryDate = calloc<Uint32>();
+    int status = _lexActivatorNative.GetLicenseMaintenanceExpiryDate(
+      expiryDate,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    return expiryDate.value;
+  }
+
+  /// Returns the maximum allowed release version of the license.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+
+  static String GetLicenseMaxAllowedReleaseVersion() {
+    final array = calloc<Uint8>(1024);
+
+    int status = _lexActivatorNative.GetLicenseMaxAllowedReleaseVersion(
+      array.cast(),
+      1024,
+    );
+
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+
+    final version = convertArrayToDartString(array);
+    calloc.free(array);
+    return version.trim();
+  }
+
+  /// Sets the current release version of your application.
+  ///
+  /// The release version appears along with the activation details in dashboard.
+  /// The [releaseVersion] must be in one of the following formats: x.x, x.x.x, x.x.x.x
+  ///
+  /// The function throws a [LexActivatorException] on error.
+
+  static int SetReleaseVersion({required String releaseVersion}) {
+    int status = _lexActivatorNative.SetReleaseVersion(releaseVersion);
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    return status;
   }
 
   /// Returns the email associated with the license user.
@@ -621,6 +909,101 @@ class LexActivator {
     return licenseUserMetadata.trim();
   }
 
+  /// Returns the organization name associated with the license.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+
+  static String GetLicenseOrganizationName() {
+    final array = calloc<Uint8>(256);
+    int status = _lexActivatorNative.GetLicenseOrganizationName(
+      array.cast(),
+      256,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    final licenseOrganizationName = convertArrayToDartString(array);
+    calloc.free(array);
+    return licenseOrganizationName.trim();
+  }
+
+  /// Gets the organization address associated with the license.
+  ///
+  /// Returns the license organization address as an [OrganizationAddress] object.
+  ///
+  /// Throws a [LexActivatorException] on error.
+  static OrganizationAddress? GetLicenseOrganizationAddress() {
+    final array = calloc<Uint8>(256);
+    int status = _lexActivatorNative.GetLicenseOrganizationAddress(
+      array.cast(),
+      256,
+    );
+    if (status != LexStatusCodes.LA_OK) {
+      throw LexActivatorException(status);
+    }
+
+    Map<String, dynamic> addressObject;
+    String jsonString = '';
+    try {
+      // Get raw string first
+      // jsonString = convertArrayToDartString(array);
+      // Remove any null terminators that could corrupt the JSON
+      // jsonString = jsonString.replaceAll('\u0000', '');
+      addressObject = jsonDecode(convertArrayToDartString(array));
+    } catch (e) {
+      print('JSON decode error: $e');
+      print('Raw string: $jsonString');
+      addressObject = {};
+    } finally {
+      calloc.free(array);
+    }
+
+    if (addressObject.isNotEmpty) {
+      return OrganizationAddress(
+          addressLine1: addressObject['addressLine1'],
+          addressLine2: addressObject['addressLine2'],
+          city: addressObject['city'],
+          state: addressObject['state'],
+          country: addressObject['country'],
+          postalCode: addressObject['postalCode']);
+    }
+    return null;
+  }
+
+  /// Gets the user licenses for the product.
+  ///
+  /// This function sends a network request to Cryptlex servers to get the licenses.
+  /// Make sure [AuthenticateUser] function is called before calling this function.
+  ///
+  /// Returns a list of [UserLicense] objects.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+  static List<UserLicense> GetUserLicenses() {
+    final array = calloc<Uint8>(4096);
+    int status = _lexActivatorNative.GetUserLicenses(
+      array.cast(),
+      4096,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+
+    List<UserLicense> userLicenses;
+    print("license: ${convertArrayToDartString(array)}");
+    try {
+      final List<dynamic> jsonList =
+          jsonDecode(convertArrayToDartString(array));
+      userLicenses =
+          jsonList.map((json) => UserLicense.fromJson(json)).toList();
+    } catch (e) {
+      print('JSON decode error: $e');
+      userLicenses = [];
+    } finally {
+      calloc.free(array);
+    }
+    return userLicenses;
+  }
+
   /// Returns the license type (node-locked or hosted-floating).
   ///
   /// The function throws a [LexActivatorException] on error.
@@ -637,6 +1020,25 @@ class LexActivator {
     final licenseType = convertArrayToDartString(array);
     calloc.free(array);
     return licenseType.trim();
+  }
+
+  /// Gets the activation Id.
+  ///
+  /// Returns the activation Id as a String.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+  static String GetActivationId() {
+    final array = calloc<Uint8>(1024);
+    int status = _lexActivatorNative.GetActivationId(
+      array.cast(),
+      1024,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    final activationId = convertArrayToDartString(array);
+    calloc.free(array);
+    return activationId.trim();
   }
 
   /// Returns the activation metadata associated with the [key].
@@ -656,6 +1058,30 @@ class LexActivator {
     final activationMetadata = convertArrayToDartString(array);
     calloc.free(array);
     return activationMetadata.trim();
+  }
+
+  /// Gets the initial and current mode of activation (online or offline).
+  ///
+  /// The function throws a [LexActivatorException] on error.
+
+  static ActivationMode GetActivationMode() {
+    final initialModeArray = calloc<Uint8>(256);
+    final currentModeArray = calloc<Uint8>(256);
+    int status = _lexActivatorNative.GetActivationMode(
+      initialModeArray.cast(),
+      256,
+      currentModeArray.cast(),
+      256,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    final initialMode = convertArrayToDartString(initialModeArray);
+    final currentMode = convertArrayToDartString(currentModeArray);
+    calloc.free(initialModeArray);
+    calloc.free(currentModeArray);
+    final activationMode = ActivationMode(initialMode, currentMode);
+    return activationMode;
   }
 
   /// Returns the meter attribute uses consumed by the activation associated
@@ -784,6 +1210,33 @@ class LexActivator {
     return libraryName;
   }
 
+  /// Checks whether a new release is available for the product.
+  ///
+  /// This function should only be used if you manage your releases through
+  /// Cryptlex release management API.
+  ///
+  /// When this function is called the release update callback function gets invoked
+  /// which passes the following parameters:
+  ///
+  /// status - determines if any update is available or not. It also determines whether
+  /// an update is allowed or not. Expected values are LA_RELEASE_UPDATE_AVAILABLE,
+  /// LA_RELEASE_UPDATE_NOT_AVAILABLE, LA_RELEASE_UPDATE_AVAILABLE_NOT_ALLOWED.
+  ///
+  /// release - object of the latest available release, the object passed depends on the
+  /// flag LA_RELEASES_ALLOWED or LA_RELEASES_ALL provided to the CheckReleaseUpdate().
+  ///
+  /// userData - data that is passed to the callback function when it is registered
+  /// using the CheckReleaseUpdate function. This parameter is optional and can be null if no user data
+  /// is passed to the CheckReleaseUpdate function.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+  /// A callback function for CheckReleaseUpdate().
+  ///
+  /// [status] - status of an update.
+  /// [release] - release object.
+  /// [userData] - user defined data.
+  //
+
   // /// Checks whether a new release is available for the product.
   // ///
   // /// This check is preformed based on the release [platform] like windows.
@@ -795,23 +1248,72 @@ class LexActivator {
   // ///
   // /// The function throws a [LexActivatorException] on error.
 
-  // static int CheckForReleaseUpdate({
-  //   required String platform,
-  //   required String version,
-  //   required String channel,
-  //   required CallbackType releaseUpdateCallback,
-  // }) {
-  //   int status = _lexActivatorNative.CheckForReleaseUpdate(
-  //     platform,
-  //     version,
-  //     channel,
-  //     releaseUpdateCallback,
-  //   );
-  //   if (LexStatusCodes.LA_OK != status) {
-  //     throw LexActivatorException(status);
-  //   }
-  //   return 0;
-  // }
+  static int CheckForReleaseUpdate({
+    required String platform,
+    required String version,
+    required String channel,
+    required ReleaseCallbackFuncDart releaseUpdateCallback,
+  }) {
+    late final NativeCallable<ReleaseCallbackFunc> lcallback;
+    void internalCallback(int status) {
+      releaseUpdateCallback(status);
+      lcallback.close();
+    }
+
+    lcallback = NativeCallable<ReleaseCallbackFunc>.listener(internalCallback);
+    int status = _lexActivatorNative.CheckForReleaseUpdate(
+      platform,
+      version,
+      channel,
+      lcallback.nativeFunction,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    return 0;
+  }
+
+  /// Sends the request to the Cryptlex servers to authenticate the user.
+  ///
+  /// [email] is the user's email address
+  /// [password] is the user's password
+  ///
+  /// Returns [LexStatusCodes] LA_OK
+  ///
+  /// The function throws a [LexActivatorException] on error.
+
+  static int AuthenticateUser({
+    required String email,
+    required String password,
+  }) {
+    int status = _lexActivatorNative.AuthenticateUser(
+      email,
+      password,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    return status;
+  }
+
+  /// Authenticates the user via OIDC Id token.
+  ///
+  /// [idToken] is the id token obtained from the OIDC provider.
+  ///
+  /// Returns [LexStatusCodes] LA_OK
+  ///
+  /// The function throws a [LexActivatorException] on error.
+  static int AuthenticateUserWithIdToken({
+    required String idToken,
+  }) {
+    int status = _lexActivatorNative.AuthenticateUserWithIdToken(
+      idToken,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    return status;
+  }
 
   /// Activates the license by contacting the Cryptlex servers.
   ///
@@ -1253,11 +1755,21 @@ class LexActivator {
 
   /// Converts Pointer to Array to a String usable in Dart
 
-  static String convertArrayToDartString(Pointer charPtr) {
-    if (Platform.isWindows) {
-      return charPtr.cast<Utf16>().toDartString();
+  static String convertArrayToDartString(Pointer<Uint8> array) {
+    // Find the length of the string (up to the first null terminator)
+    int length = 0;
+    while (length < 1024 && array[length] != 0) {
+      length++;
     }
-    return charPtr.cast<Utf8>().toDartString();
+
+    // Create a list of bytes
+    List<int> bytes = [];
+    for (int i = 0; i < length; i++) {
+      bytes.add(array[i]);
+    }
+
+    // Convert to string using UTF-8 encoding
+    return utf8.decode(bytes);
   }
 
   // static void licenseCallback(int status) {

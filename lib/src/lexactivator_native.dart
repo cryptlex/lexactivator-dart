@@ -121,6 +121,26 @@ class LexActivatorNative {
   late final _SetDataDirectoryWin =
       _SetDataDirectoryPtrWin.asFunction<int Function(CSTRTYPE_WIN)>();
 
+  int SetDebugMode(
+    int flag,
+  ) {
+    return _SetDebugMode(flag);
+  }
+
+  late final _SetDebugModePtr =
+      _lookup<NativeFunction<Int32 Function(Uint32)>>('SetDebugMode');
+  late final _SetDebugMode = _SetDebugModePtr.asFunction<int Function(int)>();
+
+  int SetCacheMode(
+    int enable,
+  ) {
+    return _SetCacheMode(enable);
+  }
+
+  late final _SetCacheModePtr =
+      _lookup<NativeFunction<Int32 Function(Uint32)>>('SetCacheMode');
+  late final _SetCacheMode = _SetCacheModePtr.asFunction<int Function(int)>();
+
   int SetCustomDeviceFingerprint(
     String fingerprint,
   ) {
@@ -210,7 +230,7 @@ class LexActivatorNative {
 
   // /TODO
   int SetLicenseCallback(
-    CallbackType callback,
+    LicenseCallbackType callback,
   ) {
     return _SetLicenseCallback(
       callback,
@@ -218,10 +238,10 @@ class LexActivatorNative {
   }
 
   late final _SetLicenseCallbackPtr =
-      _lookup<NativeFunction<Int32 Function(CallbackType)>>(
+      _lookup<NativeFunction<Int32 Function(LicenseCallbackType)>>(
           'SetLicenseCallback');
   late final _SetLicenseCallback =
-      _SetLicenseCallbackPtr.asFunction<int Function(CallbackType)>();
+      _SetLicenseCallbackPtr.asFunction<int Function(LicenseCallbackType)>();
 
   int SetActivationMetadata(
     String key,
@@ -314,6 +334,71 @@ class LexActivatorNative {
       _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>('SetAppVersion');
   late final _SetAppVersionWin =
       _SetAppVersionPtrWin.asFunction<int Function(CSTRTYPE_WIN)>();
+  int SetReleasePublishedDate(
+    int releasePublishedDate,
+  ) {
+    return _SetReleasePublishedDate(releasePublishedDate);
+  }
+
+  late final _SetReleasePublishedDatePtr =
+      _lookup<NativeFunction<Int32 Function(Uint32)>>(
+          'SetReleasePublishedDate');
+  late final _SetReleasePublishedDate =
+      _SetReleasePublishedDatePtr.asFunction<int Function(int)>();
+
+  int SetReleaseChannel(
+    String releaseChannel,
+  ) {
+    late final int result;
+    if (Platform.isWindows) {
+      final string = releaseChannel.toNativeUtf16();
+      result = _SetReleaseChannelWin(string);
+      calloc.free(string);
+      return result;
+    }
+    final string = releaseChannel.toNativeUtf8();
+    result = _SetReleaseChannel(string);
+    calloc.free(string);
+    return result;
+  }
+
+  late final _SetReleaseChannelPtr =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE)>>('SetReleaseChannel');
+  late final _SetReleaseChannel =
+      _SetReleaseChannelPtr.asFunction<int Function(CSTRTYPE)>();
+
+  late final _SetReleaseChannelPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>(
+          'SetReleaseChannel');
+  late final _SetReleaseChannelWin =
+      _SetReleaseChannelPtrWin.asFunction<int Function(CSTRTYPE_WIN)>();
+
+  int SetReleasePlatform(
+    String releasePlatform,
+  ) {
+    late final int result;
+    if (Platform.isWindows) {
+      final string = releasePlatform.toNativeUtf16();
+      result = _SetReleasePlatformWin(string);
+      calloc.free(string);
+      return result;
+    }
+    final string = releasePlatform.toNativeUtf8();
+    result = _SetReleasePlatform(string);
+    calloc.free(string);
+    return result;
+  }
+
+  late final _SetReleasePlatformPtr =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE)>>('SetReleasePlatform');
+  late final _SetReleasePlatform =
+      _SetReleasePlatformPtr.asFunction<int Function(CSTRTYPE)>();
+
+  late final _SetReleasePlatformPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>(
+          'SetReleasePlatform');
+  late final _SetReleasePlatformWin =
+      _SetReleasePlatformPtrWin.asFunction<int Function(CSTRTYPE_WIN)>();
 
   int SetOfflineActivationRequestMeterAttributeUses(
     String name,
@@ -415,7 +500,33 @@ class LexActivatorNative {
           'SetActivationLeaseDuration');
   late final _SetActivationLeaseDuration =
       _SetActivationLeaseDurationPtr.asFunction<int Function(int)>();
+  int SetTwoFactorAuthenticationCode(
+    String twoFactorAuthenticationCode,
+  ) {
+    late final int result;
+    if (Platform.isWindows) {
+      final string = twoFactorAuthenticationCode.toNativeUtf16();
+      result = _SetTwoFactorAuthenticationCodeWin(string);
+      calloc.free(string);
+      return result;
+    }
+    final string = twoFactorAuthenticationCode.toNativeUtf8();
+    result = _SetTwoFactorAuthenticationCode(string);
+    calloc.free(string);
+    return result;
+  }
 
+  late final _SetTwoFactorAuthenticationCodePtr =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE)>>(
+          'SetTwoFactorAuthenticationCode');
+  late final _SetTwoFactorAuthenticationCode =
+      _SetTwoFactorAuthenticationCodePtr.asFunction<int Function(CSTRTYPE)>();
+  late final _SetTwoFactorAuthenticationCodePtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>(
+          'SetTwoFactorAuthenticationCode');
+  late final _SetTwoFactorAuthenticationCodeWin =
+      _SetTwoFactorAuthenticationCodePtrWin.asFunction<
+          int Function(CSTRTYPE_WIN)>();
   int GetProductMetadata(
     String key,
     CSTRTYPE value,
@@ -533,14 +644,14 @@ class LexActivatorNative {
   late final _GetProductVersionFeatureFlagPtr = _lookup<
       NativeFunction<
           Int32 Function(CSTRTYPE, Pointer<Uint32>, CSTRTYPE,
-              Uint32)>>('GetLicenseMeterAttribute');
+              Uint32)>>('GetProductVersionFeatureFlag');
   late final _GetProductVersionFeatureFlag = _GetProductVersionFeatureFlagPtr
       .asFunction<int Function(CSTRTYPE, Pointer<Uint32>, CSTRTYPE, int)>();
 
   late final _GetProductVersionFeatureFlagPtrWin = _lookup<
       NativeFunction<
           Int32 Function(CSTRTYPE_WIN, Pointer<Uint32>, CSTRTYPE_WIN,
-              Uint32)>>('GetLicenseMeterAttribute');
+              Uint32)>>('GetProductVersionFeatureFlag');
   late final _GetProductVersionFeatureFlagWin =
       _GetProductVersionFeatureFlagPtrWin.asFunction<
           int Function(CSTRTYPE_WIN, Pointer<Uint32>, CSTRTYPE_WIN, int)>();
@@ -585,9 +696,9 @@ class LexActivatorNative {
 
   int GetLicenseMeterAttribute(
     String name,
-    Pointer<Uint32> allowedUses,
-    Pointer<Uint32> totalUses,
-    Pointer<Uint32> grossUses,
+    Pointer<Int64> allowedUses,
+    Pointer<Int64> totalUses,
+    Pointer<Int64> grossUses,
   ) {
     late final int result;
     if (Platform.isWindows) {
@@ -614,21 +725,21 @@ class LexActivatorNative {
 
   late final _GetLicenseMeterAttributePtr = _lookup<
       NativeFunction<
-          Int32 Function(CSTRTYPE, Pointer<Uint32>, Pointer<Uint32>,
-              Pointer<Uint32>)>>('GetLicenseMeterAttribute');
+          Int32 Function(CSTRTYPE, Pointer<Int64>, Pointer<Int64>,
+              Pointer<Int64>)>>('GetLicenseMeterAttribute');
   late final _GetLicenseMeterAttribute =
       _GetLicenseMeterAttributePtr.asFunction<
           int Function(
-              CSTRTYPE, Pointer<Uint32>, Pointer<Uint32>, Pointer<Uint32>)>();
+              CSTRTYPE, Pointer<Int64>, Pointer<Int64>, Pointer<Int64>)>();
 
   late final _GetLicenseMeterAttributePtrWin = _lookup<
       NativeFunction<
-          Int32 Function(CSTRTYPE_WIN, Pointer<Uint32>, Pointer<Uint32>,
-              Pointer<Uint32>)>>('GetLicenseMeterAttribute');
+          Int32 Function(CSTRTYPE_WIN, Pointer<Int64>, Pointer<Int64>,
+              Pointer<Int64>)>>('GetLicenseMeterAttribute');
   late final _GetLicenseMeterAttributeWin =
       _GetLicenseMeterAttributePtrWin.asFunction<
-          int Function(CSTRTYPE_WIN, Pointer<Uint32>, Pointer<Uint32>,
-              Pointer<Uint32>)>();
+          int Function(
+              CSTRTYPE_WIN, Pointer<Int64>, Pointer<Int64>, Pointer<Int64>)>();
 
   int GetLicenseKey(
     CSTRTYPE licenseKey,
@@ -662,7 +773,7 @@ class LexActivatorNative {
       _GetLicenseKeyPtrWin.asFunction<int Function(CSTRTYPE_WIN, int)>();
 
   int GetLicenseAllowedActivations(
-    Pointer<Uint32> allowedActivations,
+    Pointer<Int64> allowedActivations,
   ) {
     return _GetLicenseAllowedActivations(
       allowedActivations,
@@ -670,10 +781,23 @@ class LexActivatorNative {
   }
 
   late final _GetLicenseAllowedActivationsPtr =
-      _lookup<NativeFunction<Int32 Function(Pointer<Uint32>)>>(
+      _lookup<NativeFunction<Int32 Function(Pointer<Int64>)>>(
           'GetLicenseAllowedActivations');
   late final _GetLicenseAllowedActivations = _GetLicenseAllowedActivationsPtr
-      .asFunction<int Function(Pointer<Uint32>)>();
+      .asFunction<int Function(Pointer<Int64>)>();
+
+  int GetLicenseAllowedDeactivations(
+    Pointer<Int64> allowedDeactivations,
+  ) {
+    return _GetLicenseAllowedDeactivations(allowedDeactivations);
+  }
+
+  late final _GetLicenseAllowedDeactivationsPtr =
+      _lookup<NativeFunction<Int32 Function(Pointer<Int64>)>>(
+          'GetLicenseAllowedDeactivations');
+  late final _GetLicenseAllowedDeactivations =
+      _GetLicenseAllowedDeactivationsPtr.asFunction<
+          int Function(Pointer<Int64>)>();
 
   int GetLicenseTotalActivations(
     Pointer<Uint32> totalActivations,
@@ -689,6 +813,52 @@ class LexActivatorNative {
   late final _GetLicenseTotalActivations = _GetLicenseTotalActivationsPtr
       .asFunction<int Function(Pointer<Uint32>)>();
 
+  int GetLicenseTotalDeactivations(
+    Pointer<Uint32> totalDeactivations,
+  ) {
+    return _GetLicenseTotalDeactivations(totalDeactivations);
+  }
+
+  late final _GetLicenseTotalDeactivationsPtr =
+      _lookup<NativeFunction<Int32 Function(Pointer<Uint32>)>>(
+          'GetLicenseTotalDeactivations');
+  late final _GetLicenseTotalDeactivations = _GetLicenseTotalDeactivationsPtr
+      .asFunction<int Function(Pointer<Uint32>)>();
+  int GetLicenseCreationDate(
+    Pointer<Uint32> creationDate,
+  ) {
+    return _GetLicenseCreationDate(creationDate);
+  }
+
+  late final _GetLicenseCreationDatePtr =
+      _lookup<NativeFunction<Int32 Function(Pointer<Uint32>)>>(
+          'GetLicenseCreationDate');
+  late final _GetLicenseCreationDate =
+      _GetLicenseCreationDatePtr.asFunction<int Function(Pointer<Uint32>)>();
+  int GetActivationCreationDate(
+    Pointer<Uint32> activationDate,
+  ) {
+    return _GetActivationCreationDate(activationDate);
+  }
+
+  late final _GetActivationCreationDatePtr =
+      _lookup<NativeFunction<Int32 Function(Pointer<Uint32>)>>(
+          'GetActivationCreationDate');
+  late final _GetActivationCreationDate =
+      _GetActivationCreationDatePtr.asFunction<int Function(Pointer<Uint32>)>();
+
+  int GetLicenseActivationDate(
+    Pointer<Uint32> activationDate,
+  ) {
+    return _GetLicenseActivationDate(activationDate);
+  }
+
+  late final _GetLicenseActivationDatePtr =
+      _lookup<NativeFunction<Int32 Function(Pointer<Uint32>)>>(
+          'GetLicenseActivationDate');
+  late final _GetLicenseActivationDate =
+      _GetLicenseActivationDatePtr.asFunction<int Function(Pointer<Uint32>)>();
+
   int GetLicenseExpiryDate(
     Pointer<Uint32> expiryDate,
   ) {
@@ -703,6 +873,77 @@ class LexActivatorNative {
   late final _GetLicenseExpiryDate =
       _GetLicenseExpiryDatePtr.asFunction<int Function(Pointer<Uint32>)>();
 
+  int GetLicenseMaintenanceExpiryDate(
+    Pointer<Uint32> expiryDate,
+  ) {
+    return _GetLicenseMaintenanceExpiryDate(
+      expiryDate,
+    );
+  }
+
+  late final _GetLicenseMaintenanceExpiryDatePtr =
+      _lookup<NativeFunction<Int32 Function(Pointer<Uint32>)>>(
+          'GetLicenseMaintenanceExpiryDate');
+  late final _GetLicenseMaintenanceExpiryDate =
+      _GetLicenseMaintenanceExpiryDatePtr.asFunction<
+          int Function(Pointer<Uint32>)>();
+
+  int SetReleaseVersion(
+    String releaseVersion,
+  ) {
+    late final int result;
+    if (Platform.isWindows) {
+      final string = releaseVersion.toNativeUtf16();
+      result = _SetReleaseVersionWin(string);
+      calloc.free(string);
+      return result;
+    }
+    final string = releaseVersion.toNativeUtf8();
+    result = _SetReleaseVersion(string);
+    calloc.free(string);
+    return result;
+  }
+
+  late final _SetReleaseVersionPtr =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE)>>('SetReleaseVersion');
+  late final _SetReleaseVersion =
+      _SetReleaseVersionPtr.asFunction<int Function(CSTRTYPE)>();
+
+  late final _SetReleaseVersionPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>(
+          'SetReleaseVersion');
+  late final _SetReleaseVersionWin =
+      _SetReleaseVersionPtrWin.asFunction<int Function(CSTRTYPE_WIN)>();
+
+  int GetLicenseMaxAllowedReleaseVersion(
+    CSTRTYPE array,
+    int length,
+  ) {
+    if (Platform.isWindows) {
+      return _GetLicenseMaxAllowedReleaseVersionWin(
+        array.cast(),
+        length,
+      );
+    }
+    return _GetLicenseMaxAllowedReleaseVersion(
+      array,
+      length,
+    );
+  }
+
+  late final _GetLicenseMaxAllowedReleaseVersionPtr =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, Uint32)>>(
+          'GetLicenseMaxAllowedReleaseVersion');
+  late final _GetLicenseMaxAllowedReleaseVersion =
+      _GetLicenseMaxAllowedReleaseVersionPtr.asFunction<
+          int Function(CSTRTYPE, int)>();
+
+  late final _GetLicenseMaxAllowedReleaseVersionPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'GetLicenseMaxAllowedReleaseVersion');
+  late final _GetLicenseMaxAllowedReleaseVersionWin =
+      _GetLicenseMaxAllowedReleaseVersionPtrWin.asFunction<
+          int Function(CSTRTYPE_WIN, int)>();
   int GetLicenseUserEmail(
     CSTRTYPE email,
     int length,
@@ -824,6 +1065,82 @@ class LexActivatorNative {
       'GetLicenseUserMetadata');
   late final _GetLicenseUserMetadataWin = _GetLicenseUserMetadataPtrWin
       .asFunction<int Function(CSTRTYPE_WIN, CSTRTYPE_WIN, int)>();
+  int GetLicenseOrganizationName(
+    CSTRTYPE organizationName,
+    int length,
+  ) {
+    if (Platform.isWindows) {
+      return _GetLicenseOrganizationNameWin(
+        organizationName.cast(),
+        length,
+      );
+    }
+    return _GetLicenseOrganizationName(
+      organizationName,
+      length,
+    );
+  }
+
+  late final _GetLicenseOrganizationNamePtr =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, Uint32)>>(
+          'GetLicenseOrganizationName');
+  late final _GetLicenseOrganizationName =
+      _GetLicenseOrganizationNamePtr.asFunction<int Function(CSTRTYPE, int)>();
+  late final _GetLicenseOrganizationNamePtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'GetLicenseOrganizationName');
+  late final _GetLicenseOrganizationNameWin = _GetLicenseOrganizationNamePtrWin
+      .asFunction<int Function(CSTRTYPE_WIN, int)>();
+
+  int GetLicenseOrganizationAddress(
+    CSTRTYPE organizationAddress,
+    int length,
+  ) {
+    if (Platform.isWindows) {
+      return _GetLicenseOrganizationAddressWin(
+        organizationAddress.cast(),
+        length,
+      );
+    }
+    return _GetLicenseOrganizationAddress(
+      organizationAddress,
+      length,
+    );
+  }
+
+  late final _GetLicenseOrganizationAddressPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'GetLicenseOrganizationAddressInternal');
+  late final _GetLicenseOrganizationAddressWin =
+      _GetLicenseOrganizationAddressPtrWin.asFunction<
+          int Function(CSTRTYPE_WIN, int)>();
+  late final _GetLicenseOrganizationAddressPtr =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, Uint32)>>(
+          'GetLicenseOrganizationAddressInternal');
+  late final _GetLicenseOrganizationAddress = _GetLicenseOrganizationAddressPtr
+      .asFunction<int Function(CSTRTYPE, int)>();
+
+  int GetUserLicenses(
+    CSTRTYPE array,
+    int length,
+  ) {
+    if (Platform.isWindows) {
+      return _GetUserLicensesWin(array.cast(), length);
+    }
+    return _GetUserLicenses(array, length);
+  }
+
+  late final _GetUserLicensesPtr =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, Uint32)>>(
+          'GetUserLicensesInternal');
+  late final _GetUserLicenses =
+      _GetUserLicensesPtr.asFunction<int Function(CSTRTYPE, int)>();
+
+  late final _GetUserLicensesPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'GetUserLicensesInternal');
+  late final _GetUserLicensesWin =
+      _GetUserLicensesPtrWin.asFunction<int Function(CSTRTYPE_WIN, int)>();
 
   int GetLicenseType(
     CSTRTYPE licenseType,
@@ -852,6 +1169,27 @@ class LexActivatorNative {
           'GetLicenseType');
   late final _GetLicenseTypeWin =
       _GetLicenseTypePtrWin.asFunction<int Function(CSTRTYPE_WIN, int)>();
+  int GetActivationId(
+    CSTRTYPE activationId,
+    int length,
+  ) {
+    if (Platform.isWindows) {
+      return _GetActivationIdWin(activationId.cast(), length);
+    }
+    return _GetActivationId(activationId, length);
+  }
+
+  late final _GetActivationIdPtr =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, Uint32)>>(
+          'GetActivationId');
+  late final _GetActivationId =
+      _GetActivationIdPtr.asFunction<int Function(CSTRTYPE, int)>();
+
+  late final _GetActivationIdPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'GetActivationId');
+  late final _GetActivationIdWin =
+      _GetActivationIdPtrWin.asFunction<int Function(CSTRTYPE_WIN, int)>();
 
   int GetActivationMetadata(
     String key,
@@ -890,6 +1228,41 @@ class LexActivatorNative {
       'GetActivationMetadata');
   late final _GetActivationMetadataWin = _GetActivationMetadataPtrWin
       .asFunction<int Function(CSTRTYPE_WIN, CSTRTYPE_WIN, int)>();
+
+  int GetActivationMode(
+    CSTRTYPE initialMode,
+    int initialModeLength,
+    CSTRTYPE currentMode,
+    int currentModeLength,
+  ) {
+    if (Platform.isWindows) {
+      return _GetActivationModeWin(
+        initialMode.cast(),
+        initialModeLength,
+        currentMode.cast(),
+        currentModeLength,
+      );
+    }
+    return _GetActivationMode(
+      initialMode,
+      initialModeLength,
+      currentMode,
+      currentModeLength,
+    );
+  }
+
+  late final _GetActivationModePtr = _lookup<
+          NativeFunction<Int32 Function(CSTRTYPE, Uint32, CSTRTYPE, Uint32)>>(
+      'GetActivationMode');
+  late final _GetActivationMode = _GetActivationModePtr.asFunction<
+      int Function(CSTRTYPE, int, CSTRTYPE, int)>();
+
+  late final _GetActivationModePtrWin = _lookup<
+      NativeFunction<
+          Int32 Function(Pointer<Uint8>, Uint32, Pointer<Uint8>,
+              Uint32)>>('GetActivationMode');
+  late final _GetActivationModeWin = _GetActivationModePtrWin.asFunction<
+      int Function(Pointer<Uint8>, int, Pointer<Uint8>, int)>();
 
   int GetActivationMeterAttributeUses(
     String name,
@@ -1065,27 +1438,126 @@ class LexActivatorNative {
   late final _GetLibraryVersionWin =
       _GetLibraryVersionPtrWin.asFunction<int Function(CSTRTYPE_WIN, int)>();
 
-  ///TODO
-  // int CheckForReleaseUpdate(
-  //   CSTRTYPE platform,
-  //   CSTRTYPE version,
-  //   CSTRTYPE channel,
-  //   CallbackType releaseUpdateCallback,
+  int CheckForReleaseUpdate(
+    String platform,
+    String version,
+    String channel,
+    ReleaseCallbackType releaseUpdateCallback,
+  ) {
+    if (Platform.isWindows) {
+      return _CheckForReleaseUpdateWin(
+        platform.toNativeUtf16(),
+        version.toNativeUtf16(),
+        channel.toNativeUtf16(),
+        releaseUpdateCallback,
+      );
+    }
+    return _CheckForReleaseUpdate(
+      platform.toNativeUtf8(),
+      version.toNativeUtf8(),
+      channel.toNativeUtf8(),
+      releaseUpdateCallback,
+    );
+  }
+
+  late final _CheckForReleaseUpdatePtr = _lookup<
+      NativeFunction<
+          Int32 Function(CSTRTYPE, CSTRTYPE, CSTRTYPE,
+              ReleaseCallbackType)>>('CheckForReleaseUpdate');
+  late final _CheckForReleaseUpdate = _CheckForReleaseUpdatePtr.asFunction<
+      int Function(CSTRTYPE, CSTRTYPE, CSTRTYPE, ReleaseCallbackType)>();
+
+  late final _CheckForReleaseUpdatePtrWin = _lookup<
+      NativeFunction<
+          Int32 Function(CSTRTYPE_WIN, CSTRTYPE_WIN, CSTRTYPE_WIN,
+              ReleaseCallbackType)>>('CheckForReleaseUpdate');
+  late final _CheckForReleaseUpdateWin =
+      _CheckForReleaseUpdatePtrWin.asFunction<
+          int Function(
+              CSTRTYPE_WIN, CSTRTYPE_WIN, CSTRTYPE_WIN, ReleaseCallbackType)>();
+
+  // int CheckReleaseUpdate(
+  //   NativeCallable<CallbackFuncReleaseUpdate> releaseUpdateCallback,
+  //   int flag,
   // ) {
-  //   return _CheckForReleaseUpdate(
-  //     platform,
-  //     version,
-  //     channel,
-  //     releaseUpdateCallback,
-  //   );
+
+  //   return _CheckReleaseUpdate(
+  //       releaseUpdateCallback.nativeFunction, flag, nullptr);
   // }
 
-  // late final _CheckForReleaseUpdatePtr = _lookup<
+  // late final _CheckReleaseUpdatePtr = _lookup<
   //     NativeFunction<
-  //         Int32 Function(CSTRTYPE, CSTRTYPE, CSTRTYPE,
-  //             CallbackType)>>('CheckForReleaseUpdate');
-  // late final _CheckForReleaseUpdate = _CheckForReleaseUpdatePtr.asFunction<
-  //     int Function(CSTRTYPE, CSTRTYPE, CSTRTYPE, CallbackType)>();
+  //         Int32 Function(CallbackFuncReleaseType, Uint32,
+  //             Pointer<Void>)>>('CheckReleaseUpdateInternal');
+  // late final _CheckReleaseUpdate = _CheckReleaseUpdatePtr.asFunction<
+  //     int Function(CallbackFuncReleaseType, int, Pointer<Void>)>();
+
+  int AuthenticateUser(
+    String email,
+    String password,
+  ) {
+    late final int result;
+    if (Platform.isWindows) {
+      final string = email.toNativeUtf16();
+      final string2 = password.toNativeUtf16();
+      result = _AuthenticateUserWin(
+        string,
+        string2,
+      );
+      calloc.free(string);
+      calloc.free(string2);
+      return result;
+    }
+    final string = email.toNativeUtf8();
+    final string2 = password.toNativeUtf8();
+    result = _AuthenticateUser(
+      string,
+      string2,
+    );
+    calloc.free(string);
+    calloc.free(string2);
+    return result;
+  }
+
+  late final _AuthenticateUserPtr =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, CSTRTYPE)>>(
+          'AuthenticateUser');
+  late final _AuthenticateUser =
+      _AuthenticateUserPtr.asFunction<int Function(CSTRTYPE, CSTRTYPE)>();
+  late final _AuthenticateUserPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, CSTRTYPE_WIN)>>(
+          'AuthenticateUser');
+  late final _AuthenticateUserWin = _AuthenticateUserPtrWin.asFunction<
+      int Function(CSTRTYPE_WIN, CSTRTYPE_WIN)>();
+
+  int AuthenticateUserWithIdToken(
+    String idToken,
+  ) {
+    late final int result;
+    if (Platform.isWindows) {
+      final string = idToken.toNativeUtf16();
+      result = _AuthenticateUserWithIdTokenWin(string);
+      calloc.free(string);
+      return result;
+    }
+    final string = idToken.toNativeUtf8();
+    result = _AuthenticateUserWithIdToken(string);
+    calloc.free(string);
+    return result;
+  }
+
+  late final _AuthenticateUserWithIdTokenPtr =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE)>>(
+          'AuthenticateUserWithIdToken');
+  late final _AuthenticateUserWithIdToken =
+      _AuthenticateUserWithIdTokenPtr.asFunction<int Function(CSTRTYPE)>();
+
+  late final _AuthenticateUserWithIdTokenPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>(
+          'AuthenticateUserWithIdToken');
+  late final _AuthenticateUserWithIdTokenWin =
+      _AuthenticateUserWithIdTokenPtrWin.asFunction<
+          int Function(CSTRTYPE_WIN)>();
 
   int ActivateLicense() {
     return _ActivateLicense();
@@ -1446,10 +1918,12 @@ typedef CSTRTYPE = Pointer<Utf8>;
 
 typedef CSTRTYPE_WIN = Pointer<Utf16>;
 
-typedef CallbackType = Pointer<NativeFunction<Void Function(Uint32)>>;
-typedef CallbackFunc = Void Function(Uint32);
-typedef CallbackFuncDart = void Function(int);
-
+typedef LicenseCallbackType = Pointer<NativeFunction<Void Function(Uint32)>>;
+typedef LicenseCallbackFunc = Void Function(Uint32);
+typedef LicenseCallbackFuncDart = void Function(int);
+typedef ReleaseCallbackType = Pointer<NativeFunction<Void Function(Uint32)>>;
+typedef ReleaseCallbackFunc = Void Function(Uint32);
+typedef ReleaseCallbackFuncDart = void Function(int);
 const int INT8_MIN = -128;
 
 const int INT16_MIN = -32768;

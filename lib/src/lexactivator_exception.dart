@@ -189,6 +189,35 @@ class LexActivatorException implements Exception {
       case LexStatusCodes.LA_E_CLIENT:
         message = 'Client error.';
         break;
+      case LexStatusCodes.LA_E_LOGIN_TEMPORARILY_LOCKED:
+        message =
+            'The user account has been temporarily locked for 5 mins due to 5 failed attempts.';
+        break;
+
+      case LexStatusCodes.LA_E_AUTHENTICATION_ID_TOKEN_INVALID:
+        message = 'Invalid authentication ID token.';
+        break;
+
+      case LexStatusCodes.LA_E_OIDC_SSO_NOT_ENABLED:
+        message = 'OIDC SSO is not enabled.';
+        break;
+
+      case LexStatusCodes.LA_E_USERS_LIMIT_REACHED:
+        message = 'The allowed users for this account has reached its limit.';
+        break;
+
+      case LexStatusCodes.LA_E_OS_USER:
+        message =
+            'OS user has changed since activation and the license is user-locked.';
+        break;
+
+      case LexStatusCodes.LA_E_INVALID_PERMISSION_FLAG:
+        message = 'Invalid permission flag.';
+        break;
+
+      case LexStatusCodes.LA_E_FREE_PLAN_ACTIVATION_LIMIT_REACHED:
+        message = 'The free plan has reached its activation limit.';
+        break;
 
       default:
         message = 'Unknown error!';
