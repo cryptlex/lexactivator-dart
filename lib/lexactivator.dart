@@ -558,8 +558,8 @@ class LexActivator {
   static LicenseMeterAttribute GetLicenseMeterAttribute(
       {required String name}) {
     final allowedUses = calloc<Int64>();
-    final totalUses = calloc<Int64>();
-    final grossUses = calloc<Int64>();
+    final totalUses = calloc<Uint64>();
+    final grossUses = calloc<Uint64>();
 
     int status = _lexActivatorNative.GetLicenseMeterAttribute(
       name,
@@ -943,16 +943,9 @@ class LexActivator {
     }
 
     Map<String, dynamic> addressObject;
-    String jsonString = '';
     try {
-      // Get raw string first
-      // jsonString = convertArrayToDartString(array);
-      // Remove any null terminators that could corrupt the JSON
-      // jsonString = jsonString.replaceAll('\u0000', '');
       addressObject = jsonDecode(convertArrayToDartString(array));
-    } catch (e) {
-      print('JSON decode error: $e');
-      print('Raw string: $jsonString');
+    } catch (_) {
       addressObject = {};
     } finally {
       calloc.free(array);
@@ -989,14 +982,12 @@ class LexActivator {
     }
 
     List<UserLicense> userLicenses;
-    print("license: ${convertArrayToDartString(array)}");
     try {
       final List<dynamic> jsonList =
           jsonDecode(convertArrayToDartString(array));
       userLicenses =
           jsonList.map((json) => UserLicense.fromJson(json)).toList();
-    } catch (e) {
-      print('JSON decode error: $e');
+    } catch (_) {
       userLicenses = [];
     } finally {
       calloc.free(array);
@@ -1236,6 +1227,46 @@ class LexActivator {
   /// [release] - release object.
   /// [userData] - user defined data.
   //
+
+// static int CheckReleaseUpdate({
+//     required CallbackFuncReleaseUpdateDart releaseUpdateCallback,
+//     required int flag,
+//     dynamic userData,
+//   }) {
+//     late final NativeCallable<CallbackFuncReleaseUpdate> callback;
+
+//     void internalReleaseUpdateCallback(
+//         int status, Pointer<Utf8> releaseJson, Pointer<Void> userDataPtr) {
+//       Release? release;
+//       String? jsonString;
+
+//       try {
+//         jsonString = releaseJson.cast<Utf8>().toDartString();
+//         if (jsonString.isNotEmpty) {}
+//       } catch (_) {}
+
+//       // Call the user's callback
+//       releaseUpdateCallback(status, release, userData);
+//       callback.close(); // Close the NativeCallable when done
+//     }
+
+//     // Create the NativeCallable
+//     callback = NativeCallable<CallbackFuncReleaseUpdate>.listener(
+//         internalReleaseUpdateCallback);
+
+//     // Call the native function with the nativeFunction property
+//     int status = _lexActivatorNative.CheckReleaseUpdate(
+//       callback,
+//       flag,
+//     );
+
+//     if (LexStatusCodes.LA_OK != status) {
+//       callback.close(); // Clean up if there's an error
+//       throw LexActivatorException(status);
+//     }
+
+//     return status;
+//   }
 
   // /// Checks whether a new release is available for the product.
   // ///

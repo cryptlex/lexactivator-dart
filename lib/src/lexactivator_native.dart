@@ -228,7 +228,6 @@ class LexActivatorNative {
   late final _SetLicenseUserCredentialWin = _SetLicenseUserCredentialPtrWin
       .asFunction<int Function(CSTRTYPE_WIN, CSTRTYPE_WIN)>();
 
-  // /TODO
   int SetLicenseCallback(
     LicenseCallbackType callback,
   ) {
@@ -334,6 +333,7 @@ class LexActivatorNative {
       _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN)>>('SetAppVersion');
   late final _SetAppVersionWin =
       _SetAppVersionPtrWin.asFunction<int Function(CSTRTYPE_WIN)>();
+
   int SetReleasePublishedDate(
     int releasePublishedDate,
   ) {
@@ -500,6 +500,7 @@ class LexActivatorNative {
           'SetActivationLeaseDuration');
   late final _SetActivationLeaseDuration =
       _SetActivationLeaseDurationPtr.asFunction<int Function(int)>();
+
   int SetTwoFactorAuthenticationCode(
     String twoFactorAuthenticationCode,
   ) {
@@ -697,8 +698,8 @@ class LexActivatorNative {
   int GetLicenseMeterAttribute(
     String name,
     Pointer<Int64> allowedUses,
-    Pointer<Int64> totalUses,
-    Pointer<Int64> grossUses,
+    Pointer<Uint64> totalUses,
+    Pointer<Uint64> grossUses,
   ) {
     late final int result;
     if (Platform.isWindows) {
@@ -725,21 +726,21 @@ class LexActivatorNative {
 
   late final _GetLicenseMeterAttributePtr = _lookup<
       NativeFunction<
-          Int32 Function(CSTRTYPE, Pointer<Int64>, Pointer<Int64>,
-              Pointer<Int64>)>>('GetLicenseMeterAttribute');
+          Int32 Function(CSTRTYPE, Pointer<Int64>, Pointer<Uint64>,
+              Pointer<Uint64>)>>('GetLicenseMeterAttribute');
   late final _GetLicenseMeterAttribute =
       _GetLicenseMeterAttributePtr.asFunction<
           int Function(
-              CSTRTYPE, Pointer<Int64>, Pointer<Int64>, Pointer<Int64>)>();
+              CSTRTYPE, Pointer<Int64>, Pointer<Uint64>, Pointer<Uint64>)>();
 
   late final _GetLicenseMeterAttributePtrWin = _lookup<
       NativeFunction<
-          Int32 Function(CSTRTYPE_WIN, Pointer<Int64>, Pointer<Int64>,
-              Pointer<Int64>)>>('GetLicenseMeterAttribute');
+          Int32 Function(CSTRTYPE_WIN, Pointer<Int64>, Pointer<Uint64>,
+              Pointer<Uint64>)>>('GetLicenseMeterAttribute');
   late final _GetLicenseMeterAttributeWin =
       _GetLicenseMeterAttributePtrWin.asFunction<
-          int Function(
-              CSTRTYPE_WIN, Pointer<Int64>, Pointer<Int64>, Pointer<Int64>)>();
+          int Function(CSTRTYPE_WIN, Pointer<Int64>, Pointer<Uint64>,
+              Pointer<Uint64>)>();
 
   int GetLicenseKey(
     CSTRTYPE licenseKey,
