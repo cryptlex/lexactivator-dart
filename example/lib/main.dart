@@ -7,7 +7,7 @@ void main() {
     activateLicense();
 
     final status = LexActivator.IsLicenseGenuine();
-    LexActivator.SetCallback(callback: (status) {
+    LexActivator.SetLicenseCallback(callback: (status) {
       print('Callback status: $status');
     });
 
