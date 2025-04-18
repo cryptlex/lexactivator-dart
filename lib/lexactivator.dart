@@ -18,14 +18,6 @@ part 'src/product_version_feature_flag.dart';
 part 'src/activation_mode.dart';
 part 'src/organisation_address.dart';
 part 'src/user_license.dart';
-part 'src/release.dart';
-
-// Move the typedef outside the class
-typedef ReleaseUpdateCallback = void Function(
-    int status, CSTRTYPE release, Pointer<Void> userData);
-typedef CallbackFuncReleaseUpdate = Void Function(
-    Uint32, CSTRTYPE, Pointer<Void>);
-typedef CallbackFuncReleaseUpdateDart = void Function(int, Release?, dynamic);
 
 class LexActivator {
   ///User Permission Flag
