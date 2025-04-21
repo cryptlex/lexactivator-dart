@@ -5,12 +5,8 @@ void main() {
   try {
     initializeLexActivator();
     activateLicense();
-
+    LexActivator.SetLicenseCallback(callback: licenseCallback);
     final status = LexActivator.IsLicenseGenuine();
-    LexActivator.SetCallback(callback: (status) {
-      print('Callback status: $status');
-    });
-
     if (LexStatusCodes.LA_OK == status) {
       print('License is genuinely activated!');
 
@@ -88,5 +84,28 @@ void activateTrial() {
     print('Product trial has expired!');
   } else {
     print('Product trial activation failed: $status');
+  }
+}
+
+void licenseCallback(int status) {
+  try {
+    switch (status) {
+      case LexStatusCodes.LA_OK:
+        print('License is genuinely activated!');
+        break;
+      case LexStatusCodes.LA_EXPIRED:
+        print('License is genuinely activated but has expired!');
+        break;
+      case LexStatusCodes.LA_SUSPENDED:
+        print('License is genuinely activated but has been suspended!');
+        break;
+      case LexStatusCodes.LA_GRACE_PERIOD_OVER:
+        print('License is genuinely activated but grace period is over!');
+        break;
+      default:
+        throw LexActivatorException(status);
+    }
+  } catch (error) {
+    print(error.toString());
   }
 }
