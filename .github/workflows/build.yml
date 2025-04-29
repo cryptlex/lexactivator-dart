@@ -50,8 +50,12 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Publish to pub.dev
-        env:
-          PUB_DEV_PUBLISH_TOKEN: ${{ secrets.PUB_DEV_PUBLISH_TOKEN }}
-        run: |
-          dart pub publish --force
+      - name: 'Publish Dart package'
+        uses: k-paxian/dart-package-publisher@v1.6.1
+        with:
+          accessToken: ${{ secrets.PUB_DEV_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.PUB_DEV_REFRESH_TOKEN }}
+          flutter: true
+          skipTests: true
+          flutterBranch: main
+
