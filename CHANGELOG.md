@@ -1,3 +1,6 @@
+## 3.2.0
+* Added few more functions
+
 ## 3.1.0
 
 * Fixed library loading for all supported platforms
