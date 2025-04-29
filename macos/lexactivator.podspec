@@ -20,5 +20,5 @@ Pod::Spec.new do |s|
   s.platform = :osx, '10.11'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.swift_version = '5.0'
-  s.vendored_library = 'darwin/libLexActivator.dylib'
+  s.vendored_library = 'darwin-universal/libLexActivator.dylib'
 end
