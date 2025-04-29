@@ -1121,6 +1121,101 @@ class LexActivatorNative {
   late final _GetLicenseOrganizationAddress = _GetLicenseOrganizationAddressPtr
       .asFunction<int Function(CSTRTYPE, int)>();
 
+  int GetLicenseEntitlementSetName(CSTRTYPE name, int length) {
+    if (Platform.isWindows) {
+      return _GetLicenseEntitlementSetNameWin(name.cast(), length);
+    }
+    return _GetLicenseEntitlementSetName(name, length);
+  }
+
+  late final _GetLicenseEntitlementSetNamePtr = _lookup<
+      NativeFunction<Int32 Function(CSTRTYPE, Uint32)>>(
+      'GetLicenseEntitlementSetName');
+  late final _GetLicenseEntitlementSetName =
+      _GetLicenseEntitlementSetNamePtr.asFunction<
+          int Function(CSTRTYPE, int)>();
+
+  late final _GetLicenseEntitlementSetNamePtrWin = _lookup<
+      NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+      'GetLicenseEntitlementSetName');
+  late final _GetLicenseEntitlementSetNameWin =
+      _GetLicenseEntitlementSetNamePtrWin.asFunction<
+          int Function(CSTRTYPE_WIN, int)>();
+
+  int GetLicenseEntitlementSetDisplayName(CSTRTYPE name, int length) {
+    if (Platform.isWindows) {
+      return _GetLicenseEntitlementSetDisplayNameWin(name.cast(), length);
+    }
+    return _GetLicenseEntitlementSetDisplayName(name, length);
+  }
+
+  late final _GetLicenseEntitlementSetDisplayNamePtr = _lookup<
+      NativeFunction<Int32 Function(CSTRTYPE, Uint32)>>(
+      'GetLicenseEntitlementSetDisplayName');
+  late final _GetLicenseEntitlementSetDisplayName =
+      _GetLicenseEntitlementSetDisplayNamePtr.asFunction<
+          int Function(CSTRTYPE, int)>(); 
+
+  late final _GetLicenseEntitlementSetDisplayNamePtrWin = _lookup<
+      NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+      'GetLicenseEntitlementSetDisplayName');
+  late final _GetLicenseEntitlementSetDisplayNameWin =
+      _GetLicenseEntitlementSetDisplayNamePtrWin.asFunction<
+          int Function(CSTRTYPE_WIN, int)>();
+
+
+  int GetFeatureEntitlements(
+    CSTRTYPE array,
+    int length,
+  ) {
+    if (Platform.isWindows) {
+      return _GetFeatureEntitlementsWin(array.cast(), length);
+    }
+    return _GetFeatureEntitlements(array, length);
+  }
+
+  late final _GetFeatureEntitlementsPtr =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE, Uint32)>>(
+          'GetFeatureEntitlementsInternal');
+  late final _GetFeatureEntitlements =
+      _GetFeatureEntitlementsPtr.asFunction<int Function(CSTRTYPE, int)>();
+
+  late final _GetFeatureEntitlementsPtrWin =
+      _lookup<NativeFunction<Int32 Function(CSTRTYPE_WIN, Uint32)>>(
+          'GetFeatureEntitlementsInternal');
+  late final _GetFeatureEntitlementsWin =
+      _GetFeatureEntitlementsPtrWin.asFunction<int Function(CSTRTYPE_WIN, int)>();
+
+  int GetFeatureEntitlement(
+    String featureName,
+    CSTRTYPE value,
+    int length,
+  ) {
+    late final int result;
+    if (Platform.isWindows) {
+      final string = featureName.toNativeUtf16();
+      result = _GetFeatureEntitlementWin(string, value.cast(), length);
+      calloc.free(string);
+      return result;
+    }
+    final string = featureName.toNativeUtf8();
+    result = _GetFeatureEntitlement(string, value, length);
+    calloc.free(string);
+    return result;
+  }
+
+  late final _GetFeatureEntitlementPtr = _lookup<
+      NativeFunction<Int32 Function(CSTRTYPE, CSTRTYPE, Uint32)>>(
+      'GetFeatureEntitlementInternal');
+  late final _GetFeatureEntitlement = _GetFeatureEntitlementPtr.asFunction<
+      int Function(CSTRTYPE, CSTRTYPE, int)>();
+
+  late final _GetFeatureEntitlementPtrWin = _lookup<
+      NativeFunction<Int32 Function(CSTRTYPE_WIN, CSTRTYPE_WIN, Uint32)>>(
+      'GetFeatureEntitlementInternal');
+  late final _GetFeatureEntitlementWin = _GetFeatureEntitlementPtrWin.asFunction<
+      int Function(CSTRTYPE_WIN, CSTRTYPE_WIN, int)>();
+
   int GetUserLicenses(
     CSTRTYPE array,
     int length,
