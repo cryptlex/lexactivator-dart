@@ -8,32 +8,10 @@ set(PLUGIN_NAME "lexactivator_plugin")
 
 
 set(archdetect_c_code "
-#if defined(__arm__) || defined(__TARGET_ARCH_ARM)
-    #if defined(__ARM_ARCH_8A__)
-        #error cmake_ARCH armv8
-    #elif defined(__ARM_ARCH_7__) \\
-        || defined(__ARM_ARCH_7A__) \\
-        || defined(__ARM_ARCH_7R__) \\
-        || defined(__ARM_ARCH_7M__) \\
-        || (defined(__TARGET_ARCH_ARM) && __TARGET_ARCH_ARM-0 >= 7)
-        #error cmake_ARCH armv7
-    #else
-        #error cmake_ARCH arm
-    #endif
-#elif defined(__i386) || defined(__i386__) || defined(_M_IX86)
-    #error cmake_ARCH i386
+#if defined(__aarch64__) || defined(__ARM_ARCH_8A__) || defined(__arm64__) || defined(__ARM_ARCH_8__)
+    #error cmake_ARCH arm64
 #elif defined(__x86_64) || defined(__x86_64__) || defined(__amd64) || defined(_M_X64)
     #error cmake_ARCH x86_64
-#elif defined(__ia64) || defined(__ia64__) || defined(_M_IA64)
-    #error cmake_ARCH ia64
-#elif defined(__ppc__) || defined(__ppc) || defined(__powerpc__) \\
-      || defined(_ARCH_COM) || defined(_ARCH_PWR) || defined(_ARCH_PPC)  \\
-      || defined(_M_MPPC) || defined(_M_PPC)
-    #if defined(__ppc64__) || defined(__powerpc64__) || defined(__64BIT__)
-        #error cmake_ARCH ppc64
-    #else
-        #error cmake_ARCH ppc
-    #endif
 #endif
 #error cmake_ARCH unknown
 ")
@@ -103,21 +81,7 @@ if(ARCH STREQUAL "x86_64")
   )  
 endif()
 
-if(ARCH STREQUAL "i386")
-  set(lexactivator_bundled_libraries
-  "${CMAKE_CURRENT_SOURCE_DIR}/linux-x86/libLexActivator.so"
-  PARENT_SCOPE
-  )
-endif()
-
-if(ARCH STREQUAL "armv7" OR ARCH STREQUAL "arm")
-  set(lexactivator_bundled_libraries
-  "${CMAKE_CURRENT_SOURCE_DIR}/linux-arm/libLexActivator.so"
-  PARENT_SCOPE
-  )
-endif()
-
-if(ARCH STREQUAL "armv8")
+if(ARCH STREQUAL "arm64")
   set(lexactivator_bundled_libraries
   "${CMAKE_CURRENT_SOURCE_DIR}/linux-aarch64/libLexActivator.so"
   PARENT_SCOPE
