@@ -1,3 +1,6 @@
+## 3.5.0
+* Minor refactoring
+
 ## 3.2.0
 * Added few more functions
 

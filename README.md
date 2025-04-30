@@ -4,7 +4,7 @@ LexActivator API wrapper for Dart (licensing library)
 
 ## Getting Started
 
-The first thing you need to do is either embed the Product.dat file in your app using the `SetProductData()` function or set the absolute path of the file using `SetProductFile()` function. The next thing you need to do is to set the product id of your application in your code using `SetProductId()` function. It sets the id of the product you will be adding licensing to.
+The first thing you need to do is to embed the Product.dat file in your app using the `SetProductData()` function. The next thing you need to do is to set the product id of your application in your code using `SetProductId()` function. It sets the id of the product you will be adding licensing to.
 
 ```dart
 void initializeLexActivator() {
@@ -45,7 +45,6 @@ void main() {
   try {
     
     initializeLexActivator();
-    activateLicense(); //Run once, during first run.
 
     final status = LexActivator.IsLicenseGenuine();
     if (LexStatusCodes.LA_OK == status) {
