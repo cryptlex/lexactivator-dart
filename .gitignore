@@ -33,8 +33,4 @@ doc/api/
 *.js.deps
 *.js.map
 
-# Avoid committing native libraries
-*.dll
-*.so
-*.dylib
 
