@@ -32,3 +32,10 @@ flutter:
         pluginClass: LexactivatorPlugin
       ios:
         pluginClass: LexactivatorPlugin
+
+false_secrets:
+  - '/linux/linux-aarch64/libLexActivator.so'
+  - '/linux/linux-x86-64/libLexActivator.so'
+  - '/windows/win-x86-64/LexActivator.dll'
+  - '/windows/win-arm64/LexActivator.dll'
+  - '/macos/darwin-universal/libLexActivator.dylib'
