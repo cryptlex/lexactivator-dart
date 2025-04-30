@@ -1,3 +1,7 @@
+## 3.31.3
+* Added missing functions.
+* Added support for license callback to know the server sync status.
+
 ## 3.5.0
 * Minor refactoring
 

@@ -4,7 +4,7 @@ import 'package:lexactivator/lexactivator.dart';
 void main() {
   try {
     initializeLexActivator();
-    activateLicense();
+    activateLicense(); // Call it once to activate the license
     LexActivator.SetLicenseCallback(callback: licenseCallback);
     final status = LexActivator.IsLicenseGenuine();
     if (LexStatusCodes.LA_OK == status) {
@@ -56,7 +56,7 @@ void initializeLexActivator() {
   LexActivator.SetProductId(
       productId: "SET_PRODUCT_ID", flags: LexActivator.LA_USER);
 
-  LexActivator.SetAppVersion(appVersion: 'PASTE_YOUR_APP_VERSION');
+  LexActivator.SetReleaseVersion(releaseVersion: 'PASTE_YOUR_RELEASE_VERSION');
 }
 
 ///Activation function is called once when license is to be activated. Calling this function
