@@ -281,4 +281,8 @@ abstract class LexStatusCodes {
   /// No entitlement set is linked to the license.
   
   static const int LA_E_ENTITLEMENT_SET_NOT_LINKED = 109;
+
+  /// The license cannot be activated before its effective date.
+
+  static const int LA_E_LICENSE_NOT_EFFECTIVE = 110;
 }
