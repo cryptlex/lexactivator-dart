@@ -860,6 +860,19 @@ class LexActivatorNative {
   late final _GetLicenseActivationDate =
       _GetLicenseActivationDatePtr.asFunction<int Function(Pointer<Uint32>)>();
 
+  int GetActivationLastSyncedDate(
+    Pointer<Uint32> lastSyncedDate,
+  ) {
+    return _GetActivationLastSyncedDate(lastSyncedDate);
+  }
+
+  late final _GetActivationLastSyncedDatePtr =
+      _lookup<NativeFunction<Int32 Function(Pointer<Uint32>)>>(
+          'GetActivationLastSyncedDate');
+  late final _GetActivationLastSyncedDate =
+      _GetActivationLastSyncedDatePtr.asFunction<
+          int Function(Pointer<Uint32>)>();
+
   int GetLicenseExpiryDate(
     Pointer<Uint32> expiryDate,
   ) {

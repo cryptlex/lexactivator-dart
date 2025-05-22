@@ -759,6 +759,20 @@ class LexActivator {
     }
   }
 
+  /// Returns the activation last synced date timestamp.
+  ///
+  /// Initially, this timestamp matches the activation creation date, and then updates with each successful server sync.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+  static int GetActivationLastSyncedDate() {
+    final lastSyncedDate = calloc<Uint32>();
+    int status = _lexActivatorNative.GetActivationLastSyncedDate(lastSyncedDate);
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    return lastSyncedDate.value;
+  }
+
   /// Returns the license expiry date timestamp.
   ///
   /// The function throws a [LexActivatorException] on error.
