@@ -4,7 +4,7 @@
 set -e
 
 BASE_URL=https://dl.cryptlex.com/downloads
-VERSION="v3.31.3";
+VERSION="v3.32.0";
 
 # Create temporary directory
 mkdir -p tmp
