@@ -238,6 +238,10 @@ abstract class LexStatusCodes {
 
   static const int LA_E_CLIENT = 92;
 
+  /// Invalid account ID.
+
+  static const int LA_E_ACCOUNT_ID = 93;
+
   /// The user account has been temporarily locked for 5 mins due to 5 failed attempts.
 
   static const int LA_E_LOGIN_TEMPORARILY_LOCKED = 100;
@@ -265,4 +269,20 @@ abstract class LexStatusCodes {
   /// The free plan has reached it's activation limit.
 
   static const int LA_E_FREE_PLAN_ACTIVATION_LIMIT_REACHED = 106;
+
+  /// Invalid feature entitlements.
+
+  static const int LA_E_FEATURE_ENTITLEMENTS_INVALID = 107;
+
+  /// The feature entitlement does not exist.
+
+  static const int LA_E_FEATURE_ENTITLEMENT_NOT_FOUND = 108;
+
+  /// No entitlement set is linked to the license.
+  
+  static const int LA_E_ENTITLEMENT_SET_NOT_LINKED = 109;
+
+  /// The license cannot be activated before its effective date.
+
+  static const int LA_E_LICENSE_NOT_EFFECTIVE = 110;
 }

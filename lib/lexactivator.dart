@@ -18,6 +18,7 @@ part 'src/product_version_feature_flag.dart';
 part 'src/activation_mode.dart';
 part 'src/organisation_address.dart';
 part 'src/user_license.dart';
+part 'src/feature_entitlement.dart';
 
 class LexActivator {
   ///User Permission Flag
@@ -456,6 +457,40 @@ class LexActivator {
     final metadata = convertArrayToDartString(array);
     calloc.free(array);
     return metadata;
+  }
+
+  /// Returns the license entitlement set name.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+  static String GetLicenseEntitlementSetName() {
+    final array = calloc<Uint8>(256);
+    int status = _lexActivatorNative.GetLicenseEntitlementSetName(
+      array.cast(),
+      256,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    final entitlementSetName = convertArrayToDartString(array);
+    calloc.free(array);
+    return entitlementSetName;
+  }
+
+  /// Returns the license entitlement set display name.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+  static String GetLicenseEntitlementSetDisplayName() {
+    final array = calloc<Uint8>(256);
+    int status = _lexActivatorNative.GetLicenseEntitlementSetDisplayName(
+      array.cast(),
+      256,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    final licenseEntitlementSetDisplayName = convertArrayToDartString(array);
+    calloc.free(array);
+    return licenseEntitlementSetDisplayName;
   }
 
   ///Returns the set name of the Product Version.
@@ -967,6 +1002,61 @@ class LexActivator {
           postalCode: addressObject['postalCode']);
     }
     return null;
+  }
+
+  /// Gets the feature entitlements for the product.
+  ///
+  /// Returns a list of [FeatureEntitlement] objects.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+  static List<FeatureEntitlement> GetFeatureEntitlements() {
+    final array = calloc<Uint8>(4096);
+    int status = _lexActivatorNative.GetFeatureEntitlements(
+      array.cast(),
+      4096,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    List<FeatureEntitlement> featureEntitlements;
+    try {
+      final List<dynamic> jsonList =
+          jsonDecode(convertArrayToDartString(array));
+      featureEntitlements =
+          jsonList.map((json) => FeatureEntitlement.fromJson(json)).toList();
+    } catch (_) {
+      featureEntitlements = [];
+    } finally {
+      calloc.free(array);
+    }
+    return featureEntitlements;
+  }
+
+  /// Gets the feature entitlement for the product.
+  ///
+  /// Returns a [FeatureEntitlement] object.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+  static FeatureEntitlement GetFeatureEntitlement({required String featureName}) {
+    final array = calloc<Uint8>(1024);
+    int status = _lexActivatorNative.GetFeatureEntitlement(
+      featureName,
+      array.cast(),
+      1024,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+
+    Map<String, dynamic> featureEntitlementObject;
+    try {
+      featureEntitlementObject = jsonDecode(convertArrayToDartString(array));
+    } catch (_) {
+      featureEntitlementObject = {};
+    } finally {
+      calloc.free(array);
+    }
+    return FeatureEntitlement.fromJson(featureEntitlementObject);
   }
 
   /// Gets the user licenses for the product.
