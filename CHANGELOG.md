@@ -1,3 +1,7 @@
+## 3.32.0
+* Added feature entitlement functions.
+* Added activation last synced date getter.
+
 ## 3.31.3
 * Added missing functions.
 * Added support for license callback to know the server sync status.
