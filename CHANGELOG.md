@@ -1,3 +1,6 @@
+## 3.32.1
+* Updated android package version
+
 ## 3.32.0
 * Added feature entitlement functions.
 * Added activation last synced date getter.

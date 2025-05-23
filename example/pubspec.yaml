@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  lexactivator: 3.31.3
+  lexactivator: 3.32.1
 
 dev_dependencies:
   flutter_test:
