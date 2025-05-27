@@ -1,3 +1,6 @@
+## 3.32.2
+* Few bug fixes.
+
 ## 3.32.1
 * Updated android package version
 
