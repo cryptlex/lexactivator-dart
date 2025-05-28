@@ -1,3 +1,6 @@
+## 3.32.3
+* Minor bug fix.
+
 ## 3.32.2
 * Few bug fixes.
 
