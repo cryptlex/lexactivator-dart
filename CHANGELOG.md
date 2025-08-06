@@ -1,3 +1,7 @@
+## 3.33.0
+* Added support for x86_64 android.
+* Updated libcurl version.
+
 ## 3.32.3
 * Minor bug fix.
 
