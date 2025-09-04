@@ -1,3 +1,7 @@
+## 3.34.0
+* Improved linux OS fingerprint when LA_SYSTEM permission flag is used.
+* Minor bug fix.
+
 ## 3.33.0
 * Added support for x86_64 android.
 * Updated libcurl version.
