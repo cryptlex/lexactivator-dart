@@ -1010,10 +1010,11 @@ class LexActivator {
   ///
   /// The function throws a [LexActivatorException] on error.
   static List<FeatureEntitlement> GetFeatureEntitlements() {
-    final array = calloc<Uint8>(4096);
+    final length = Platform.isWindows ? 8192 : 4096;
+    final array = calloc<Uint8>(length);
     int status = _lexActivatorNative.GetFeatureEntitlements(
       array.cast(),
-      4096,
+      length,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
