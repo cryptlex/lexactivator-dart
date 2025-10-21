@@ -1,3 +1,9 @@
+## 3.35.1
+* Minor bug fix
+
+## 3.35.0
+* Added support for wsl detection
+
 ## 3.34.0
 * Improved linux OS fingerprint when LA_SYSTEM permission flag is used.
 * Minor bug fix.
