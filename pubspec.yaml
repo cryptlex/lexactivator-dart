@@ -1,6 +1,6 @@
 name: lexactivator
 description: LexActivator API wrapper for Dart. Integrates Crypltex's services into the Dart language.
-version: 3.35.1
+version: 3.35.2
 homepage: https://cryptlex.com
 
 environment:
