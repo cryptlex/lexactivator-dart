@@ -1425,6 +1425,21 @@ class LexActivatorNative {
       _GetServerSyncGracePeriodExpiryDatePtr.asFunction<
           int Function(Pointer<Uint32>)>();
 
+  int GetLastActivationError(
+    Pointer<Uint32> errorCode,
+  ) {
+    return _GetLastActivationError(
+      errorCode,
+    );
+  }
+
+  late final _GetLastActivationErrorPtr =
+      _lookup<NativeFunction<Int32 Function(Pointer<Uint32>)>>(
+          'GetLastActivationError');
+  late final _GetLastActivationError =
+      _GetLastActivationErrorPtr.asFunction<
+          int Function(Pointer<Uint32>)>();
+
   int GetTrialActivationMetadata(
     String key,
     CSTRTYPE value,

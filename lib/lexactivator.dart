@@ -1206,6 +1206,21 @@ class LexActivator {
     return expiryDate.value;
   }
 
+  /// Returns the error code that caused the activation data to be cleared.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+
+  static int GetLastActivationError() {
+    final errorCode = calloc<Uint32>();
+    int status = _lexActivatorNative.GetLastActivationError(
+      errorCode,
+    );
+    if (LexStatusCodes.LA_OK != status) {
+      throw LexActivatorException(status);
+    }
+    return errorCode.value;
+  }
+
   /// Returns the trial activation metadata associated with the [key];
   ///
   /// The function throws a [LexActivatorException] on error.
