@@ -1,11 +1,15 @@
+## 3.36.0
+* Added GetLastActivationError() which returns the error code that caused the activation data to be cleared.
+* Minor bug fix.
+
 ## 3.35.2
-* Minor bug fix
+* Minor bug fix.
 
 ## 3.35.1
-* Minor bug fix
+* Minor bug fix.
 
 ## 3.35.0
-* Added support for wsl detection
+* Added support for wsl detection.
 
 ## 3.34.0
 * Improved linux OS fingerprint when LA_SYSTEM permission flag is used.
@@ -22,7 +26,7 @@
 * Few bug fixes.
 
 ## 3.32.1
-* Updated android package version
+* Updated android package version.
 
 ## 3.32.0
 * Added feature entitlement functions.
@@ -33,19 +37,14 @@
 * Added support for license callback to know the server sync status.
 
 ## 3.5.0
-* Minor refactoring
+* Minor refactoring.
 
 ## 3.2.0
-* Added few more functions
+* Added few more functions.
 
 ## 3.1.0
-
-* Fixed library loading for all supported platforms
+* Fixed library loading for all supported platforms.
 * Fixed network in example app in accordance with https://flutter.dev/desktop#entitlements-and-the-app-sandbox
 
-
-
-
 ## 3.0.0
-
-* Initial release
+* Initial release.
