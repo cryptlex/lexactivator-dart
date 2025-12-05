@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   
   s.license          = { :type => 'MIT', :file => '../LICENSE' }
   
-  s.author           = { 'Cryptlex' => 'qa@cyptlex.com' }
+  s.author           = { 'Cryptlex LLP' => 'support@cyptlex.com' }
   s.source           = { :path => '.' }
   s.source_files     = 'Classes/**/*'
 
