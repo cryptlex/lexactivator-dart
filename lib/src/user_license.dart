@@ -4,6 +4,8 @@ class UserLicense {
   final int allowedActivations;
   final int allowedDeactivations;
   final String key;
+  final int totalActivations;
+  final int totalDeactivations;
   final String type;
   final List<LicenseMetadata> metadata;
 
@@ -11,6 +13,8 @@ class UserLicense {
     required this.allowedActivations,
     required this.allowedDeactivations,
     required this.key,
+    required this.totalActivations,
+    required this.totalDeactivations,
     required this.type,
     required this.metadata,
   });
@@ -20,6 +24,8 @@ class UserLicense {
       allowedActivations: json['allowedActivations'] ?? 0,
       allowedDeactivations: json['allowedDeactivations'] ?? 0,
       key: json['key'] ?? '',
+      totalActivations: json['totalActivations'] ?? 0,
+      totalDeactivations: json['totalDeactivations'] ?? 0,
       type: json['type'] ?? '',
       metadata: (json['metadata'] as List<dynamic>?)
               ?.map((e) => LicenseMetadata.fromJson(e))
