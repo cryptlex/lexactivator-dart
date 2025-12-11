@@ -1,3 +1,7 @@
+## 3.37.0
+* Added expiresAt to Feature Entitlements.
+* Added totalActivations and totalDeactivations to User License. 
+
 ## 3.36.0
 * Added GetLastActivationError() which returns the error code that caused the activation data to be cleared.
 * Minor bug fix.
