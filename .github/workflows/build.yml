@@ -32,3 +32,22 @@ jobs:
           skipTests: true
           flutterBranch: main
 
+      - name: Extract version and create tag
+        run: |
+          VERSION=$(sed -n 's/^[[:space:]]*version:[[:space:]]*\(.*\)/\1/p' pubspec.yaml)
+
+          [ -n "$VERSION" ] || exit 1
+
+          git tag "$VERSION" 2>/dev/null || echo "Tag already exists"
+          git push origin "$VERSION" || true
+
+      - name: Notify slack releases channel
+        uses: slackapi/slack-github-action@v2
+        with:
+          webhook: ${{ secrets.SLACK_RELEASES_PROD_WEBHOOK_URL }}
+          webhook-type: webhook-trigger
+          payload: |
+            status: "${{ job.status }}"
+            environment: "PRODUCTION"
+            project: "LexActivator Dart"
+
