@@ -34,7 +34,7 @@ jobs:
 
       - name: Extract version and create tag
         run: |
-          VERSION=$(sed -n 's/^[[:space:]]*version:[[:space:]]*\(.*\)/\1/p' pubspec.yaml)
+          VERSION=$(sed -n 's/^[[:space:]]*version:[[:space:]]*\([^[:space:]]*\).*/\1/p' pubspec.yaml)
 
           [ -n "$VERSION" ] || exit 1
 
