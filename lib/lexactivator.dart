@@ -1860,6 +1860,31 @@ class LexActivator {
     return status;
   }
 
+  /// Migrates existing license data to system-wide storage from [oldPermissionFlag] storage.
+  /// Call this function after [SetProductData()].
+  /// If you intend to use a custom data directory after migration,
+  /// set it first using [SetDataDirectory()].
+  ///
+  /// Returns [LexStatusCodes] LA_OK, and LA_FAIL.
+  ///
+  /// __Note:__ The function does not support migration from custom data directories.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+
+  static int MigrateToSystemWideActivation({required int oldPermissionFlag}) {
+    int status = _lexActivatorNative.MigrateToSystemWideActivation(
+      oldPermissionFlag,
+    );
+    switch (status) {
+      case LexStatusCodes.LA_OK:
+        return LexStatusCodes.LA_OK;
+      case LexStatusCodes.LA_FAIL:
+        return LexStatusCodes.LA_FAIL;
+      default:
+        throw LexActivatorException(status);
+    }
+  }
+
   /// Resets the activation and trial data stored in the machine.
   /// This function is meant for developer testing only.
   /// __Note:__ The function does not reset local(unverified) trial data.
