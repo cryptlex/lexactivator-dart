@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   
   s.homepage         = 'https://cryptlex.com'
   
-  s.license          = { :type => 'MIT', :file => '../LICENSE' }
+  s.license          = { :type => 'Proprietary', :file => '../LICENSE' }
   
   s.author           = { 'Cryptlex LLP' => 'support@cyptlex.com' }
   s.source           = { :path => '.' }
