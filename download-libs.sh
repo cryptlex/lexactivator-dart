@@ -18,6 +18,7 @@ unzip ${WINDOWS_FILE_NAME} -d ./tmp/windows
 # Copy Windows libraries to existing directories
 cp ./tmp/windows/libs/vc14/x64/LexActivator.dll ./windows/win-x86-64/
 cp ./tmp/windows/libs/vc17/arm64/LexActivator.dll ./windows/win-arm64/
+cp ./tmp/windows/THIRD-PARTY-NOTICES.txt ./windows/
 
 # macOS libraries
 mkdir -p tmp/macos
@@ -27,6 +28,7 @@ unzip ${MAC_FILE_NAME} -d ./tmp/macos
 
 # Copy macOS universal binary to existing directory
 cp ./tmp/macos/libs/clang/universal/libLexActivator.dylib ./macos/darwin-universal/
+cp ./tmp/macos/THIRD-PARTY-NOTICES.txt ./macos/
 
 # Linux libraries
 mkdir -p tmp/linux
@@ -37,6 +39,7 @@ unzip ${LINUX_FILE_NAME} -d ./tmp/linux
 # Copy Linux libraries to existing directories
 cp ./tmp/linux/libs/gcc-6/amd64/libLexActivator.so ./linux/linux-x86-64/
 cp ./tmp/linux/libs/gcc-6/arm64/libLexActivator.so ./linux/linux-aarch64/
+cp ./tmp/linux/THIRD-PARTY-NOTICES.txt ./linux/
 
 # Cleanup
 rm -f ${WINDOWS_FILE_NAME}
