@@ -2021,6 +2021,20 @@ class LexActivatorNative {
       _ResetActivationMeterAttributeUsesPtrWin.asFunction<
           int Function(CSTRTYPE_WIN)>();
 
+  int MigrateToSystemWideActivation(
+    int oldPermissionFlag,
+  ) {
+    return _MigrateToSystemWideActivation(
+      oldPermissionFlag,
+    );
+  }
+
+  late final _MigrateToSystemWideActivationPtr =
+      _lookup<NativeFunction<Int32 Function(Uint32)>>(
+          'MigrateToSystemWideActivation');
+  late final _MigrateToSystemWideActivation = _MigrateToSystemWideActivationPtr
+      .asFunction<int Function(int)>();
+
   int Reset() {
     return _Reset();
   }
