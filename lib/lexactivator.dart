@@ -445,7 +445,7 @@ class LexActivator {
   /// The function throws a [LexActivatorException] on error.
 
   static String GetProductMetadata({required String key}) {
-    final array = calloc<Uint8>(256);
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetProductMetadata(
       key,
       array.cast(),
@@ -463,7 +463,7 @@ class LexActivator {
   ///
   /// The function throws a [LexActivatorException] on error.
   static String GetLicenseEntitlementSetName() {
-    final array = calloc<Uint8>(256);
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetLicenseEntitlementSetName(
       array.cast(),
       256,
@@ -480,7 +480,7 @@ class LexActivator {
   ///
   /// The function throws a [LexActivatorException] on error.
   static String GetLicenseEntitlementSetDisplayName() {
-    final array = calloc<Uint8>(256);
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetLicenseEntitlementSetDisplayName(
       array.cast(),
       256,
@@ -497,7 +497,7 @@ class LexActivator {
   ///
   /// The function throws a [LexActivatorException] on error.
   static String GetProductVersionName() {
-    final array = calloc<Uint8>(256);
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetProductVersionName(
       array.cast(),
       256,
@@ -514,7 +514,7 @@ class LexActivator {
   ///
   /// The function throws a [LexActivatorException] on error.
   static String GetProductVersionDisplayName() {
-    final array = calloc<Uint8>(256);
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetProductVersionDisplayName(
       array.cast(),
       256,
@@ -533,8 +533,7 @@ class LexActivator {
   static ProductVersionFeatureFlag GetProductVersionFeatureFlag(
       {required String name}) {
     final enabled = calloc<Uint32>();
-    final array = calloc<Uint8>(256);
-
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetProductVersionFeatureFlag(
       name,
       enabled,
@@ -562,7 +561,7 @@ class LexActivator {
   static String GetLicenseMetadata({
     required String key,
   }) {
-    final array = calloc<Uint8>(256);
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetLicenseMetadata(
       key,
       array.cast(),
@@ -612,7 +611,7 @@ class LexActivator {
   /// The function throws a [LexActivatorException] on error.
 
   static String GetLicenseKey() {
-    final array = calloc<Uint8>(256);
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetLicenseKey(
       array.cast(),
       256,
@@ -844,8 +843,7 @@ class LexActivator {
   /// The function throws a [LexActivatorException] on error.
 
   static String GetLicenseMaxAllowedReleaseVersion() {
-    final array = calloc<Uint8>(1024);
-
+    final array = Platform.isWindows ? calloc<Uint8>(1024 * 2) : calloc<Uint8>(1024);
     int status = _lexActivatorNative.GetLicenseMaxAllowedReleaseVersion(
       array.cast(),
       1024,
@@ -880,8 +878,7 @@ class LexActivator {
   /// The function throws a [LexActivatorException] on error.
 
   static String GetLicenseUserEmail() {
-    final array = calloc<Uint8>(256);
-
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetLicenseUserEmail(
       array.cast(),
       256,
@@ -899,7 +896,7 @@ class LexActivator {
   /// The function throws a [LexActivatorException] on error.
 
   static String GetLicenseUserName() {
-    final array = calloc<Uint8>(256);
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetLicenseUserName(
       array.cast(),
       256,
@@ -917,7 +914,7 @@ class LexActivator {
   /// The function throws a [LexActivatorException] on error.
 
   static String GetLicenseUserCompany() {
-    final array = calloc<Uint8>(256);
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetLicenseUserCompany(
       array.cast(),
       256,
@@ -936,7 +933,7 @@ class LexActivator {
   /// The function throws a [LexActivatorException] on error.
 
   static String GetLicenseUserMetadata({required String key}) {
-    final array = calloc<Uint8>(256);
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetLicenseUserMetadata(
       key,
       array.cast(),
@@ -955,7 +952,7 @@ class LexActivator {
   /// The function throws a [LexActivatorException] on error.
 
   static String GetLicenseOrganizationName() {
-    final array = calloc<Uint8>(256);
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetLicenseOrganizationName(
       array.cast(),
       256,
@@ -974,7 +971,7 @@ class LexActivator {
   ///
   /// Throws a [LexActivatorException] on error.
   static OrganizationAddress? GetLicenseOrganizationAddress() {
-    final array = calloc<Uint8>(256);
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetLicenseOrganizationAddress(
       array.cast(),
       256,
@@ -1010,11 +1007,10 @@ class LexActivator {
   ///
   /// The function throws a [LexActivatorException] on error.
   static List<FeatureEntitlement> GetFeatureEntitlements() {
-    final length = Platform.isWindows ? 8192 : 4096;
-    final array = calloc<Uint8>(length);
+    final array = Platform.isWindows ? calloc<Uint8>(4096 * 2) : calloc<Uint8>(4096);
     int status = _lexActivatorNative.GetFeatureEntitlements(
       array.cast(),
-      length,
+      4096,
     );
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -1039,7 +1035,7 @@ class LexActivator {
   ///
   /// The function throws a [LexActivatorException] on error.
   static FeatureEntitlement GetFeatureEntitlement({required String featureName}) {
-    final array = calloc<Uint8>(1024);
+    final array = Platform.isWindows ? calloc<Uint8>(1024 * 2) : calloc<Uint8>(1024);
     int status = _lexActivatorNative.GetFeatureEntitlement(
       featureName,
       array.cast(),
@@ -1069,7 +1065,7 @@ class LexActivator {
   ///
   /// The function throws a [LexActivatorException] on error.
   static List<UserLicense> GetUserLicenses() {
-    final array = calloc<Uint8>(4096);
+    final array = Platform.isWindows ? calloc<Uint8>(4096 * 2) : calloc<Uint8>(4096);
     int status = _lexActivatorNative.GetUserLicenses(
       array.cast(),
       4096,
@@ -1097,7 +1093,7 @@ class LexActivator {
   /// The function throws a [LexActivatorException] on error.
 
   static String GetLicenseType() {
-    final array = calloc<Uint8>(256);
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetLicenseType(
       array.cast(),
       256,
@@ -1116,7 +1112,7 @@ class LexActivator {
   ///
   /// The function throws a [LexActivatorException] on error.
   static String GetActivationId() {
-    final array = calloc<Uint8>(1024);
+    final array = Platform.isWindows ? calloc<Uint8>(1024 * 2) : calloc<Uint8>(1024);
     int status = _lexActivatorNative.GetActivationId(
       array.cast(),
       1024,
@@ -1134,7 +1130,7 @@ class LexActivator {
   /// The function throws a [LexActivatorException] on error.
 
   static String GetActivationMetadata(String key) {
-    final array = calloc<Uint8>(256);
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetActivationMetadata(
       key,
       array.cast(),
@@ -1153,8 +1149,8 @@ class LexActivator {
   /// The function throws a [LexActivatorException] on error.
 
   static ActivationMode GetActivationMode() {
-    final initialModeArray = calloc<Uint8>(256);
-    final currentModeArray = calloc<Uint8>(256);
+    final initialModeArray = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
+    final currentModeArray = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetActivationMode(
       initialModeArray.cast(),
       256,
@@ -1226,8 +1222,7 @@ class LexActivator {
   /// The function throws a [LexActivatorException] on error.
 
   static String GetTrialActivationMetadata({required String key}) {
-    final array = calloc<Uint8>(256);
-
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetTrialActivationMetadata(
       key,
       array.cast(),
@@ -1263,8 +1258,7 @@ class LexActivator {
   /// The function throws a [LexActivatorException] on error.
 
   static String GetTrialId() {
-    final array = calloc<Uint8>(256);
-
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetTrialId(array.cast(), 256);
     if (LexStatusCodes.LA_OK != status) {
       throw LexActivatorException(status);
@@ -1298,7 +1292,7 @@ class LexActivator {
   /// The function throws a [LexActivatorException] on error.
 
   static String GetLibraryVersion() {
-    final array = calloc<Uint8>(256);
+    final array = Platform.isWindows ? calloc<Uint8>(256 * 2) : calloc<Uint8>(256);
     int status = _lexActivatorNative.GetLibraryVersion(
       array.cast(),
       256,
