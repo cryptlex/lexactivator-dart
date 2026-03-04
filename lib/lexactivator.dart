@@ -493,6 +493,25 @@ class LexActivator {
     return licenseEntitlementSetDisplayName;
   }
 
+  /// Returns the license entitlement set tier.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+  static int GetLicenseEntitlementSetTier() {
+    final tier = calloc<Int64>();
+    int status = _lexActivatorNative.GetLicenseEntitlementSetTier(
+      tier,
+    );
+
+    try {
+      if (LexStatusCodes.LA_OK != status) {
+        throw LexActivatorException(status);
+      }
+      return tier.value;
+    } finally {
+      calloc.free(tier);
+    }
+  }
+
   ///Returns the set name of the Product Version.
   ///
   /// The function throws a [LexActivatorException] on error.
