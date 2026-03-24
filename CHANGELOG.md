@@ -1,3 +1,6 @@
+## 3.39.0
+* Added GetLicenseEntitlementSetTier() function which returns the tier of the license entitlement set.
+
 ## 3.38.0
 * Added support for migration of activation data from LA_USER and LA_SYSTEM to LA_ALL_USERS for macOS and Windows.
 
