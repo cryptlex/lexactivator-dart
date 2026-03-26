@@ -1,3 +1,6 @@
+## 3.39.1
+* Minor bug fix.
+
 ## 3.39.0
 * Added GetLicenseEntitlementSetTier() function which returns the tier of the license entitlement set.
 
