@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-// https://mvnrepository.com/artifact/com.cryptlex.android.lexactivator/lexactivator
-implementation 'com.cryptlex.android.lexactivator:lexactivator:3.39.1'
+    // https://mvnrepository.com/artifact/com.cryptlex.android.lexactivator/lexactivator
+    implementation 'com.cryptlex.android.lexactivator:lexactivator:3.39.1'
 }
 
