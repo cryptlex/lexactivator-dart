@@ -1661,14 +1661,16 @@ class LexActivator {
     }
   }
 
-  /// Syncs the activation data with the Cryptlex servers.
+  /// Synchronizes the activation data with the Cryptlex servers.
   ///
   /// Returns [LexStatusCodes] LA_OK, LA_EXPIRED, LA_SUSPENDED, and LA_FAIL.
   ///
-  /// This function should be called only if the license is already activated. This is a
-  /// blocking call that performs a one-time synchronization to refresh the local license data.
-  /// __Note:__ For periodic validation, use IsLicenseGenuine() instead, which schedules background
-  /// sync at a defined interval.
+  /// The license must already be activated when this function is called. This is a blocking call
+  /// that performs a one-time synchronization to refresh the local license data. In most cases,
+  /// rely on IsLicenseGenuine(), which automatically handles periodic background synchronization
+  /// based on the configured interval.
+  /// __Note:__ Do not use this function in regular application flow. Use it only when an immediate
+  /// synchronization is required.
   ///
   /// The function throws a [LexActivatorException] on error.
 
@@ -1712,14 +1714,16 @@ class LexActivator {
     }
   }
 
-  /// Syncs the trial activation data with the Cryptlex servers.
+  /// Synchronizes the trial activation data with the Cryptlex servers.
   ///
   /// Returns [LexStatusCodes] LA_OK, LA_TRIAL_EXPIRED, and LA_FAIL.
   ///
-  /// This function should be called only if the trial is already activated. This is a
-  /// blocking call that performs a one-time synchronization to refresh the trial data locally.
-  /// __Note:__  Unlike IsTrialGenuine(), which validates the trial activation locally only, this
-  /// function forces an immediate server check.
+  /// The trial must already be activated when this function is called. This is a blocking call that
+  /// performs a one-time synchronization to refresh the trial data locally. Unlike IsTrialGenuine(),
+  /// which validates the trial activation locally, this function performs an immediate
+  /// synchronization with the servers.
+  /// __Note:__ Use this function to immediately reflect server-side changes on the user's machine,
+  /// such as trial extensions.
   ///
   /// The function throws a [LexActivatorException] on error.
 
