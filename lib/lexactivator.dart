@@ -1667,7 +1667,7 @@ class LexActivator {
   ///
   /// The license must already be activated when this function is called. This is a blocking call
   /// that performs a one-time synchronization to refresh the local license data. In most cases,
-  /// rely on IsLicenseGenuine(), which automatically handles periodic background synchronization
+  /// rely on [IsLicenseGenuine()], which automatically handles periodic background synchronization
   /// based on the configured interval.
   /// __Note:__ Do not use this function in regular application flow. Use it only when an immediate
   /// synchronization is required.
@@ -1719,7 +1719,7 @@ class LexActivator {
   /// Returns [LexStatusCodes] LA_OK, LA_TRIAL_EXPIRED, and LA_FAIL.
   ///
   /// The trial must already be activated when this function is called. This is a blocking call that
-  /// performs a one-time synchronization to refresh the trial data locally. Unlike IsTrialGenuine(),
+  /// performs a one-time synchronization to refresh the trial data locally. Unlike [IsTrialGenuine()],
   /// which validates the trial activation locally, this function performs an immediate
   /// synchronization with the servers.
   /// __Note:__ Use this function to immediately reflect server-side changes on the user's machine,
