@@ -1,3 +1,6 @@
+## 3.40.0
+* Added baseValue property to the FeatureEntitlement object returned by GetFeatureEntitlement() function.
+
 ## 3.39.1
 * Minor bug fix.
 
