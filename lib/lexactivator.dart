@@ -493,6 +493,25 @@ class LexActivator {
     return licenseEntitlementSetDisplayName;
   }
 
+  /// Returns the license entitlement set tier.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+  static int GetLicenseEntitlementSetTier() {
+    final tier = calloc<Int64>();
+    int status = _lexActivatorNative.GetLicenseEntitlementSetTier(
+      tier,
+    );
+
+    try {
+      if (LexStatusCodes.LA_OK != status) {
+        throw LexActivatorException(status);
+      }
+      return tier.value;
+    } finally {
+      calloc.free(tier);
+    }
+  }
+
   ///Returns the set name of the Product Version.
   ///
   /// The function throws a [LexActivatorException] on error.
@@ -1858,6 +1877,31 @@ class LexActivator {
       throw LexActivatorException(status);
     }
     return status;
+  }
+
+  /// Migrates existing license data to system-wide storage from [oldPermissionFlag] storage.
+  /// Call this function after [SetProductData()].
+  /// If you intend to use a custom data directory after migration,
+  /// set it first using [SetDataDirectory()].
+  ///
+  /// Returns [LexStatusCodes] LA_OK, and LA_FAIL.
+  ///
+  /// __Note:__ The function does not support migration from custom data directories.
+  ///
+  /// The function throws a [LexActivatorException] on error.
+
+  static int MigrateToSystemWideActivation({required int oldPermissionFlag}) {
+    int status = _lexActivatorNative.MigrateToSystemWideActivation(
+      oldPermissionFlag,
+    );
+    switch (status) {
+      case LexStatusCodes.LA_OK:
+        return LexStatusCodes.LA_OK;
+      case LexStatusCodes.LA_FAIL:
+        return LexStatusCodes.LA_FAIL;
+      default:
+        throw LexActivatorException(status);
+    }
   }
 
   /// Resets the activation and trial data stored in the machine.

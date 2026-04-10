@@ -1176,6 +1176,17 @@ class LexActivatorNative {
       _GetLicenseEntitlementSetDisplayNamePtrWin.asFunction<
           int Function(CSTRTYPE_WIN, int)>();
 
+  int GetLicenseEntitlementSetTier(Pointer<Int64> tier) {
+    return _GetLicenseEntitlementSetTier(tier);
+  }
+
+  late final _GetLicenseEntitlementSetTierPtr =
+      _lookup<NativeFunction<Int32 Function(Pointer<Int64>)>>(
+          'GetLicenseEntitlementSetTier');
+  late final _GetLicenseEntitlementSetTier =
+      _GetLicenseEntitlementSetTierPtr.asFunction<
+          int Function(Pointer<Int64>)>();
+
 
   int GetFeatureEntitlements(
     CSTRTYPE array,
@@ -2020,6 +2031,20 @@ class LexActivatorNative {
   late final _ResetActivationMeterAttributeUsesWin =
       _ResetActivationMeterAttributeUsesPtrWin.asFunction<
           int Function(CSTRTYPE_WIN)>();
+
+  int MigrateToSystemWideActivation(
+    int oldPermissionFlag,
+  ) {
+    return _MigrateToSystemWideActivation(
+      oldPermissionFlag,
+    );
+  }
+
+  late final _MigrateToSystemWideActivationPtr =
+      _lookup<NativeFunction<Int32 Function(Uint32)>>(
+          'MigrateToSystemWideActivation');
+  late final _MigrateToSystemWideActivation = _MigrateToSystemWideActivationPtr
+      .asFunction<int Function(int)>();
 
   int Reset() {
     return _Reset();
