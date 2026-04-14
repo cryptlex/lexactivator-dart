@@ -1,3 +1,6 @@
+## 3.41.1
+* Minor bug fix.
+
 ## 3.41.0
 * Added SyncLicenseActivation() function which synchronizes the activation data with the Cryptlex servers.
 * Added SyncTrialActivation() function which synchronizes the trial activation data with the Cryptlex servers.
