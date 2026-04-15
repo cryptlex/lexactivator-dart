@@ -1,3 +1,6 @@
+## 3.41.2
+* Increased the buffer size for GetFeatureEntitlements()
+
 ## 3.41.1
 * Minor bug fix.
 

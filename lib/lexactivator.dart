@@ -1025,27 +1025,43 @@ class LexActivator {
   /// Returns a list of [FeatureEntitlement] objects.
   ///
   /// The function throws a [LexActivatorException] on error.
+  static int _featureEntitlementsBufferSize =
+      Platform.isWindows ? 8192 : 4096;
+
   static List<FeatureEntitlement> GetFeatureEntitlements() {
-    final array = Platform.isWindows ? calloc<Uint8>(4096 * 2) : calloc<Uint8>(4096);
-    int status = _lexActivatorNative.GetFeatureEntitlements(
-      array.cast(),
-      4096,
-    );
-    if (LexStatusCodes.LA_OK != status) {
-      throw LexActivatorException(status);
+    int length = _featureEntitlementsBufferSize;
+    while (true) {
+      final array = calloc<Uint8>(length);
+      final status = _lexActivatorNative.GetFeatureEntitlements(
+        array.cast(),
+        length,
+      );
+      if (LexStatusCodes.LA_E_BUFFER_SIZE == status) {
+        calloc.free(array);
+        if (length >= 524288) {
+          throw LexActivatorException(status);
+        }
+        length *= 2;
+        continue;
+      }
+      if (LexStatusCodes.LA_OK != status) {
+        calloc.free(array);
+        throw LexActivatorException(status);
+      }
+      _featureEntitlementsBufferSize = length;
+      List<FeatureEntitlement> featureEntitlements;
+      try {
+        final List<dynamic> jsonList =
+            jsonDecode(convertArrayToDartString(array));
+        featureEntitlements =
+            jsonList.map((json) => FeatureEntitlement.fromJson(json)).toList();
+      } catch (_) {
+        featureEntitlements = [];
+      } finally {
+        calloc.free(array);
+      }
+      return featureEntitlements;
     }
-    List<FeatureEntitlement> featureEntitlements;
-    try {
-      final List<dynamic> jsonList =
-          jsonDecode(convertArrayToDartString(array));
-      featureEntitlements =
-          jsonList.map((json) => FeatureEntitlement.fromJson(json)).toList();
-    } catch (_) {
-      featureEntitlements = [];
-    } finally {
-      calloc.free(array);
-    }
-    return featureEntitlements;
   }
 
   /// Gets the feature entitlement for the product.
