@@ -1816,6 +1816,15 @@ class LexActivatorNative {
       _lookup<NativeFunction<Int32 Function()>>('IsLicenseValid');
   late final _IsLicenseValid = _IsLicenseValidPtr.asFunction<int Function()>();
 
+  int SyncLicenseActivation() {
+    return _SyncLicenseActivation();
+  }
+
+  late final _SyncLicenseActivationPtr =
+      _lookup<NativeFunction<Int32 Function()>>('SyncLicenseActivation');
+  late final _SyncLicenseActivation =
+      _SyncLicenseActivationPtr.asFunction<int Function()>();
+
   int ActivateTrial() {
     return _ActivateTrial();
   }
@@ -1823,6 +1832,15 @@ class LexActivatorNative {
   late final _ActivateTrialPtr =
       _lookup<NativeFunction<Int32 Function()>>('ActivateTrial');
   late final _ActivateTrial = _ActivateTrialPtr.asFunction<int Function()>();
+
+  int SyncTrialActivation() {
+    return _SyncTrialActivation();
+  }
+
+  late final _SyncTrialActivationPtr =
+      _lookup<NativeFunction<Int32 Function()>>('SyncTrialActivation');
+  late final _SyncTrialActivation =
+      _SyncTrialActivationPtr.asFunction<int Function()>();
 
   int ActivateTrialOffline(
     String filePath,
