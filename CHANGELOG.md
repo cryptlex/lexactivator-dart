@@ -1,3 +1,7 @@
+## 3.42.0
+* Added crypto-binding support for windows.
+* Updated android packages to support 16 KB memory page size.
+
 ## 3.41.2
 * Increased the buffer size for GetFeatureEntitlements()
 
