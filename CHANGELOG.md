@@ -1,3 +1,6 @@
+## 3.42.1
+* Fixed license data invalidation caused by a multi-process conflict on Windows (LA_ALL_USERS) and Linux.
+
 ## 3.42.0
 * Added crypto-binding support for windows.
 * Updated android packages to support 16 KB memory page size.
