@@ -1,3 +1,6 @@
+## 3.41.2
+* Bug fix.
+
 ## 3.42.1
 * Fixed license data invalidation caused by a multi-process conflict on Windows (LA_ALL_USERS) and Linux.
 
